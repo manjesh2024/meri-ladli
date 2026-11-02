@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#1b090f">
+<title>A Diwali Written in Love — Meri Ladli</title>
+<style>
+:root {
+  --site-primary: #7f263b;
+  --site-on-primary: #fff7ef;
+  --site-secondary: #d9ad70;
+  --site-on-secondary: #24130e;
+  --site-background: #1b090f;
+  --site-on-background: #fff1e4;
+  --site-font-body: "Avenir Next", Avenir, "Segoe UI", sans-serif;
+  --site-font-heading: "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
+  --site-heading-scale: 1;
+  --site-spacing-scale: 1;
+  --site-radius-scale: 1;
+  --site-decoration-opacity: 1;
+  --cream: #fff1e4;
+  --muted: #d9bdb0;
+  --gold: #e9c58d;
+  --wine: #3a101e;
+  --line: rgba(233,197,141,.24);
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--site-background); color: var(--site-on-background); font-family: var(--site-font-body); }
+button { font: inherit; }
+#app { min-height: 100vh; width: 100%; overflow: hidden; border-radius: 0; position: relative; background: radial-gradient(ellipse at 50% 0%, #54202b 0%, #260d17 42%, var(--site-background) 78%); color: var(--site-on-background); }
+.decor { position: absolute; inset: 0; pointer-events: none; opacity: var(--site-decoration-opacity); overflow: hidden; }
+.star { position: absolute; color: #f2d6a4; opacity: .6; animation: twinkle 3.5s ease-in-out infinite; }
+.star:nth-child(2n) { animation-delay: 1.2s; }
+@keyframes twinkle { 0%,100% { opacity: .18; transform: scale(.75); } 50% { opacity: .85; transform: scale(1.15); } }
+.topbar { position: relative; z-index: 5; display: flex; justify-content: space-between; align-items: center; padding: 22px clamp(18px,5vw,72px); }
+.brand { color: var(--gold); letter-spacing: .22em; text-transform: uppercase; font-size: 10px; }
+.music { border: 1px solid var(--line); color: var(--cream); background: rgba(255,255,255,.06); border-radius: 999px; padding: 10px 15px; cursor: pointer; font-size: 12px; backdrop-filter: blur(10px); }
+.music span { color: var(--gold); margin-right: 7px; }
+.hero { min-height: 83vh; position: relative; z-index: 1; display: grid; place-items: center; text-align: center; padding: 50px 20px 110px; }
+.hero-inner { max-width: 760px; }
+.eyebrow { color: var(--gold); letter-spacing: .35em; text-transform: uppercase; font-size: 10px; margin-bottom: 24px; }
+h1,h2,h3,p { margin-top: 0; }
+h1,h2,h3 { font-family: var(--site-font-heading); font-weight: 400; }
+h1 { font-size: clamp(48px,9vw,104px); line-height: .98; margin-bottom: 24px; }
+h1 em { color: var(--gold); font-weight: 400; }
+.hero-copy { color: var(--muted); line-height: 1.9; max-width: 510px; margin: 0 auto 34px; font-size: 14px; }
+.cta { border: 1px solid rgba(233,197,141,.65); border-radius: 999px; background: linear-gradient(135deg,#e8c48e,#b67b4d); color: #28110f; padding: 15px 25px; cursor: pointer; box-shadow: 0 10px 35px rgba(205,143,79,.18); transition: transform .25s, box-shadow .25s; }
+.cta:hover { transform: translateY(-3px); box-shadow: 0 15px 42px rgba(205,143,79,.3); }
+.hero-foot { position: absolute; bottom: 28px; color: #b9988a; font-size: 10px; letter-spacing: .22em; text-transform: uppercase; }
+.diya-row { display: flex; justify-content: center; gap: 38px; margin: 0 auto 34px; }
+.diya { width: 38px; height: 21px; background: linear-gradient(#f6d79b,#a64d28); border-radius: 4px 4px 22px 22px; position: relative; box-shadow: 0 0 24px rgba(255,171,77,.35); }
+.diya:before { content:""; position:absolute; width: 10px; height: 20px; border-radius: 100% 0 100% 0; background: #fff0ae; left: 14px; top: -18px; transform: rotate(45deg); box-shadow: 0 0 20px #ffc36e; }
+.diya:after { content:""; position:absolute; height: 2px; width: 58px; left:-10px; bottom:-5px; background: #d9a46e; border-radius: 50%; opacity:.7; }
+section.content { position: relative; z-index: 1; padding: 92px 20px; }
+.section-inner { max-width: 980px; margin: 0 auto; }
+.section-label { color: var(--gold); letter-spacing: .3em; text-transform: uppercase; font-size: 10px; text-align: center; margin-bottom: 17px; }
+.section-title { font-size: clamp(35px,5vw,57px); text-align: center; margin-bottom: 18px; }
+.section-intro { color: var(--muted); text-align: center; line-height: 1.8; max-width: 570px; margin: 0 auto 45px; font-size: 14px; }
+.memory-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 17px; }
+.memory { min-height: 230px; border: 1px solid var(--line); border-radius: calc(20px * var(--site-radius-scale)); background: linear-gradient(145deg,rgba(255,255,255,.09),rgba(255,255,255,.025)); display: flex; flex-direction: column; justify-content: end; padding: 20px; position: relative; overflow: hidden; }
+.memory:before { content:"✦"; position:absolute; top: 24px; right: 25px; font-size: 26px; color: rgba(233,197,141,.45); }
+.memory .number { color: var(--gold); font-size: 10px; letter-spacing: .2em; margin-bottom: 10px; }
+.memory h3 { font-size: 24px; margin-bottom: 7px; }
+.memory p { color: var(--muted); font-size: 12px; line-height: 1.6; margin: 0; }
+.memory .placeholder { position:absolute; inset:0; display:grid; place-items:center; color:rgba(255,241,228,.14); font-family:var(--site-font-heading); font-size:64px; }
+.memory > *:not(.placeholder) { position:relative; z-index:1; }
+.timeline { max-width: 680px; margin: 0 auto; border-left: 1px solid rgba(233,197,141,.35); padding-left: 28px; }
+.moment { padding: 0 0 34px; position:relative; }
+.moment:before { content:""; position:absolute; width:9px; height:9px; border-radius:50%; background:var(--gold); left:-33px; top:5px; box-shadow:0 0 14px rgba(233,197,141,.6); }
+.moment small { color:var(--gold); letter-spacing:.2em; text-transform:uppercase; font-size:9px; }
+.moment h3 { font-size:25px; margin:8px 0; }
+.moment p { color:var(--muted); font-size:13px; line-height:1.8; margin:0; }
+.note-section { background: radial-gradient(ellipse at center,rgba(127,38,59,.28),transparent 68%); }
+.envelope-wrap { display:grid; place-items:center; margin:45px auto 0; }
+.envelope { width:min(340px,86vw); height:220px; border:1px solid rgba(233,197,141,.55); background:linear-gradient(145deg,#8b3447,#4c1728); border-radius:10px; position:relative; cursor:pointer; box-shadow:0 22px 65px rgba(0,0,0,.3); transition:transform .3s; }
+.envelope:hover { transform:translateY(-5px); }
+.envelope:before { content:""; position:absolute; inset:0; background:linear-gradient(35deg,transparent 49.5%,rgba(233,197,141,.35) 50%,transparent 50.7%),linear-gradient(-35deg,transparent 49.5%,rgba(233,197,141,.35) 50%,transparent 50.7%); }
+.seal { position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:58px; height:58px; display:grid; place-items:center; border-radius:50%; background:linear-gradient(135deg,#f0d39d,#b9814d); color:#4a1827; font-size:25px; box-shadow:0 5px 22px rgba(0,0,0,.25); }
+.envelope-hint { color:var(--muted); font-size:12px; margin-top:20px; letter-spacing:.08em; }
+.letter { display:none; max-width:700px; margin:36px auto 0; padding:clamp(25px,5vw,54px); background:linear-gradient(145deg,#fff4e5,#f0dcc5); color:#44212a; border-radius:5px; box-shadow:0 25px 80px rgba(0,0,0,.35); position:relative; }
+.letter.open { display:block; animation: unfold .75s cubic-bezier(.2,.8,.2,1) both; }
+@keyframes unfold { from { opacity:0; transform:translateY(25px) scale(.96); clip-path:inset(0 0 100% 0); } to { opacity:1; transform:translateY(0) scale(1); clip-path:inset(0 0 0 0); } }
+.letter:after { content:"✦"; position:absolute; right:22px; top:18px; color:#b47a52; font-size:20px; }
+.letter-kicker { color:#9b5c4d; text-transform:uppercase; letter-spacing:.25em; font-size:9px; margin-bottom:22px; }
+.letter h2 { font-size:clamp(27px,4vw,40px); color:#63263b; margin-bottom:25px; }
+.letter p { font-family:var(--site-font-heading); font-size:clamp(16px,2vw,19px); line-height:1.9; color:#583641; }
+.letter .signoff { font-size:24px; color:#8c304b; margin:26px 0 0; }
+.last { text-align:center; padding:110px 20px 120px; position:relative; z-index:1; }
+.last h2 { font-size:clamp(40px,7vw,75px); color:var(--gold); margin-bottom:20px; }
+.last p { color:var(--muted); line-height:1.9; font-size:14px; }
+.heart { display:inline-block; color:#e58a92; animation:heartbeat 1.6s infinite; }
+@keyframes heartbeat { 0%,100%{transform:scale(1)} 12%{transform:scale(1.2)} 24%{transform:scale(1)} 36%{transform:scale(1.12)} }
+footer { text-align:center; padding:25px; color:#9c7c72; font-size:10px; letter-spacing:.16em; border-top:1px solid rgba(233,197,141,.12); position:relative; z-index:1; }
+#toast { position:fixed; z-index:20; bottom:22px; left:50%; transform:translateX(-50%); background:#f0d39d; color:#35151c; padding:11px 17px; border-radius:99px; font-size:12px; opacity:0; transition:opacity .3s; pointer-events:none; }
+#toast.show { opacity:1; }
+@media(max-width:700px){ .memory-grid{grid-template-columns:1fr 1fr;} .memory{min-height:190px;padding:15px;} .memory h3{font-size:20px;} .hero{min-height:78vh;} section.content{padding:72px 18px;} }
+@media(max-width:430px){ .memory-grid{grid-template-columns:1fr;} .memory{min-height:165px;} .brand{letter-spacing:.12em;font-size:9px;} }
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important;}}
+</style>
+</head>
+<body>
+<div id="app">
+  <div class="decor" aria-hidden="true" id="stars"></div>
+  <header class="topbar">
+    <div class="brand">A little something for you · 2026</div>
+    <button class="music" id="musicToggle" aria-label="Play romantic instrumental"><span>♫</span><b id="musicLabel">Play the music</b></button>
+  </header>
+  <main>
+    <section class="hero" id="home">
+      <div class="hero-inner">
+        <div class="diya-row" aria-hidden="true"><i class="diya"></i><i class="diya"></i><i class="diya"></i></div>
+        <div class="eyebrow">A festival of lights · A little note from my heart</div>
+        <h1>For my <em>Ladli</em></h1>
+        <p class="hero-copy">Some lights make a home glow. Some people make life feel brighter. This little Diwali surprise is for the one who makes my world warmer.</p>
+        <button class="cta" id="openSurprise">Open your Diwali surprise <span>↗</span></button>
+      </div>
+      <div class="hero-foot">Made with love · just for you</div>
+    </section>
+    <section class="content" id="memories">
+      <div class="section-inner">
+        <div class="section-label">Little pieces of us</div>
+        <h2 class="section-title">Memories that glow</h2>
+        <p class="section-intro">A few moments, a thousand feelings. These spaces are waiting for the photographs that make our story ours.</p>
+        <div class="memory-grid">
+          <article class="memory"><div class="placeholder">✧</div><div class="number">MEMORY 01</div><h3>That familiar smile</h3><p>A moment I wish I could keep on repeat.</p></article>
+          <article class="memory"><div class="placeholder">♡</div><div class="number">MEMORY 02</div><h3>Our kind of chaos</h3><p>Random talks, endless laughs, favourite company.</p></article>
+          <article class="memory"><div class="placeholder">✦</div><div class="number">MEMORY 03</div><h3>Little adventures</h3><p>Ordinary places made special together.</p></article>
+          <article class="memory"><div class="placeholder">❋</div><div class="number">MEMORY 04</div><h3>The candid ones</h3><p>The unplanned moments are often the best.</p></article>
+          <article class="memory"><div class="placeholder">☾</div><div class="number">MEMORY 05</div><h3>My safe place</h3><p>Some company just feels like home.</p></article>
+          <article class="memory"><div class="placeholder">♡</div><div class="number">MEMORY 06</div><h3>More to come</h3><p>Our camera roll has many chapters left.</p></article>
+        </div>
+      </div>
+    </section>
+    <section class="content">
+      <div class="section-inner">
+        <div class="section-label">Not just dates on a calendar</div>
+        <h2 class="section-title">Our little story</h2>
+        <p class="section-intro">No grand timeline can hold every feeling. Just a few chapters, with so many more waiting ahead.</p>
+        <div class="timeline">
+          <div class="moment"><small>Chapter one</small><h3>When our story began</h3><p>A simple hello that slowly became a favourite part of my days.</p></div>
+          <div class="moment"><small>Somewhere along the way</small><h3>Comfort in the little things</h3><p>Those conversations, silly jokes and quiet moments that mean more than they seem.</p></div>
+          <div class="moment"><small>Today & always</small><h3>Still choosing more memories</h3><p>Grateful for this chapter, excited for every page still unwritten.</p></div>
+        </div>
+      </div>
+    </section>
+    <section class="content note-section" id="note">
+      <div class="section-inner">
+        <div class="section-label">A note, sealed with love</div>
+        <h2 class="section-title">A little something from my heart</h2>
+        <p class="section-intro">Some things are better opened slowly. Tap the envelope when you're ready.</p>
+        <div class="envelope-wrap">
+          <button class="envelope" id="envelope" aria-label="Open your Diwali letter"><span class="seal">♥</span></button>
+          <div class="envelope-hint" id="envelopeHint">TAP TO OPEN YOUR LETTER</div>
+        </div>
+        <article class="letter" id="letter">
+          <div class="letter-kicker">A Diwali wish · from my heart</div>
+          <h2>My dearest Ladli,</h2>
+          <p>This gift is just a small way of reminding you how special you are to me. The real gift in my life is having you beside me through all these memories and moments. Thank you for being you, for loving me, and for being a part of my story. I hope we have a million more Diwalis together.</p>
+          <p class="signoff">Happy Diwali, Meri Ladli! ❤️🪔</p>
+        </article>
+      </div>
+    </section>
+    <section class="last">
+      <div class="diya-row" aria-hidden="true"><i class="diya"></i><i class="diya"></i><i class="diya"></i></div>
+      <div class="section-label">One last little wish</div>
+      <h2>A million more<br>Diwalis together.</h2>
+      <p>May your days be as lovely as your smile,<br>and may life always give us reasons to celebrate.</p>
+      <p style="margin-top:28px;font-family:var(--site-font-heading);font-size:22px;color:var(--cream)">Always, with love <span class="heart">♥</span></p>
+    </section>
+  </main>
+  <footer>CRAFTED WITH LOVE · HAPPY DIWALI, MERI LADLI</footer>
+</div>
+<div id="toast" role="status">A little surprise is waiting below ♥</div>
+<script>
+const starField = document.getElementById('stars');
+for (let i = 0; i < 42; i++) {
+  const star = document.createElement('span');
+  star.className = 'star';
+  star.textContent = i % 5 === 0 ? '✦' : '·';
+  star.style.left = `${(i * 37) % 100}%`;
+  star.style.top = `${(i * 61) % 100}%`;
+  star.style.fontSize = `${8 + (i % 4) * 4}px`;
+  star.style.animationDelay = `${(i % 9) * .35}s`;
+  starField.appendChild(star);
+}
+
+document.getElementById('openSurprise').addEventListener('click', () => {
+  document.getElementById('memories').scrollIntoView({ behavior: 'smooth' });
+  const toast = document.getElementById('toast');
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 2200);
+});
+const envelope = document.getElementById('envelope');
+const letter = document.getElementById('letter');
+envelope.addEventListener('click', () => {
+  const opened = letter.classList.toggle('open');
+  document.getElementById('envelopeHint').textContent = opened ? 'A NOTE FROM MY HEART ♥' : 'TAP TO OPEN YOUR LETTER';
+  if (opened) setTimeout(() => letter.scrollIntoView({ behavior: 'smooth', block: 'center' }), 150);
+});
+
+// Original, locally synthesised romantic instrumental motif; no external audio or copyrighted recording.
+let audioContext;
+let masterGain;
+let musicOn = false;
+let musicTimer;
+let noteIndex = 0;
+const melody = [ [261.63,329.63,392.00], [220.00,261.63,329.63], [174.61,220.00,261.63], [196.00,246.94,293.66] ];
+function playChord() {
+  if (!musicOn || !audioContext) return;
+  const chord = melody[noteIndex % melody.length];
+  chord.forEach((frequency, index) => {
+    const osc = audioContext.createOscillator();
+    const gain = audioContext.createGain();
+    const filter = audioContext.createBiquadFilter();
+    osc.type = index === 0 ? 'sine' : 'triangle';
+    osc.frequency.value = frequency * (index === 2 ? 2 : 1);
+    filter.type = 'lowpass';
+    filter.frequency.value = 900;
+    gain.gain.setValueAtTime(0.0001, audioContext.currentTime);
+    gain.gain.exponentialRampToValueAtTime(index === 0 ? .045 : .018, audioContext.currentTime + .5);
+    gain.gain.exponentialRampToValueAtTime(.0001, audioContext.currentTime + 3.7);
+    osc.connect(filter); filter.connect(gain); gain.connect(masterGain);
+    osc.start(); osc.stop(audioContext.currentTime + 3.8);
+  });
+  // A soft bell-like top note adds a gentle, dreamy sparkle.
+  const bell = audioContext.createOscillator();
+  const bellGain = audioContext.createGain();
+  bell.type = 'sine';
+  bell.frequency.value = [523.25,493.88,440,587.33][noteIndex % 4];
+  bellGain.gain.setValueAtTime(.0001, audioContext.currentTime);
+  bellGain.gain.exponentialRampToValueAtTime(.012, audioContext.currentTime + .08);
+  bellGain.gain.exponentialRampToValueAtTime(.0001, audioContext.currentTime + 2.4);
+  bell.connect(bellGain); bellGain.connect(masterGain);
+  bell.start(); bell.stop(audioContext.currentTime + 2.5);
+  noteIndex++;
+}
+async function toggleMusic() {
+  const buttonLabel = document.getElementById('musicLabel');
+  if (!audioContext) {
+    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContextClass) { buttonLabel.textContent = 'Music unavailable'; return; }
+    audioContext = new AudioContextClass();
+    masterGain = audioContext.createGain();
+    masterGain.gain.value = .7;
+    masterGain.connect(audioContext.destination);
+  }
+  if (audioContext.state === 'suspended') await audioContext.resume();
+  musicOn = !musicOn;
+  if (musicOn) {
+    playChord();
+    musicTimer = setInterval(playChord, 3900);
+    buttonLabel.textContent = 'Pause music';
+  } else {
+    clearInterval(musicTimer);
+    masterGain.gain.setTargetAtTime(.0001, audioContext.currentTime, .12);
+    setTimeout(() => { if (!musicOn) masterGain.gain.setTargetAtTime(.7, audioContext.currentTime, .12); }, 250);
+    buttonLabel.textContent = 'Play the music';
+  }
+}
+document.getElementById('musicToggle').addEventListener('click', toggleMusic);
+</script>
+</body>
+</html>
