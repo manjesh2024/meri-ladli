@@ -29,13 +29,34 @@
 html { scroll-behavior: smooth; }
 body { margin: 0; background: var(--site-background); color: var(--site-on-background); font-family: var(--site-font-body); overflow:hidden; }
 button { font: inherit; }
-#app { min-height: 100vh; width: 100%; overflow: hidden; border-radius: 0; position: relative; background: radial-gradient(ellipse at 50% 0%, #54202b 0%, #260d17 42%, var(--site-background) 78%); color: var(--site-on-background); }
+#app { min-height: 100vh; width: 100%; overflow: hidden; border-radius: 0; position: relative; background: radial-gradient(ellipse at 50% -15%, #762436 0%, #3b0d1d 42%, #200713 78%, #14050d 100%); color: var(--site-on-background); }
+#app { z-index:2; }
 .ambient-diyas { position:absolute; inset:0; z-index:0; overflow:hidden; pointer-events:none; }
 .bg-diya { position:absolute; width:46px; height:23px; border-radius:5px 5px 26px 26px; background:linear-gradient(180deg,#f1c47e 0%,#c8753f 40%,#6f2b2b 100%); opacity:.42; box-shadow:0 0 18px rgba(255,169,82,.3),0 0 48px rgba(255,145,65,.13); transform:scale(var(--diya-scale,1)); }
 .bg-diya:before { content:""; position:absolute; left:50%; top:-23px; width:13px; height:24px; border-radius:100% 0 100% 0; transform:translateX(-50%) rotate(45deg); transform-origin:50% 100%; background:radial-gradient(ellipse at 65% 70%,#fff9ce 0%,#ffd477 38%,#ff8b3f 72%,rgba(255,111,48,0) 100%); filter:drop-shadow(0 0 7px #ffb45e); animation:flame-flicker 1.25s ease-in-out infinite alternate; }
 .bg-diya:after { content:""; position:absolute; left:50%; top:-35px; width:62px; height:58px; transform:translateX(-50%); background:radial-gradient(ellipse,rgba(255,174,91,.2),transparent 68%); filter:blur(5px); animation:flame-glow 2.2s ease-in-out infinite alternate; }
 .bg-diya { opacity:.62; filter:saturate(1.25); }
 .bg-diya:before { width:15px; height:27px; top:-26px; background:radial-gradient(ellipse at 62% 76%,#fffdf0 0%,#fff0a9 25%,#ffc05c 54%,#ff803b 78%,rgba(255,111,48,0) 100%); filter:drop-shadow(0 0 5px #fff0a9) drop-shadow(0 0 12px #ff9f48); }
+.bg-diya { width:82px; height:62px; background:none; box-shadow:none; opacity:.32; filter:saturate(1.35); }
+.bg-diya:before,.bg-diya:after { display:none; }
+.diya { display:inline-block; flex:none; width:78px; height:68px; background:none; border-radius:0; box-shadow:none; animation:none; }
+.diya:before,.diya:after { display:none; }
+.diya-art { display:block; width:100%; height:100%; overflow:visible; }
+.diya-row .diya,.diya-row .diya-art { background:transparent !important; background-color:transparent !important; background-image:none !important; border:0 !important; outline:0 !important; box-shadow:none !important; }
+.diya-art .flame-glow-art { transform-origin:80px 64px; animation:art-glow-pulse 1.55s ease-in-out infinite alternate; }
+.diya-art .flame-main { transform-box:fill-box; transform-origin:50% 92%; animation:art-flame-dance .72s ease-in-out infinite alternate; }
+.diya-art .flame-inner { transform-box:fill-box; transform-origin:50% 92%; animation:art-flame-dance .54s ease-in-out -.18s infinite alternate-reverse; }
+.diya-art .flame-core { transform-box:fill-box; transform-origin:50% 92%; animation:art-core-flicker .34s ease-in-out infinite alternate; }
+.diya-art .oil-shine { animation:art-oil-shimmer 2.3s ease-in-out infinite alternate; }
+.diya-art .spark-dot { transform-box:fill-box; transform-origin:center; animation:art-spark-twinkle 1.4s ease-in-out infinite alternate; }
+.diya-art .spark-dot:nth-of-type(2n) { animation-delay:-.7s; }
+.diya-art .bowl-highlight { animation:art-bowl-glow 2.2s ease-in-out infinite alternate; }
+@keyframes art-flame-dance { 0% { transform:rotate(-5deg) scale(.91,1.04) skewX(-2deg); } 35% { transform:rotate(3deg) scale(1.08,.96) skewX(2deg); } 70% { transform:rotate(-2deg) scale(.97,1.09) skewX(-1deg); } 100% { transform:rotate(5deg) scale(1.06,.98) skewX(2deg); } }
+@keyframes art-core-flicker { from { opacity:.7; transform:scale(.88,1.06) rotate(-3deg); } to { opacity:1; transform:scale(1.12,.93) rotate(4deg); } }
+@keyframes art-glow-pulse { from { opacity:.52; transform:scale(.85); } to { opacity:1; transform:scale(1.18); } }
+@keyframes art-oil-shimmer { from { opacity:.48; transform:translateX(-3px); } to { opacity:.95; transform:translateX(3px); } }
+@keyframes art-spark-twinkle { from { opacity:.18; transform:scale(.55); } to { opacity:1; transform:scale(1.35); } }
+@keyframes art-bowl-glow { from { opacity:.55; } to { opacity:1; } }
 @keyframes flame-flicker { 0% { transform:translateX(-50%) rotate(39deg) scale(.92,.94); opacity:.84; } 100% { transform:translateX(-50%) rotate(51deg) scale(1.08,1.06); opacity:1; } }
 @keyframes flame-glow { from { opacity:.55; transform:translateX(-50%) scale(.88); } to { opacity:1; transform:translateX(-50%) scale(1.13); } }
 .decor { position: absolute; inset: 0; pointer-events: none; opacity: var(--site-decoration-opacity); overflow: hidden; }
@@ -47,6 +68,15 @@ button { font: inherit; }
 .brand { color: var(--gold); letter-spacing: .22em; text-transform: uppercase; font-size: 10px; }
 .music { border: 1px solid var(--line); color: var(--cream); background: rgba(255,255,255,.06); border-radius: 999px; padding: 10px 15px; cursor: pointer; font-size: 12px; backdrop-filter: blur(10px); }
 .music span { color: var(--gold); margin-right: 7px; }
+.music-player-panel { position:fixed; z-index:30; top:76px; right:clamp(12px,3vw,42px); width:224px; padding:11px; border:1px solid rgba(233,197,141,.35); border-radius:18px; background:linear-gradient(145deg,rgba(67,24,37,.96),rgba(27,9,15,.97)); box-shadow:0 18px 55px rgba(0,0,0,.42),inset 0 1px 0 rgba(255,255,255,.1); backdrop-filter:blur(18px); }
+.music-player-panel[hidden] { display:none; }
+.music-panel-heading { display:flex; justify-content:space-between; align-items:center; margin:0 0 9px; color:var(--gold); font-size:10px; letter-spacing:.12em; text-transform:uppercase; }
+.music-panel-close { border:0; background:transparent; color:var(--cream); font-size:19px; cursor:pointer; padding:0 4px; }
+#youtubePlayer { width:200px; height:113px; max-width:100%; margin:auto; overflow:hidden; border-radius:9px; background:#14070d; }
+#youtubePlayer iframe { display:block; width:100%; height:100%; border:0; }
+.music-panel-track { margin:9px 1px 2px; color:var(--cream); font-size:10px; line-height:1.45; }
+.music-panel-volume { margin:3px 1px 0; color:var(--muted); font-size:9px; letter-spacing:.06em; }
+.music-panel-fallback { display:block; margin-top:8px; color:var(--gold); font-size:10px; text-decoration:underline; text-underline-offset:3px; }
 .hero { min-height: 83vh; position: relative; z-index: 1; display: grid; place-items: center; text-align: center; padding: 50px 20px 110px; }
 .hero-inner { max-width: 760px; padding:clamp(30px,5vw,58px); border:1px solid rgba(255,239,220,.16); border-radius:30px; background:linear-gradient(145deg,rgba(255,255,255,.105),rgba(255,255,255,.025)); box-shadow:0 24px 80px rgba(0,0,0,.2),inset 0 1px 0 rgba(255,255,255,.12); backdrop-filter:blur(22px) saturate(135%); -webkit-backdrop-filter:blur(22px) saturate(135%); }
 .eyebrow { color: var(--gold); letter-spacing: .35em; text-transform: uppercase; font-size: 10px; margin-bottom: 24px; }
@@ -59,7 +89,7 @@ h1 em { color: var(--gold); font-weight: 400; }
 .cta:hover { transform: translateY(-3px); box-shadow: 0 15px 42px rgba(205,143,79,.3); }
 .hero-foot { position: absolute; bottom: 28px; color: #b9988a; font-size: 10px; letter-spacing: .22em; text-transform: uppercase; }
 .diya-row { display: flex; justify-content: center; gap: 38px; margin: 0 auto 34px; }
-.diya { width: 38px; height: 21px; background: linear-gradient(#f6d79b,#a64d28); border-radius: 4px 4px 22px 22px; position: relative; box-shadow: 0 0 24px rgba(255,171,77,.35); }
+.diya { display:inline-block; flex:0 0 82px; width:82px; height:64px; position:relative; background:none; border-radius:0; box-shadow:none; }
 .diya:before { content:""; position:absolute; width: 10px; height: 20px; border-radius: 100% 0 100% 0; background: #fff0ae; left: 14px; top: -18px; transform: rotate(45deg); box-shadow: 0 0 20px #ffc36e; }
 .diya:before { width:13px; height:24px; top:-21px; left:13px; background:radial-gradient(ellipse at 65% 72%,#fff 0%,#fff2b3 24%,#ffd16e 55%,#ff873f 82%,transparent 100%); filter:drop-shadow(0 0 5px #fff0ae) drop-shadow(0 0 13px #ff9d45); }
 .diya:after { content:""; position:absolute; height: 2px; width: 58px; left:-10px; bottom:-5px; background: #d9a46e; border-radius: 50%; opacity:.7; }
@@ -104,6 +134,49 @@ section.content { position: relative; z-index: 1; padding: 92px 20px; }
 @keyframes heartbeat { 0%,100%{transform:scale(1)} 12%{transform:scale(1.2)} 24%{transform:scale(1)} 36%{transform:scale(1.12)} }
 .heart-field { position:fixed; inset:0; z-index:3; overflow:hidden; pointer-events:none; }
 .festival-effects { position:fixed; inset:0; z-index:4; overflow:hidden; pointer-events:none; }
+.festival-effects { z-index:0; }
+.festival-effects .sparkler,.festival-effects .anar { display:none !important; }
+.golden-trails { position:absolute; left:0; bottom:-2px; width:100%; height:clamp(155px,24vh,225px); overflow:visible; opacity:1; }
+.golden-trails path { fill:none; stroke-linecap:round; }
+.golden-trail-halo { stroke:#ff8b31; stroke-width:28; opacity:.3; filter:blur(13px); }
+.golden-trail-line { stroke:url(#trailGold); stroke-width:3.1; stroke-dasharray:34 9 3 10; animation:trail-flow 2.8s linear infinite; filter:drop-shadow(0 0 7px #ffbe63) drop-shadow(0 0 17px #ff8b31); }
+.golden-trail-core { stroke:#fff4c8; stroke-width:1.5; stroke-dasharray:2 8; animation:trail-flow 1.2s linear infinite reverse; opacity:1; filter:drop-shadow(0 0 6px #fff0b0); }
+@keyframes trail-flow { to { stroke-dashoffset:-68; } }
+.trail-spark { fill:#ffe5a1; filter:drop-shadow(0 0 4px #ffad4c) drop-shadow(0 0 9px #ffad4c); }
+.trail-spark:nth-child(2n) { animation:trail-twinkle .8s ease-in-out infinite alternate; }
+@keyframes trail-twinkle { from { opacity:.24; r:1.1; } to { opacity:1; r:3.2; } }
+.rangoli-art { position:absolute; left:50%; bottom:0; width:min(560px,68vw); height:clamp(105px,16vh,150px); transform:translateX(-50%) perspective(500px) rotateX(12deg); transform-origin:50% 100%; overflow:visible; filter:drop-shadow(0 0 21px rgba(255,143,42,.84)) drop-shadow(0 0 46px rgba(255,112,30,.4)); }
+.rangoli-spin { transform-origin:250px 126px; animation:rangoli-turn 48s linear infinite; }
+.rangoli-pulse { transform-origin:250px 126px; animation:rangoli-breathe 2.8s ease-in-out infinite alternate; }
+@keyframes rangoli-turn { to { transform:rotate(360deg); } }
+@keyframes rangoli-breathe { from { opacity:.55; transform:scale(.94); } to { opacity:1; transform:scale(1.035); } }
+.festival-firework { position:absolute; width:1px; height:1px; pointer-events:none; }
+.grand-ray { position:absolute; left:-1px; bottom:0; width:var(--ray-width,2px); height:var(--ray-length,105px); border-radius:100%; transform-origin:50% 100%; background:linear-gradient(to top,rgba(255,255,255,0),var(--ray-color,#ffd77c) 42%,#fff9dc 92%,rgba(255,255,255,.7)); box-shadow:0 0 7px var(--ray-color,#ffd77c),0 0 17px color-mix(in srgb,var(--ray-color,#ffd77c) 58%,transparent); animation:grand-ray-out var(--ray-time,1.55s) cubic-bezier(.12,.55,.24,1) forwards; }
+@keyframes grand-ray-out { 0% { transform:rotate(var(--ray-angle)) scaleY(.04); opacity:0; } 12% { opacity:1; transform:rotate(var(--ray-angle)) scaleY(.48); } 72% { opacity:1; } 100% { transform:rotate(var(--ray-angle)) scaleY(1); opacity:0; } }
+.grand-spark { position:absolute; width:4px; height:4px; border-radius:50%; background:var(--ray-color); box-shadow:0 0 8px 3px var(--ray-color),0 0 20px rgba(255,211,132,.55); animation:grand-spark-fade 1.5s ease-out forwards; }
+@keyframes grand-spark-fade { 0% { transform:translate(0,0) scale(.4); opacity:0; } 14% { opacity:1; } 100% { transform:translate(var(--ray-x),var(--ray-y)) scale(.05); opacity:0; } }
+.trail-ember { position:absolute; z-index:2; left:var(--ember-left); bottom:var(--ember-bottom); width:3px; height:3px; border-radius:50%; background:var(--ember-color,#ffe7a8); box-shadow:0 0 7px 3px var(--ember-color,#ffe7a8),0 0 15px rgba(255,152,54,.7); animation:trail-ember-rise var(--ember-duration,1.8s) ease-out var(--ember-delay,0s) infinite; }
+@keyframes trail-ember-rise { 0% { transform:translate(0,0) scale(.25); opacity:0; } 12% { opacity:1; } 74% { opacity:.9; } 100% { transform:translate(var(--ember-dx),var(--ember-dy)) scale(.06); opacity:0; } }
+.anar { position:absolute; bottom:clamp(82px,12vh,126px); width:150px; height:245px; opacity:.82; filter:drop-shadow(0 0 18px rgba(255,167,73,.2)); }
+.anar-left { left:clamp(4px,4vw,70px); }
+.anar-right { right:clamp(4px,4vw,70px); transform:scaleX(-1); }
+.anar-jet { position:absolute; left:50%; bottom:34px; width:4px; height:145px; transform:translateX(-50%); transform-origin:bottom; border-radius:50%; background:linear-gradient(to top,rgba(255,120,50,0),rgba(255,170,76,.6) 35%,rgba(255,236,166,.9) 78%,rgba(255,247,210,0)); filter:blur(1px); animation:anar-jet-pulse .5s ease-in-out infinite alternate; }
+.anar-jet:before,.anar-jet:after { content:""; position:absolute; bottom:0; width:3px; height:112px; border-radius:50%; background:linear-gradient(to top,transparent,#ffad54 50%,#fff2bb); transform-origin:bottom; }
+.anar-jet:before { transform:rotate(-17deg); animation:anar-side-jet .7s ease-in-out infinite alternate; }
+.anar-jet:after { transform:rotate(17deg); animation:anar-side-jet .62s ease-in-out -.2s infinite alternate-reverse; }
+@keyframes anar-jet-pulse { from { opacity:.55; transform:translateX(-50%) scaleX(.75) scaleY(.82); } to { opacity:1; transform:translateX(-50%) scaleX(1.25) scaleY(1.08); } }
+@keyframes anar-side-jet { from { opacity:.38; scale:.8 .78; } to { opacity:.95; scale:1.1 1.08; } }
+.anar-spark { position:absolute; left:50%; bottom:39px; width:3px; height:3px; border-radius:50%; background:var(--anar-color,#ffe6a0); box-shadow:0 0 6px 2px var(--anar-color,#ffe6a0),0 0 13px rgba(255,157,67,.65); animation:anar-spray var(--anar-time,1.2s) ease-out var(--anar-delay,0s) infinite; }
+@keyframes anar-spray { 0% { transform:translate3d(0,0,0) scale(.2); opacity:0; } 9% { opacity:1; } 62% { opacity:.92; } 100% { transform:translate3d(var(--anar-x),var(--anar-y),0) scale(.08); opacity:0; } }
+.anar-pot { position:absolute; z-index:2; left:50%; bottom:0; width:74px; height:78px; transform:translateX(-50%); filter:drop-shadow(0 7px 12px rgba(0,0,0,.35)); }
+.anar-pot .pot-glow { animation:anar-pot-glow 1.1s ease-in-out infinite alternate; }
+@keyframes anar-pot-glow { from { opacity:.55; } to { opacity:1; } }
+.firework-ring { position:absolute; left:0; top:0; width:12px; height:12px; border:1px solid var(--spark-color,#ffe6a0); border-radius:50%; transform:translate(-50%,-50%) scale(.1); box-shadow:0 0 10px var(--spark-color,#ffe6a0); animation:firework-ring-expand .85s ease-out forwards; }
+@keyframes firework-ring-expand { 0% { transform:translate(-50%,-50%) scale(.1); opacity:0; } 18% { opacity:.85; } 100% { transform:translate(-50%,-50%) scale(9); opacity:0; } }
+.firework-glyph { width:auto; height:auto; background:none; box-shadow:none; font-size:12px; text-shadow:0 0 8px var(--spark-color); }
+.firework-glyph:after { display:none; }
+.sparkler-head { box-shadow:0 0 10px 5px #fff0ac,0 0 28px 15px rgba(255,157,67,.55); }
+.sparkler-particle { width:3px; height:3px; box-shadow:0 0 8px 3px #ffcf72,0 0 16px rgba(255,180,89,.55); }
 .festive-badge { display:inline-block; margin:-12px auto 25px; padding:8px 20px; border:1px solid rgba(244,205,132,.35); border-radius:999px; color:#ffe4a9; background:linear-gradient(100deg,rgba(255,176,76,.15),rgba(255,255,255,.035)); box-shadow:0 0 28px rgba(255,160,72,.12),inset 0 1px 0 rgba(255,255,255,.15); font-size:11px; letter-spacing:.2em; text-shadow:0 0 14px rgba(255,197,112,.35); }
 .festive-rangoli { position:absolute; z-index:0; width:min(52vw,480px); aspect-ratio:1; right:-18%; bottom:-33%; border-radius:50%; border:1px solid rgba(239,193,119,.15); box-shadow:0 0 0 13px rgba(239,193,119,.025),0 0 0 27px rgba(239,193,119,.035),inset 0 0 0 13px rgba(239,193,119,.035),inset 0 0 0 27px rgba(239,193,119,.025); pointer-events:none; }
 .hero-inner,.section-inner,.last > * { position:relative; z-index:1; }
@@ -113,13 +186,13 @@ section.content { position: relative; z-index: 1; padding: 92px 20px; }
 .firework-burst { position:absolute; width:1px; height:1px; }
 .firework-particle { position:absolute; left:0; top:0; width:3px; height:3px; border-radius:50%; background:var(--spark-color); box-shadow:0 0 7px 2px var(--spark-color),0 0 15px rgba(255,218,153,.45); animation:firework-pop 1.35s cubic-bezier(.12,.55,.3,1) forwards; }
 @keyframes firework-pop { 0% { transform:translate3d(0,0,0) scale(1.1); opacity:0; } 12% { opacity:1; } 75% { opacity:.85; } 100% { transform:translate3d(var(--spark-x),var(--spark-y),0) scale(.08); opacity:0; } }
-.sparkler { position:absolute; bottom:76px; width:115px; height:145px; opacity:.72; }
-.sparkler-left { left:-20px; transform:rotate(-18deg); }
-.sparkler-right { right:-20px; transform:scaleX(-1) rotate(-18deg); }
-.sparkler-stick { position:absolute; left:30px; bottom:-12px; width:5px; height:105px; border-radius:8px; transform:rotate(-27deg); background:linear-gradient(90deg,#654331,#f5d093 42%,#8a5136); box-shadow:0 0 8px rgba(255,197,111,.35); }
-.sparkler-head { position:absolute; left:4px; top:20px; width:12px; height:12px; border-radius:50%; background:#fff6cf; box-shadow:0 0 8px 4px #ffd36d,0 0 22px 10px rgba(255,157,67,.45); animation:sparkler-glow .22s steps(2,end) infinite alternate; }
+.sparkler { position:absolute; bottom:82px; width:125px; height:150px; opacity:.78; }
+.sparkler-left { left:clamp(10px,2vw,30px); transform:rotate(-18deg); transform-origin:bottom left; }
+.sparkler-right { right:clamp(10px,2vw,30px); transform:scaleX(-1) rotate(-18deg); transform-origin:bottom right; }
+.sparkler-stick { position:absolute; left:52px; bottom:0; width:5px; height:105px; border-radius:8px; transform:rotate(-18deg); background:linear-gradient(90deg,#654331,#f5d093 42%,#8a5136); box-shadow:0 0 8px rgba(255,197,111,.35); }
+.sparkler-head { position:absolute; left:66px; top:30px; width:12px; height:12px; border-radius:50%; background:#fff6cf; box-shadow:0 0 8px 4px #ffd36d,0 0 22px 10px rgba(255,157,67,.45); animation:sparkler-glow .22s steps(2,end) infinite alternate; }
 @keyframes sparkler-glow { from { opacity:.72; transform:scale(.78); } to { opacity:1; transform:scale(1.2); } }
-.sparkler-particle { position:absolute; left:10px; top:26px; width:3px; height:3px; border-radius:50%; background:#fff0b0; box-shadow:0 0 6px 2px #ffbd5f; animation:sparkler-spray var(--spark-time) ease-out var(--spark-delay) infinite; }
+.sparkler-particle { position:absolute; left:68px; top:36px; width:3px; height:3px; border-radius:50%; background:#fff0b0; box-shadow:0 0 6px 2px #ffbd5f; animation:sparkler-spray var(--spark-time) ease-out var(--spark-delay) infinite; }
 @keyframes sparkler-spray { 0% { transform:translate(0,0) scale(1); opacity:0; } 14% { opacity:1; } 100% { transform:translate(var(--spark-x),var(--spark-y)) scale(.05); opacity:0; } }
 .diwali-wish { color:#f5d99d; font-family:var(--site-font-heading); font-size:clamp(19px,3vw,27px); letter-spacing:.04em; text-shadow:0 0 22px rgba(255,191,102,.3); margin:0 auto 15px; }
 .last .diwali-wish { margin-top:12px; }
@@ -188,6 +261,8 @@ footer { display:none; }
   .topbar { min-height:55px; padding:13px 15px; }
   .brand { font-size:8px; letter-spacing:.1em; }
   .music { padding:8px 11px; font-size:10px; }
+  .diya-row { gap:14px; margin-bottom:22px; align-items:center; }
+  .diya-row .diya { flex-basis:62px; width:62px; height:48px; }
   main > section.content.slide { padding:68px 12px 82px; }
   main > section.content.slide .section-inner { padding:16px 13px; }
   .section-label { font-size:8px; margin-bottom:8px; }
@@ -242,6 +317,13 @@ footer { text-align:center; padding:25px; color:#9c7c72; font-size:10px; letter-
     <div class="brand">A little something for you · 2026</div>
     <button class="music" id="musicToggle" aria-label="Play romantic instrumental"><span>♫</span><b id="musicLabel">Play the music</b></button>
   </header>
+  <aside class="music-player-panel" id="musicPlayerPanel" aria-label="Kehdoon Tumhen instrumental player" hidden>
+    <div class="music-panel-heading"><span>Now playing</span><button class="music-panel-close" id="closeMusicPanel" aria-label="Close music player">×</button></div>
+    <div id="youtubePlayer"></div>
+    <p class="music-panel-track">Kehdoon Tumhen · Deewaar (Instrumental Music Hits)</p>
+    <p class="music-panel-volume">Volume · 65%</p>
+    <a class="music-panel-fallback" href="https://www.youtube.com/watch?v=fKR7cEo16Go" target="_blank" rel="noopener noreferrer">Open track directly on YouTube ↗</a>
+  </aside>
   <main>
     <section class="hero slide active" id="home">
       <div class="hero-inner">
@@ -318,6 +400,8 @@ footer { text-align:center; padding:25px; color:#9c7c72; font-size:10px; letter-
 <div class="festival-effects" aria-hidden="true" id="festivalEffects">
   <div class="sparkler sparkler-left"><span class="sparkler-stick"></span><span class="sparkler-head"></span><span id="sparklerLeft"></span></div>
   <div class="sparkler sparkler-right"><span class="sparkler-stick"></span><span class="sparkler-head"></span><span id="sparklerRight"></span></div>
+  <div class="anar anar-left"><span class="anar-jet"></span><span id="anarLeftSparks"></span><svg class="anar-pot" viewBox="0 0 100 108" xmlns="http://www.w3.org/2000/svg"><ellipse cx="50" cy="95" rx="39" ry="8" fill="#1c0b11" opacity=".5"/><path d="M24 43 Q50 35 76 43 L83 68 Q79 96 50 100 Q21 96 17 68Z" fill="#81382d" stroke="#d99b57" stroke-width="2"/><path d="M22 48 Q50 58 78 48 L83 68 Q50 88 17 68Z" fill="#b75f35" opacity=".9"/><path d="M26 50 Q50 59 74 50" fill="none" stroke="#ffe0a0" stroke-width="2"/><path d="M35 66 Q50 76 65 66" fill="none" stroke="#f7c879" stroke-width="2"/><ellipse cx="50" cy="43" rx="29" ry="8" fill="#e8b36b" stroke="#fff0b4" stroke-width="2"/><ellipse cx="50" cy="42" rx="19" ry="4" fill="#3a1720"/><path d="M27 78 Q50 93 73 78" fill="none" stroke="#f3c77d" stroke-width="2" opacity=".8"/><path class="pot-glow" d="M20 58 Q50 75 80 58" fill="none" stroke="#ffdc95" stroke-width="3" opacity=".7"/></svg></div>
+  <div class="anar anar-right"><span class="anar-jet"></span><span id="anarRightSparks"></span><svg class="anar-pot" viewBox="0 0 100 108" xmlns="http://www.w3.org/2000/svg"><ellipse cx="50" cy="95" rx="39" ry="8" fill="#1c0b11" opacity=".5"/><path d="M24 43 Q50 35 76 43 L83 68 Q79 96 50 100 Q21 96 17 68Z" fill="#81382d" stroke="#d99b57" stroke-width="2"/><path d="M22 48 Q50 58 78 48 L83 68 Q50 88 17 68Z" fill="#b75f35" opacity=".9"/><path d="M26 50 Q50 59 74 50" fill="none" stroke="#ffe0a0" stroke-width="2"/><path d="M35 66 Q50 76 65 66" fill="none" stroke="#f7c879" stroke-width="2"/><ellipse cx="50" cy="43" rx="29" ry="8" fill="#e8b36b" stroke="#fff0b4" stroke-width="2"/><ellipse cx="50" cy="42" rx="19" ry="4" fill="#3a1720"/><path d="M27 78 Q50 93 73 78" fill="none" stroke="#f3c77d" stroke-width="2" opacity=".8"/><path class="pot-glow" d="M20 58 Q50 75 80 58" fill="none" stroke="#ffdc95" stroke-width="3" opacity=".7"/></svg></div>
 </div>
 <div id="toast" role="status">A little surprise is waiting below ♥</div>
 <script>
@@ -335,6 +419,36 @@ for (let i = 0; i < 42; i++) {
 
 // Warm background diyas keep their flames softly flickering throughout the visit.
 const diyaField = document.getElementById('ambientDiyas');
+let diyaArtworkIndex = 0;
+function createDiyaArtwork() {
+  const id = `deepak-art-${++diyaArtworkIndex}`;
+  return `<svg class="diya-art" viewBox="0 0 160 124" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <radialGradient id="${id}-halo"><stop offset="0" stop-color="#ffe8a1" stop-opacity=".48"/><stop offset=".46" stop-color="#ffae56" stop-opacity=".18"/><stop offset="1" stop-color="#ff9b4c" stop-opacity="0"/></radialGradient>
+      <linearGradient id="${id}-outer" x1=".2" y1="1" x2=".75" y2="0"><stop offset="0" stop-color="#f35c28"/><stop offset=".48" stop-color="#ffb64e"/><stop offset="1" stop-color="#fff3b1"/></linearGradient>
+      <linearGradient id="${id}-inner" x1="0" y1="1" x2=".8" y2="0"><stop offset="0" stop-color="#ff8a2f"/><stop offset=".55" stop-color="#ffe27d"/><stop offset="1" stop-color="#fffdf0"/></linearGradient>
+      <linearGradient id="${id}-clay" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffcc78"/><stop offset=".24" stop-color="#cf7841"/><stop offset=".72" stop-color="#80372c"/><stop offset="1" stop-color="#49202a"/></linearGradient>
+      <linearGradient id="${id}-rim" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff0b0"/><stop offset=".45" stop-color="#d99a4e"/><stop offset="1" stop-color="#fff0b0"/></linearGradient>
+    </defs>
+    <ellipse class="flame-glow-art" cx="80" cy="53" rx="48" ry="51" fill="url(#${id}-halo)"/>
+    <path class="flame-main" d="M80 7 C68 24 47 43 54 61 C59 76 70 79 81 78 C98 77 109 62 103 46 C99 33 86 19 80 7Z" fill="url(#${id}-outer)" filter="drop-shadow(0 0 7px #ffb84d)"/>
+    <path class="flame-inner" d="M80 30 C72 43 65 52 69 64 C72 72 78 74 84 70 C95 63 89 47 80 30Z" fill="url(#${id}-inner)"/>
+    <path class="flame-core" d="M80 48 C76 56 75 62 79 67 C82 70 86 65 84 59 C83 55 81 51 80 48Z" fill="#fffdf0" opacity=".9"/>
+    <g fill="#ffe4a0">
+      <circle class="spark-dot" cx="43" cy="47" r="2.2"/><circle class="spark-dot" cx="118" cy="39" r="1.8"/><circle class="spark-dot" cx="53" cy="19" r="1.5"/><circle class="spark-dot" cx="108" cy="17" r="1.5"/>
+    </g>
+    <ellipse cx="80" cy="87" rx="55" ry="13" fill="#391923" opacity=".45"/>
+    <path d="M27 77 C39 84 55 86 80 86 C105 86 121 84 133 77 C128 101 112 114 80 116 C48 114 32 101 27 77Z" fill="url(#${id}-clay)" stroke="#e3a45c" stroke-width="1.4"/>
+    <ellipse cx="80" cy="79" rx="55" ry="12.5" fill="url(#${id}-rim)"/>
+    <ellipse cx="80" cy="78" rx="48" ry="8" fill="#71382c"/>
+    <ellipse class="oil-shine" cx="80" cy="76.5" rx="34" ry="4.4" fill="#f6b85e" opacity=".7"/>
+    <path d="M31 82 C48 92 112 92 129 82" fill="none" stroke="#f8d08a" stroke-width="1.4" opacity=".76"/>
+    <path d="M43 96 Q80 108 117 96" fill="none" stroke="#f4bd74" stroke-width="1.1" opacity=".55"/>
+    <path class="bowl-highlight" d="M48 101 Q80 115 112 101" fill="none" stroke="#ffd995" stroke-width="2" stroke-linecap="round" opacity=".7"/>
+    <g fill="#ffe0a0" opacity=".9"><circle cx="49" cy="88" r="1.6"/><circle cx="63" cy="91" r="1.4"/><circle cx="80" cy="92" r="1.6"/><circle cx="97" cy="91" r="1.4"/><circle cx="111" cy="88" r="1.6"/></g>
+  </svg>`;
+}
+document.querySelectorAll('.diya').forEach(diya => { diya.innerHTML = createDiyaArtwork(); });
 const diyaPositions = [
   [5,18,.82],[88,13,.72],[14,43,.62],[91,39,.86],
   [4,69,.76],[85,73,.7],[26,88,.54],[72,91,.62],
@@ -343,6 +457,7 @@ const diyaPositions = [
 diyaPositions.forEach(([left,top,scale], index) => {
   const diya = document.createElement('span');
   diya.className = 'bg-diya';
+  diya.innerHTML = createDiyaArtwork();
   diya.style.left = `${left}%`;
   diya.style.top = `${top}%`;
   diya.style.setProperty('--diya-scale', scale);
@@ -382,15 +497,82 @@ for (let i = 0; i < 19; i++) {
   }
 });
 
+// Original animated anar fountains: a glowing pot with a continuous golden spark shower.
+['anarLeftSparks','anarRightSparks'].forEach((id, side) => {
+  const holder = document.getElementById(id);
+  for (let i = 0; i < 42; i++) {
+    const spark = document.createElement('i');
+    spark.className = 'anar-spark';
+    const spread = (Math.random() - .5) * 132;
+    spark.style.setProperty('--anar-x', `${spread}px`);
+    spark.style.setProperty('--anar-y', `${-(72 + Math.random() * 142)}px`);
+    spark.style.setProperty('--anar-time', `${.7 + Math.random() * 1.2}s`);
+    spark.style.setProperty('--anar-delay', `${-Math.random() * 2.1}s`);
+    spark.style.setProperty('--anar-color', ['#fff0b7','#ffd276','#ffad63','#fff9db'][Math.floor(Math.random() * 4)]);
+    holder.appendChild(spark);
+  }
+});
+
 // Gentle firework rockets rise and bloom into golden, rose and pearl sparks.
 const festivalEffects = document.getElementById('festivalEffects');
+// Keep all celebration effects inside the app's background layer, behind the glass card.
+document.getElementById('app').prepend(festivalEffects);
+festivalEffects.insertAdjacentHTML('beforeend', `
+  <svg class="golden-trails" viewBox="0 0 1440 190" preserveAspectRatio="none" aria-hidden="true">
+    <defs><linearGradient id="trailGold" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ff8a35"/><stop offset=".38" stop-color="#ffd37a"/><stop offset=".72" stop-color="#fff1bc"/><stop offset="1" stop-color="#ff9a3e"/></linearGradient><filter id="trailBlur"><feGaussianBlur stdDeviation="5"/></filter></defs>
+    <path id="trailLeft" class="golden-trail-halo" d="M-35 25 C28 42 45 100 119 128 C190 155 255 183 331 165 C408 146 460 151 552 184"/>
+    <path id="trailRight" class="golden-trail-halo" d="M1475 25 C1412 42 1395 100 1321 128 C1250 155 1185 183 1109 165 C1032 146 980 151 888 184"/>
+    <path class="golden-trail-line" d="M-35 25 C28 42 45 100 119 128 C190 155 255 183 331 165 C408 146 460 151 552 184"/>
+    <path class="golden-trail-line" d="M1475 25 C1412 42 1395 100 1321 128 C1250 155 1185 183 1109 165 C1032 146 980 151 888 184"/>
+    <path class="golden-trail-core" d="M-35 25 C28 42 45 100 119 128 C190 155 255 183 331 165 C408 146 460 151 552 184"/>
+    <path class="golden-trail-core" d="M1475 25 C1412 42 1395 100 1321 128 C1250 155 1185 183 1109 165 C1032 146 980 151 888 184"/>
+    <path class="golden-trail-line" d="M-32 10 C38 35 57 88 132 119 C197 146 262 166 336 151 C405 137 465 139 560 169" style="stroke-width:1.55;opacity:.9;stroke-dasharray:21 7 3 9"/>
+    <path class="golden-trail-line" d="M1472 10 C1402 35 1383 88 1308 119 C1243 146 1178 166 1104 151 C1035 137 975 139 880 169" style="stroke-width:1.55;opacity:.9;stroke-dasharray:21 7 3 9"/>
+    <path class="golden-trail-core" d="M-25 43 C50 69 75 123 149 144 C222 165 274 187 346 173" style="stroke-width:.9;opacity:.8"/>
+    <path class="golden-trail-core" d="M1465 43 C1390 69 1365 123 1291 144 C1218 165 1166 187 1094 173" style="stroke-width:.9;opacity:.8"/>
+    ${Array.from({length:92},(_,i)=>`<circle class="trail-spark" r="${i%9===0?3.4:i%3===0?2.2:1.35}"><animateMotion dur="${2.1+(i%13)*.34}s" begin="-${(i%19)*.43}s" repeatCount="indefinite"><mpath href="${i%2===0?'#trailLeft':'#trailRight'}"/></animateMotion></circle>`).join('')}
+  </svg>
+  <svg class="rangoli-art" viewBox="0 0 500 160" preserveAspectRatio="none" aria-hidden="true">
+    <defs><radialGradient id="rangoliGlow"><stop offset="0" stop-color="#fffbd0" stop-opacity="1"/><stop offset=".2" stop-color="#ffbf51" stop-opacity=".86"/><stop offset=".52" stop-color="#ff7e25" stop-opacity=".38"/><stop offset="1" stop-color="#ff7b24" stop-opacity="0"/></radialGradient><linearGradient id="rangoliGold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff7bf"/><stop offset=".38" stop-color="#ffad3c"/><stop offset=".72" stop-color="#f45a22"/><stop offset="1" stop-color="#ffdf88"/></linearGradient></defs>
+    <ellipse cx="250" cy="132" rx="238" ry="23" fill="url(#rangoliGlow)" opacity=".76"/>
+    <g class="rangoli-spin" fill="none" stroke="url(#rangoliGold)" stroke-width="2" opacity=".98"><g transform="translate(0 85) scale(1 .32)">
+      ${Array.from({length:20},(_,i)=>`<path d="M250 126 C213 104 219 62 250 31 C281 62 287 104 250 126Z" transform="rotate(${i*18} 250 126)"/>`).join('')}
+      <circle cx="250" cy="126" r="35"/><circle cx="250" cy="126" r="53" stroke-dasharray="4 6"/><circle cx="250" cy="126" r="72"/><circle cx="250" cy="126" r="90" stroke-dasharray="3 7"/><circle cx="250" cy="126" r="108"/><circle cx="250" cy="126" r="126" stroke-dasharray="2 8"/>
+    </g></g>
+    <g class="rangoli-pulse" fill="none" stroke="#ffc76a" stroke-width="1.6"><path d="M250 91 Q278 112 328 132 Q278 152 250 174 Q222 152 172 132 Q222 112 250 91Z"/><path d="M250 104 Q269 117 302 132 Q269 146 250 159 Q231 146 198 132 Q231 117 250 104Z"/><ellipse cx="250" cy="132" rx="210" ry="13" stroke-dasharray="5 7"/></g>
+    <path d="M250 119 C240 129 242 138 250 143 C258 138 260 129 250 119Z" fill="#fff8c9" filter="drop-shadow(0 0 7px #fff4a8)"/>
+    <ellipse cx="250" cy="138" rx="20" ry="8" fill="url(#rangoliGlow)"/>
+    <circle cx="250" cy="132" r="3.5" fill="#fffde0"/>
+  </svg>
+`);
+// Sparkler-style gold embers travel inward from both lower corners; no stick or pot is shown.
+['left','right'].forEach(side => {
+  for (let i = 0; i < 48; i++) {
+    const ember = document.createElement('i');
+    ember.className = 'trail-ember';
+    const fromLeft = side === 'left';
+    const start = fromLeft ? Math.random() * 19 : 81 + Math.random() * 19;
+    ember.style.setProperty('--ember-left', `${start}%`);
+    ember.style.setProperty('--ember-bottom', `${Math.random() * 105}px`);
+    ember.style.setProperty('--ember-dx', `${(fromLeft ? 1 : -1) * (24 + Math.random() * 105)}px`);
+    ember.style.setProperty('--ember-dy', `${-(12 + Math.random() * 74)}px`);
+    ember.style.setProperty('--ember-duration', `${1.25 + Math.random() * 1.4}s`);
+    ember.style.setProperty('--ember-delay', `${-Math.random() * 2.6}s`);
+    ember.style.setProperty('--ember-color', ['#fff4c9','#ffd37d','#ffab52','#fff0b1'][Math.floor(Math.random() * 4)]);
+    festivalEffects.appendChild(ember);
+  }
+});
 const fireworkColors = ['#fff0bd','#ffd16d','#ffad70','#f4a9b7','#f1d7ff','#fff8e9'];
 function burstFirework(x, y) {
   const burst = document.createElement('div');
   burst.className = 'firework-burst';
   burst.style.left = `${x}%`;
   burst.style.top = `${y}%`;
-  const particleCount = 30 + Math.floor(Math.random() * 13);
+  const ring = document.createElement('i');
+  ring.className = 'firework-ring';
+  ring.style.setProperty('--spark-color', fireworkColors[Math.floor(Math.random() * fireworkColors.length)]);
+  burst.appendChild(ring);
+  const particleCount = 48 + Math.floor(Math.random() * 21);
   for (let i = 0; i < particleCount; i++) {
     const angle = (Math.PI * 2 * i / particleCount) + (Math.random() * .18);
     const distance = 36 + Math.random() * 75;
@@ -400,6 +582,10 @@ function burstFirework(x, y) {
     particle.style.setProperty('--spark-y', `${Math.sin(angle) * distance}px`);
     particle.style.setProperty('--spark-color', fireworkColors[Math.floor(Math.random() * fireworkColors.length)]);
     particle.style.animationDelay = `${Math.random() * .13}s`;
+    if (i % 13 === 0) {
+      particle.classList.add('firework-glyph');
+      particle.textContent = i % 2 === 0 ? '✦' : '♡';
+    }
     burst.appendChild(particle);
   }
   festivalEffects.appendChild(burst);
@@ -421,6 +607,61 @@ function launchFirework() {
     if (Math.random() > .52) window.setTimeout(() => burstFirework(x + (Math.random() - .5) * 13, targetY + 8), 220);
   }, 720);
 }
+function grandBurstFirework(x, y, paletteIndex = 0) {
+  const palettes = [
+    ['#fff1b8','#ffc45f','#ff8a45','#f34b8a','#cf66ff'],
+    ['#fff8d4','#ffd05d','#ff9a37','#f6e6ff','#b58bff'],
+    ['#ffe6c3','#ff9d65','#ff5e83','#c86bff','#73caff'],
+    ['#fff0b3','#ffcf6d','#f8a0cf','#f5e3a0','#a6d8ff']
+  ];
+  const palette = palettes[paletteIndex % palettes.length];
+  const burst = document.createElement('div');
+  burst.className = 'festival-firework';
+  burst.style.left = `${x}%`;
+  burst.style.top = `${y}%`;
+  const count = 100;
+  for (let i = 0; i < count; i++) {
+    const ray = document.createElement('i');
+    ray.className = 'grand-ray';
+    ray.style.setProperty('--ray-angle', `${i * (360 / count) + (Math.random() * 3)}deg`);
+    ray.style.setProperty('--ray-length', `${92 + Math.random() * 72}px`);
+    ray.style.setProperty('--ray-width', `${i % 8 === 0 ? 2.6 : 1.4}px`);
+    ray.style.setProperty('--ray-time', `${1.35 + Math.random() * .55}s`);
+    ray.style.setProperty('--ray-color', palette[Math.floor(Math.random() * palette.length)]);
+    ray.style.animationDelay = `${Math.random() * .12}s`;
+    burst.appendChild(ray);
+  }
+  for (let i = 0; i < 22; i++) {
+    const spark = document.createElement('i');
+    spark.className = 'grand-spark';
+    const angle = Math.random() * Math.PI * 2;
+    const distance = 75 + Math.random() * 130;
+    spark.style.setProperty('--ray-x', `${Math.cos(angle) * distance}px`);
+    spark.style.setProperty('--ray-y', `${Math.sin(angle) * distance}px`);
+    spark.style.setProperty('--ray-color', palette[Math.floor(Math.random() * palette.length)]);
+    spark.style.animationDelay = `${Math.random() * .25}s`;
+    burst.appendChild(spark);
+  }
+  festivalEffects.appendChild(burst);
+  window.setTimeout(() => burst.remove(), 2100);
+}
+// Several large chrysanthemum-style bursts make the background feel like a Diwali sky.
+[[18,22,0,500],[82,22,2,1100],[5,34,1,1900],[95,36,0,2650],[16,64,3,3500],[84,63,2,4200],[31,17,1,4850],[69,17,3,5400]].forEach(([x,y,palette,delay]) => {
+  window.setTimeout(() => grandBurstFirework(x,y,palette), delay);
+});
+function scheduleGrandFireworks() {
+  window.setTimeout(() => {
+    const positions = [[18,22],[82,22],[5,34],[95,36],[16,64],[84,63],[31,17],[69,17]];
+    const [x,y] = positions[Math.floor(Math.random() * positions.length)];
+    grandBurstFirework(x,y,Math.floor(Math.random() * 4));
+    if (Math.random() > .32) {
+      const second = positions[Math.floor(Math.random() * positions.length)];
+      window.setTimeout(() => grandBurstFirework(second[0],second[1],Math.floor(Math.random() * 4)), 360 + Math.random() * 420);
+    }
+    scheduleGrandFireworks();
+  }, 2500 + Math.random() * 1700);
+}
+scheduleGrandFireworks();
 window.setTimeout(launchFirework, 900);
 function scheduleNextFirework() {
   window.setTimeout(() => {
@@ -485,66 +726,57 @@ envelope.addEventListener('click', () => {
   if (currentScene === 3) startSceneTimer();
 });
 
-// Original, locally synthesised romantic instrumental motif; no external audio or copyrighted recording.
-let audioContext;
-let masterGain;
-let musicOn = false;
-let musicTimer;
-let noteIndex = 0;
-const melody = [ [261.63,329.63,392.00], [220.00,261.63,329.63], [174.61,220.00,261.63], [196.00,246.94,293.66] ];
-function playChord() {
-  if (!musicOn || !audioContext) return;
-  const chord = melody[noteIndex % melody.length];
-  chord.forEach((frequency, index) => {
-    const osc = audioContext.createOscillator();
-    const gain = audioContext.createGain();
-    const filter = audioContext.createBiquadFilter();
-    osc.type = index === 0 ? 'sine' : 'triangle';
-    osc.frequency.value = frequency * (index === 2 ? 2 : 1);
-    filter.type = 'lowpass';
-    filter.frequency.value = 900;
-    gain.gain.setValueAtTime(0.0001, audioContext.currentTime);
-    gain.gain.exponentialRampToValueAtTime(index === 0 ? .045 : .018, audioContext.currentTime + .5);
-    gain.gain.exponentialRampToValueAtTime(.0001, audioContext.currentTime + 3.7);
-    osc.connect(filter); filter.connect(gain); gain.connect(masterGain);
-    osc.start(); osc.stop(audioContext.currentTime + 3.8);
-  });
-  // A soft bell-like top note adds a gentle, dreamy sparkle.
-  const bell = audioContext.createOscillator();
-  const bellGain = audioContext.createGain();
-  bell.type = 'sine';
-  bell.frequency.value = [523.25,493.88,440,587.33][noteIndex % 4];
-  bellGain.gain.setValueAtTime(.0001, audioContext.currentTime);
-  bellGain.gain.exponentialRampToValueAtTime(.012, audioContext.currentTime + .08);
-  bellGain.gain.exponentialRampToValueAtTime(.0001, audioContext.currentTime + 2.4);
-  bell.connect(bellGain); bellGain.connect(masterGain);
-  bell.start(); bell.stop(audioContext.currentTime + 2.5);
-  noteIndex++;
+// Lazy YouTube embed: start only after a visitor taps the music control.
+const musicButton = document.getElementById('musicToggle');
+const musicLabel = document.getElementById('musicLabel');
+const musicPanel = document.getElementById('musicPlayerPanel');
+const musicHost = document.getElementById('youtubePlayer');
+const requestedMusicVolume = 65;
+let musicFrame = null;
+let musicPlaying = false;
+function sendMusicCommand(func, args = []) {
+  if (!musicFrame || !musicFrame.contentWindow) return;
+  musicFrame.contentWindow.postMessage(JSON.stringify({ event: 'command', func, args }), 'https://www.youtube.com');
 }
-async function toggleMusic() {
-  const buttonLabel = document.getElementById('musicLabel');
-  if (!audioContext) {
-    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
-    if (!AudioContextClass) { buttonLabel.textContent = 'Music unavailable'; return; }
-    audioContext = new AudioContextClass();
-    masterGain = audioContext.createGain();
-    masterGain.gain.value = .7;
-    masterGain.connect(audioContext.destination);
+function setMusicVolume() {
+  sendMusicCommand('setVolume', [requestedMusicVolume]);
+}
+musicButton.addEventListener('click', () => {
+  musicPanel.hidden = false;
+  if (!musicFrame) {
+    musicLabel.textContent = 'Opening music…';
+    musicFrame = document.createElement('iframe');
+    musicFrame.title = 'Kehdoon Tumhen — Instrumental Music Hits';
+    musicFrame.allow = 'autoplay; encrypted-media; picture-in-picture';
+    musicFrame.referrerPolicy = 'strict-origin-when-cross-origin';
+    const playerOrigin = encodeURIComponent(window.location.origin);
+    musicFrame.src = `https://www.youtube.com/embed/fKR7cEo16Go?enablejsapi=1&autoplay=1&controls=1&playsinline=1&rel=0&origin=${playerOrigin}`;
+    musicFrame.addEventListener('load', () => {
+      window.setTimeout(setMusicVolume, 700);
+      window.setTimeout(setMusicVolume, 1500);
+      window.setTimeout(setMusicVolume, 2600);
+    });
+    musicHost.replaceChildren(musicFrame);
+    musicPlaying = true;
+    musicLabel.textContent = 'Music player open';
+    return;
   }
-  if (audioContext.state === 'suspended') await audioContext.resume();
-  musicOn = !musicOn;
-  if (musicOn) {
-    playChord();
-    musicTimer = setInterval(playChord, 3900);
-    buttonLabel.textContent = 'Pause music';
+  musicPlaying = !musicPlaying;
+  if (musicPlaying) {
+    setMusicVolume();
+    sendMusicCommand('playVideo');
+    musicLabel.textContent = 'Pause music';
   } else {
-    clearInterval(musicTimer);
-    masterGain.gain.setTargetAtTime(.0001, audioContext.currentTime, .12);
-    setTimeout(() => { if (!musicOn) masterGain.gain.setTargetAtTime(.7, audioContext.currentTime, .12); }, 250);
-    buttonLabel.textContent = 'Play the music';
+    sendMusicCommand('pauseVideo');
+    musicLabel.textContent = 'Play the music';
   }
-}
-document.getElementById('musicToggle').addEventListener('click', toggleMusic);
+});
+document.getElementById('closeMusicPanel').addEventListener('click', () => {
+  if (musicFrame && musicPlaying) sendMusicCommand('pauseVideo');
+  musicPlaying = false;
+  musicPanel.hidden = true;
+  musicLabel.textContent = 'Play the music';
+});
 </script>
 </body>
 </html>
