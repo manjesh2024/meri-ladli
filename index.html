@@ -27,19 +27,28 @@
 }
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
-body { margin: 0; background: var(--site-background); color: var(--site-on-background); font-family: var(--site-font-body); }
+body { margin: 0; background: var(--site-background); color: var(--site-on-background); font-family: var(--site-font-body); overflow:hidden; }
 button { font: inherit; }
 #app { min-height: 100vh; width: 100%; overflow: hidden; border-radius: 0; position: relative; background: radial-gradient(ellipse at 50% 0%, #54202b 0%, #260d17 42%, var(--site-background) 78%); color: var(--site-on-background); }
+.ambient-diyas { position:absolute; inset:0; z-index:0; overflow:hidden; pointer-events:none; }
+.bg-diya { position:absolute; width:46px; height:23px; border-radius:5px 5px 26px 26px; background:linear-gradient(180deg,#f1c47e 0%,#c8753f 40%,#6f2b2b 100%); opacity:.42; box-shadow:0 0 18px rgba(255,169,82,.3),0 0 48px rgba(255,145,65,.13); transform:scale(var(--diya-scale,1)); }
+.bg-diya:before { content:""; position:absolute; left:50%; top:-23px; width:13px; height:24px; border-radius:100% 0 100% 0; transform:translateX(-50%) rotate(45deg); transform-origin:50% 100%; background:radial-gradient(ellipse at 65% 70%,#fff9ce 0%,#ffd477 38%,#ff8b3f 72%,rgba(255,111,48,0) 100%); filter:drop-shadow(0 0 7px #ffb45e); animation:flame-flicker 1.25s ease-in-out infinite alternate; }
+.bg-diya:after { content:""; position:absolute; left:50%; top:-35px; width:62px; height:58px; transform:translateX(-50%); background:radial-gradient(ellipse,rgba(255,174,91,.2),transparent 68%); filter:blur(5px); animation:flame-glow 2.2s ease-in-out infinite alternate; }
+.bg-diya { opacity:.62; filter:saturate(1.25); }
+.bg-diya:before { width:15px; height:27px; top:-26px; background:radial-gradient(ellipse at 62% 76%,#fffdf0 0%,#fff0a9 25%,#ffc05c 54%,#ff803b 78%,rgba(255,111,48,0) 100%); filter:drop-shadow(0 0 5px #fff0a9) drop-shadow(0 0 12px #ff9f48); }
+@keyframes flame-flicker { 0% { transform:translateX(-50%) rotate(39deg) scale(.92,.94); opacity:.84; } 100% { transform:translateX(-50%) rotate(51deg) scale(1.08,1.06); opacity:1; } }
+@keyframes flame-glow { from { opacity:.55; transform:translateX(-50%) scale(.88); } to { opacity:1; transform:translateX(-50%) scale(1.13); } }
 .decor { position: absolute; inset: 0; pointer-events: none; opacity: var(--site-decoration-opacity); overflow: hidden; }
 .star { position: absolute; color: #f2d6a4; opacity: .6; animation: twinkle 3.5s ease-in-out infinite; }
 .star:nth-child(2n) { animation-delay: 1.2s; }
 @keyframes twinkle { 0%,100% { opacity: .18; transform: scale(.75); } 50% { opacity: .85; transform: scale(1.15); } }
 .topbar { position: relative; z-index: 5; display: flex; justify-content: space-between; align-items: center; padding: 22px clamp(18px,5vw,72px); }
+.topbar { background:linear-gradient(110deg,rgba(255,255,255,.075),rgba(255,255,255,.018)); border-bottom:1px solid rgba(255,239,220,.09); backdrop-filter:blur(22px) saturate(145%); -webkit-backdrop-filter:blur(22px) saturate(145%); }
 .brand { color: var(--gold); letter-spacing: .22em; text-transform: uppercase; font-size: 10px; }
 .music { border: 1px solid var(--line); color: var(--cream); background: rgba(255,255,255,.06); border-radius: 999px; padding: 10px 15px; cursor: pointer; font-size: 12px; backdrop-filter: blur(10px); }
 .music span { color: var(--gold); margin-right: 7px; }
 .hero { min-height: 83vh; position: relative; z-index: 1; display: grid; place-items: center; text-align: center; padding: 50px 20px 110px; }
-.hero-inner { max-width: 760px; }
+.hero-inner { max-width: 760px; padding:clamp(30px,5vw,58px); border:1px solid rgba(255,239,220,.16); border-radius:30px; background:linear-gradient(145deg,rgba(255,255,255,.105),rgba(255,255,255,.025)); box-shadow:0 24px 80px rgba(0,0,0,.2),inset 0 1px 0 rgba(255,255,255,.12); backdrop-filter:blur(22px) saturate(135%); -webkit-backdrop-filter:blur(22px) saturate(135%); }
 .eyebrow { color: var(--gold); letter-spacing: .35em; text-transform: uppercase; font-size: 10px; margin-bottom: 24px; }
 h1,h2,h3,p { margin-top: 0; }
 h1,h2,h3 { font-family: var(--site-font-heading); font-weight: 400; }
@@ -52,14 +61,15 @@ h1 em { color: var(--gold); font-weight: 400; }
 .diya-row { display: flex; justify-content: center; gap: 38px; margin: 0 auto 34px; }
 .diya { width: 38px; height: 21px; background: linear-gradient(#f6d79b,#a64d28); border-radius: 4px 4px 22px 22px; position: relative; box-shadow: 0 0 24px rgba(255,171,77,.35); }
 .diya:before { content:""; position:absolute; width: 10px; height: 20px; border-radius: 100% 0 100% 0; background: #fff0ae; left: 14px; top: -18px; transform: rotate(45deg); box-shadow: 0 0 20px #ffc36e; }
+.diya:before { width:13px; height:24px; top:-21px; left:13px; background:radial-gradient(ellipse at 65% 72%,#fff 0%,#fff2b3 24%,#ffd16e 55%,#ff873f 82%,transparent 100%); filter:drop-shadow(0 0 5px #fff0ae) drop-shadow(0 0 13px #ff9d45); }
 .diya:after { content:""; position:absolute; height: 2px; width: 58px; left:-10px; bottom:-5px; background: #d9a46e; border-radius: 50%; opacity:.7; }
 section.content { position: relative; z-index: 1; padding: 92px 20px; }
-.section-inner { max-width: 980px; margin: 0 auto; }
+.section-inner { max-width: 980px; margin: 0 auto; padding:clamp(24px,4vw,48px); border:1px solid rgba(255,239,220,.12); border-radius:28px; background:linear-gradient(145deg,rgba(255,255,255,.075),rgba(255,255,255,.018)); box-shadow:0 22px 70px rgba(0,0,0,.16),inset 0 1px 0 rgba(255,255,255,.08); backdrop-filter:blur(20px) saturate(130%); -webkit-backdrop-filter:blur(20px) saturate(130%); }
 .section-label { color: var(--gold); letter-spacing: .3em; text-transform: uppercase; font-size: 10px; text-align: center; margin-bottom: 17px; }
 .section-title { font-size: clamp(35px,5vw,57px); text-align: center; margin-bottom: 18px; }
 .section-intro { color: var(--muted); text-align: center; line-height: 1.8; max-width: 570px; margin: 0 auto 45px; font-size: 14px; }
 .memory-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 17px; }
-.memory { min-height: 230px; border: 1px solid var(--line); border-radius: calc(20px * var(--site-radius-scale)); background: linear-gradient(145deg,rgba(255,255,255,.09),rgba(255,255,255,.025)); display: flex; flex-direction: column; justify-content: end; padding: 20px; position: relative; overflow: hidden; }
+.memory { min-height: 230px; border: 1px solid rgba(255,239,220,.2); border-radius: calc(20px * var(--site-radius-scale)); background: linear-gradient(145deg,rgba(255,255,255,.12),rgba(255,255,255,.035)); box-shadow:inset 0 1px 0 rgba(255,255,255,.12),0 12px 35px rgba(0,0,0,.12); backdrop-filter:blur(14px) saturate(135%); -webkit-backdrop-filter:blur(14px) saturate(135%); display: flex; flex-direction: column; justify-content: end; padding: 20px; position: relative; overflow: hidden; }
 .memory:before { content:"✦"; position:absolute; top: 24px; right: 25px; font-size: 26px; color: rgba(233,197,141,.45); }
 .memory .number { color: var(--gold); font-size: 10px; letter-spacing: .2em; margin-bottom: 10px; }
 .memory h3 { font-size: 24px; margin-bottom: 7px; }
@@ -92,6 +102,129 @@ section.content { position: relative; z-index: 1; padding: 92px 20px; }
 .last p { color:var(--muted); line-height:1.9; font-size:14px; }
 .heart { display:inline-block; color:#e58a92; animation:heartbeat 1.6s infinite; }
 @keyframes heartbeat { 0%,100%{transform:scale(1)} 12%{transform:scale(1.2)} 24%{transform:scale(1)} 36%{transform:scale(1.12)} }
+.heart-field { position:fixed; inset:0; z-index:3; overflow:hidden; pointer-events:none; }
+.festival-effects { position:fixed; inset:0; z-index:4; overflow:hidden; pointer-events:none; }
+.festive-badge { display:inline-block; margin:-12px auto 25px; padding:8px 20px; border:1px solid rgba(244,205,132,.35); border-radius:999px; color:#ffe4a9; background:linear-gradient(100deg,rgba(255,176,76,.15),rgba(255,255,255,.035)); box-shadow:0 0 28px rgba(255,160,72,.12),inset 0 1px 0 rgba(255,255,255,.15); font-size:11px; letter-spacing:.2em; text-shadow:0 0 14px rgba(255,197,112,.35); }
+.festive-rangoli { position:absolute; z-index:0; width:min(52vw,480px); aspect-ratio:1; right:-18%; bottom:-33%; border-radius:50%; border:1px solid rgba(239,193,119,.15); box-shadow:0 0 0 13px rgba(239,193,119,.025),0 0 0 27px rgba(239,193,119,.035),inset 0 0 0 13px rgba(239,193,119,.035),inset 0 0 0 27px rgba(239,193,119,.025); pointer-events:none; }
+.hero-inner,.section-inner,.last > * { position:relative; z-index:1; }
+.firework-rocket { position:absolute; width:4px; height:4px; border-radius:50%; background:#fff3c7; box-shadow:0 0 8px 3px #ffca70,0 0 19px 6px rgba(255,134,77,.48); animation:rocket-lift .72s cubic-bezier(.3,.1,.8,.5) forwards; }
+.firework-rocket:after { content:""; position:absolute; width:2px; height:40px; left:1px; top:3px; background:linear-gradient(#ffd98b,rgba(255,150,73,0)); filter:blur(1px); }
+@keyframes rocket-lift { from { transform:translate3d(0,0,0); opacity:1; } to { transform:translate3d(var(--rocket-dx),var(--rocket-dy),0); opacity:.95; } }
+.firework-burst { position:absolute; width:1px; height:1px; }
+.firework-particle { position:absolute; left:0; top:0; width:3px; height:3px; border-radius:50%; background:var(--spark-color); box-shadow:0 0 7px 2px var(--spark-color),0 0 15px rgba(255,218,153,.45); animation:firework-pop 1.35s cubic-bezier(.12,.55,.3,1) forwards; }
+@keyframes firework-pop { 0% { transform:translate3d(0,0,0) scale(1.1); opacity:0; } 12% { opacity:1; } 75% { opacity:.85; } 100% { transform:translate3d(var(--spark-x),var(--spark-y),0) scale(.08); opacity:0; } }
+.sparkler { position:absolute; bottom:76px; width:115px; height:145px; opacity:.72; }
+.sparkler-left { left:-20px; transform:rotate(-18deg); }
+.sparkler-right { right:-20px; transform:scaleX(-1) rotate(-18deg); }
+.sparkler-stick { position:absolute; left:30px; bottom:-12px; width:5px; height:105px; border-radius:8px; transform:rotate(-27deg); background:linear-gradient(90deg,#654331,#f5d093 42%,#8a5136); box-shadow:0 0 8px rgba(255,197,111,.35); }
+.sparkler-head { position:absolute; left:4px; top:20px; width:12px; height:12px; border-radius:50%; background:#fff6cf; box-shadow:0 0 8px 4px #ffd36d,0 0 22px 10px rgba(255,157,67,.45); animation:sparkler-glow .22s steps(2,end) infinite alternate; }
+@keyframes sparkler-glow { from { opacity:.72; transform:scale(.78); } to { opacity:1; transform:scale(1.2); } }
+.sparkler-particle { position:absolute; left:10px; top:26px; width:3px; height:3px; border-radius:50%; background:#fff0b0; box-shadow:0 0 6px 2px #ffbd5f; animation:sparkler-spray var(--spark-time) ease-out var(--spark-delay) infinite; }
+@keyframes sparkler-spray { 0% { transform:translate(0,0) scale(1); opacity:0; } 14% { opacity:1; } 100% { transform:translate(var(--spark-x),var(--spark-y)) scale(.05); opacity:0; } }
+.diwali-wish { color:#f5d99d; font-family:var(--site-font-heading); font-size:clamp(19px,3vw,27px); letter-spacing:.04em; text-shadow:0 0 22px rgba(255,191,102,.3); margin:0 auto 15px; }
+.last .diwali-wish { margin-top:12px; }
+main > section.slide { background:radial-gradient(ellipse at 8% 14%,rgba(255,166,73,.075),transparent 34%),radial-gradient(ellipse at 92% 86%,rgba(220,87,93,.065),transparent 37%); }
+main > section.slide:after { content:""; position:absolute; z-index:0; width:min(44vw,410px); aspect-ratio:1; left:-19%; top:-34%; border-radius:50%; border:1px solid rgba(244,199,125,.1); box-shadow:0 0 0 12px rgba(244,199,125,.018),0 0 0 24px rgba(244,199,125,.025),inset 0 0 0 12px rgba(244,199,125,.025),inset 0 0 0 24px rgba(244,199,125,.018); pointer-events:none; }
+.heart-bubble { position:absolute; bottom:-82px; left:var(--heart-left); width:var(--heart-size); height:var(--heart-size); display:grid; place-items:center; border:1px solid rgba(255,224,230,.3); border-radius:50%; color:rgba(255,192,207,.8); font-size:var(--heart-font); line-height:1; background:radial-gradient(circle at 32% 25%,rgba(255,255,255,.22),rgba(255,180,202,.07) 48%,rgba(255,255,255,.025)); box-shadow:inset 0 1px 5px rgba(255,255,255,.13),0 0 24px rgba(255,130,165,.1); backdrop-filter:blur(9px); -webkit-backdrop-filter:blur(9px); animation:heart-rise var(--heart-duration) linear var(--heart-delay) infinite; will-change:transform,opacity; }
+@keyframes heart-rise { 0% { transform:translate3d(0,0,0) scale(.65) rotate(-12deg); opacity:0; } 12% { opacity:.72; } 78% { opacity:.48; } 100% { transform:translate3d(var(--heart-drift),-118vh,0) scale(1.18) rotate(16deg); opacity:0; } }
+.diya { animation:diya-shell-glow 2s ease-in-out infinite alternate; }
+.diya:before { transform-origin:50% 85%; animation:diya-live-flame 1.05s ease-in-out infinite alternate; }
+@keyframes diya-live-flame { from { transform:rotate(38deg) scale(.9,.95); opacity:.82; } to { transform:rotate(52deg) scale(1.1,1.07); opacity:1; } }
+@keyframes diya-shell-glow { from { box-shadow:0 0 17px rgba(255,171,77,.25); } to { box-shadow:0 0 34px rgba(255,171,77,.55); } }
+html, body { width:100%; height:100%; overflow:hidden; overscroll-behavior:none; }
+#app { height:100svh; min-height:0; overflow:hidden; }
+main { position:relative; width:100%; height:100%; }
+.topbar { position:absolute; z-index:15; top:0; left:0; right:0; min-height:62px; }
+main > section.slide { position:absolute; inset:0; width:100%; height:100%; min-height:0; display:none; overflow:hidden; box-sizing:border-box; padding:82px 18px 92px; z-index:2; }
+main > section.slide.active { display:grid; place-items:center; animation:scene-enter .75s cubic-bezier(.2,.75,.2,1) both; }
+@keyframes scene-enter { from { opacity:0; transform:translateY(14px) scale(.99); } to { opacity:1; transform:translateY(0) scale(1); } }
+.hero.slide { min-height:0; }
+.hero.slide.active { padding:84px 18px 88px; }
+.hero-inner { width:min(760px,100%); max-height:100%; }
+.hero-foot { bottom:74px; }
+main > section.content.slide { padding:78px 18px 88px; }
+main > section.content.slide .section-inner { width:min(980px,100%); max-height:100%; padding:clamp(20px,3vh,34px) clamp(18px,3vw,38px); }
+.section-title { font-size:clamp(30px,4.6vw,52px); margin-bottom:10px; }
+.section-intro { font-size:clamp(11px,1.5vh,14px); line-height:1.55; margin-bottom:clamp(14px,2.5vh,24px); }
+.memory-grid { gap:clamp(8px,1.4vw,14px); }
+.memory { min-height:clamp(88px,16vh,132px); padding:clamp(9px,1.4vh,14px); }
+.memory h3 { font-size:clamp(16px,2vw,22px); margin-bottom:4px; }
+.memory p { font-size:clamp(9px,1.25vh,11px); line-height:1.35; }
+.memory .number { font-size:8px; margin-bottom:5px; }
+.memory .placeholder { font-size:clamp(34px,5vh,52px); }
+.timeline { max-width:680px; }
+.moment { padding-bottom:clamp(12px,2vh,19px); }
+.moment h3 { font-size:clamp(19px,2.6vh,25px); margin:5px 0; }
+.moment p { font-size:clamp(11px,1.45vh,13px); line-height:1.5; }
+.note-section .section-inner { padding:clamp(17px,2.5vh,28px) clamp(18px,3vw,38px); }
+.envelope-wrap { margin:clamp(14px,2vh,24px) auto 0; }
+.envelope { height:clamp(105px,19vh,165px); }
+.letter { margin:clamp(10px,1.8vh,18px) auto 0; padding:clamp(14px,2vh,24px) clamp(18px,3vw,34px); max-height:42svh; overflow:hidden; }
+.letter-kicker { margin-bottom:8px; }
+.letter h2 { font-size:clamp(23px,3.4vh,34px); margin-bottom:10px; }
+.letter p { font-size:clamp(13px,1.65vh,16px); line-height:1.5; margin-bottom:8px; }
+.letter .signoff { font-size:clamp(18px,2.4vh,23px); margin:10px 0 0; }
+.note-section.letter-revealed .section-intro { display:none; }
+.note-section.letter-revealed .envelope-wrap { margin:8px auto 0; }
+.note-section.letter-revealed .envelope { width:105px; height:48px; }
+.note-section.letter-revealed .seal { width:32px; height:32px; font-size:15px; }
+.note-section.letter-revealed .envelope-hint { margin-top:5px; font-size:9px; }
+main > section.last.slide { padding:82px 18px 96px; }
+.last h2 { font-size:clamp(38px,6.5vw,72px); }
+.last p { font-size:clamp(12px,1.6vh,14px); }
+.replay { margin-top:8px; padding:11px 20px; }
+.slide-controls { position:absolute; z-index:16; left:0; right:0; bottom:0; min-height:70px; display:flex; align-items:center; justify-content:space-between; gap:18px; padding:10px clamp(14px,4vw,46px); background:linear-gradient(110deg,rgba(255,255,255,.09),rgba(255,255,255,.025)); border-top:1px solid rgba(255,239,220,.12); backdrop-filter:blur(22px) saturate(145%); -webkit-backdrop-filter:blur(22px) saturate(145%); }
+.slide-controls[hidden] { display:none; }
+.scene-meta { min-width:0; flex:1; display:grid; grid-template-columns:auto minmax(70px,1fr); align-items:center; gap:8px 14px; color:var(--muted); font-size:9px; letter-spacing:.14em; text-transform:uppercase; }
+.scene-countdown { grid-column:1 / -1; color:var(--gold); font-size:9px; letter-spacing:.08em; text-transform:none; }
+.scene-track { height:3px; width:100%; overflow:hidden; border-radius:9px; background:rgba(255,255,255,.15); }
+.scene-track span { display:block; height:100%; width:0; border-radius:9px; background:linear-gradient(90deg,#b87950,#f0d39d); box-shadow:0 0 12px rgba(240,211,157,.45); }
+.scene-actions { display:flex; align-items:center; gap:8px; }
+.scene-button { border:1px solid rgba(233,197,141,.36); border-radius:999px; padding:9px 15px; color:var(--cream); background:rgba(255,255,255,.055); cursor:pointer; font-size:11px; white-space:nowrap; }
+.scene-button.primary { background:linear-gradient(135deg,#e8c48e,#b67b4d); color:#28110f; border-color:rgba(233,197,141,.65); }
+.scene-button:disabled { opacity:.35; cursor:default; }
+footer { display:none; }
+@media(max-width:700px){
+  .topbar { min-height:55px; padding:13px 15px; }
+  .brand { font-size:8px; letter-spacing:.1em; }
+  .music { padding:8px 11px; font-size:10px; }
+  main > section.content.slide { padding:68px 12px 82px; }
+  main > section.content.slide .section-inner { padding:16px 13px; }
+  .section-label { font-size:8px; margin-bottom:8px; }
+  .section-title { font-size:clamp(24px,6vw,36px); margin-bottom:7px; }
+  .section-intro { font-size:10px; line-height:1.4; margin-bottom:12px; }
+  .memory-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:7px; }
+  .memory { min-height:clamp(84px,13svh,108px); padding:8px; border-radius:13px; }
+  .memory h3 { font-size:clamp(13px,3.5vw,17px); }
+  .memory p { font-size:9px; line-height:1.25; }
+  .memory .number { font-size:7px; }
+  .memory .placeholder { font-size:35px; }
+  .timeline { padding-left:20px; }
+  .moment:before { left:-25px; }
+  .moment { padding-bottom:12px; }
+  .moment h3 { font-size:18px; margin:4px 0; }
+  .moment p { font-size:10px; line-height:1.35; }
+  .moment small { font-size:8px; }
+  .note-section .section-inner { padding:15px 13px; }
+  .envelope { height:110px; }
+  .letter { max-height:39svh; padding:13px 15px; }
+  .letter p { font-size:12px; line-height:1.42; }
+  .letter h2 { font-size:23px; margin-bottom:7px; }
+  .slide-controls { min-height:64px; gap:8px; padding:8px 11px; }
+  .scene-meta { grid-template-columns:auto minmax(45px,1fr); gap:6px 8px; font-size:8px; }
+  .scene-countdown { font-size:8px; }
+  .scene-actions { gap:5px; }
+  .scene-button { padding:8px 11px; font-size:10px; }
+}
+@media(max-height:620px){
+  main > section.content.slide { padding-top:65px; padding-bottom:72px; }
+  main > section.content.slide .section-inner { padding-top:12px; padding-bottom:12px; }
+  .section-intro { margin-bottom:10px; }
+  .memory { min-height:82px; }
+  .moment { padding-bottom:8px; }
+  .envelope { height:82px; }
+  .letter { max-height:35svh; }
+}
 footer { text-align:center; padding:25px; color:#9c7c72; font-size:10px; letter-spacing:.16em; border-top:1px solid rgba(233,197,141,.12); position:relative; z-index:1; }
 #toast { position:fixed; z-index:20; bottom:22px; left:50%; transform:translateX(-50%); background:#f0d39d; color:#35151c; padding:11px 17px; border-radius:99px; font-size:12px; opacity:0; transition:opacity .3s; pointer-events:none; }
 #toast.show { opacity:1; }
@@ -103,22 +236,25 @@ footer { text-align:center; padding:25px; color:#9c7c72; font-size:10px; letter-
 <body>
 <div id="app">
   <div class="decor" aria-hidden="true" id="stars"></div>
+  <div class="ambient-diyas" aria-hidden="true" id="ambientDiyas"></div>
+  <div class="festive-rangoli" aria-hidden="true"></div>
   <header class="topbar">
     <div class="brand">A little something for you · 2026</div>
     <button class="music" id="musicToggle" aria-label="Play romantic instrumental"><span>♫</span><b id="musicLabel">Play the music</b></button>
   </header>
   <main>
-    <section class="hero" id="home">
+    <section class="hero slide active" id="home">
       <div class="hero-inner">
         <div class="diya-row" aria-hidden="true"><i class="diya"></i><i class="diya"></i><i class="diya"></i></div>
+        <div class="festive-badge">✦ शुभ दीपावली · SHUBH DEEPAVALI ✦</div>
         <div class="eyebrow">A festival of lights · A little note from my heart</div>
         <h1>For my <em>Ladli</em></h1>
-        <p class="hero-copy">Some lights make a home glow. Some people make life feel brighter. This little Diwali surprise is for the one who makes my world warmer.</p>
-        <button class="cta" id="openSurprise">Open your Diwali surprise <span>↗</span></button>
+        <p class="hero-copy">May every diya bring a little more joy, every sparkle make a new wish come true, and every moment remind you how loved you are. This Diwali celebration is made just for you.</p>
+        <button class="cta" id="openSurprise">Begin our little story <span>↗</span></button>
       </div>
       <div class="hero-foot">Made with love · just for you</div>
     </section>
-    <section class="content" id="memories">
+    <section class="content slide" id="memories">
       <div class="section-inner">
         <div class="section-label">Little pieces of us</div>
         <h2 class="section-title">Memories that glow</h2>
@@ -133,7 +269,7 @@ footer { text-align:center; padding:25px; color:#9c7c72; font-size:10px; letter-
         </div>
       </div>
     </section>
-    <section class="content">
+    <section class="content slide">
       <div class="section-inner">
         <div class="section-label">Not just dates on a calendar</div>
         <h2 class="section-title">Our little story</h2>
@@ -145,7 +281,7 @@ footer { text-align:center; padding:25px; color:#9c7c72; font-size:10px; letter-
         </div>
       </div>
     </section>
-    <section class="content note-section" id="note">
+    <section class="content slide note-section" id="note">
       <div class="section-inner">
         <div class="section-label">A note, sealed with love</div>
         <h2 class="section-title">A little something from my heart</h2>
@@ -162,15 +298,26 @@ footer { text-align:center; padding:25px; color:#9c7c72; font-size:10px; letter-
         </article>
       </div>
     </section>
-    <section class="last">
+    <section class="last slide">
       <div class="diya-row" aria-hidden="true"><i class="diya"></i><i class="diya"></i><i class="diya"></i></div>
+      <div class="diwali-wish">दीपों की रोशनी · खुशियों की बरसात</div>
       <div class="section-label">One last little wish</div>
       <h2>A million more<br>Diwalis together.</h2>
       <p>May your days be as lovely as your smile,<br>and may life always give us reasons to celebrate.</p>
       <p style="margin-top:28px;font-family:var(--site-font-heading);font-size:22px;color:var(--cream)">Always, with love <span class="heart">♥</span></p>
+      <button class="cta replay" id="replayJourney">Replay our little story ↻</button>
     </section>
   </main>
+  <nav class="slide-controls" id="slideControls" aria-label="Story navigation" hidden>
+    <div class="scene-meta"><span id="sceneCounter">SCENE 02 / 05</span><div class="scene-track"><span id="sceneProgress"></span></div><span class="scene-countdown" id="sceneCountdown">A little moment to read…</span></div>
+    <div class="scene-actions"><button class="scene-button" id="previousScene">← Back</button><button class="scene-button primary" id="nextScene">Next →</button></div>
+  </nav>
   <footer>CRAFTED WITH LOVE · HAPPY DIWALI, MERI LADLI</footer>
+</div>
+<div class="heart-field" aria-hidden="true" id="heartField"></div>
+<div class="festival-effects" aria-hidden="true" id="festivalEffects">
+  <div class="sparkler sparkler-left"><span class="sparkler-stick"></span><span class="sparkler-head"></span><span id="sparklerLeft"></span></div>
+  <div class="sparkler sparkler-right"><span class="sparkler-stick"></span><span class="sparkler-head"></span><span id="sparklerRight"></span></div>
 </div>
 <div id="toast" role="status">A little surprise is waiting below ♥</div>
 <script>
@@ -186,18 +333,156 @@ for (let i = 0; i < 42; i++) {
   starField.appendChild(star);
 }
 
-document.getElementById('openSurprise').addEventListener('click', () => {
-  document.getElementById('memories').scrollIntoView({ behavior: 'smooth' });
-  const toast = document.getElementById('toast');
-  toast.classList.add('show');
-  setTimeout(() => toast.classList.remove('show'), 2200);
+// Warm background diyas keep their flames softly flickering throughout the visit.
+const diyaField = document.getElementById('ambientDiyas');
+const diyaPositions = [
+  [5,18,.82],[88,13,.72],[14,43,.62],[91,39,.86],
+  [4,69,.76],[85,73,.7],[26,88,.54],[72,91,.62],
+  [48,8,.48],[51,92,.56],[34,32,.44],[68,56,.5]
+];
+diyaPositions.forEach(([left,top,scale], index) => {
+  const diya = document.createElement('span');
+  diya.className = 'bg-diya';
+  diya.style.left = `${left}%`;
+  diya.style.top = `${top}%`;
+  diya.style.setProperty('--diya-scale', scale);
+  diya.style.setProperty('opacity', .38 + (index % 3) * .12);
+  diya.style.animationDelay = `${index * -.19}s`;
+  diyaField.appendChild(diya);
 });
+
+// Glassy heart bubbles continuously drift from the bottom to the top of the screen.
+const heartField = document.getElementById('heartField');
+for (let i = 0; i < 19; i++) {
+  const bubble = document.createElement('span');
+  bubble.className = 'heart-bubble';
+  bubble.textContent = i % 3 === 0 ? '♥' : '♡';
+  bubble.style.setProperty('--heart-left', `${(i * 29 + 7) % 100}%`);
+  bubble.style.setProperty('--heart-size', `${22 + (i % 4) * 10}px`);
+  bubble.style.setProperty('--heart-font', `${11 + (i % 4) * 4}px`);
+  bubble.style.setProperty('--heart-duration', `${14 + (i % 6) * 2.2}s`);
+  bubble.style.setProperty('--heart-delay', `${-(i % 9) * 2.1}s`);
+  bubble.style.setProperty('--heart-drift', `${((i * 17) % 90) - 45}px`);
+  heartField.appendChild(bubble);
+}
+
+// Tiny fuljhadi sparks stream continuously from both lower corners.
+['sparklerLeft','sparklerRight'].forEach((id, side) => {
+  const holder = document.getElementById(id);
+  for (let i = 0; i < 22; i++) {
+    const spark = document.createElement('i');
+    spark.className = 'sparkler-particle';
+    const angle = (Math.random() * 1.6 - .8) + (side ? Math.PI : 0);
+    const distance = 24 + Math.random() * 80;
+    spark.style.setProperty('--spark-x', `${Math.cos(angle) * distance}px`);
+    spark.style.setProperty('--spark-y', `${Math.sin(angle) * distance - 12}px`);
+    spark.style.setProperty('--spark-time', `${.55 + Math.random() * .8}s`);
+    spark.style.setProperty('--spark-delay', `${Math.random() * 1.4}s`);
+    holder.appendChild(spark);
+  }
+});
+
+// Gentle firework rockets rise and bloom into golden, rose and pearl sparks.
+const festivalEffects = document.getElementById('festivalEffects');
+const fireworkColors = ['#fff0bd','#ffd16d','#ffad70','#f4a9b7','#f1d7ff','#fff8e9'];
+function burstFirework(x, y) {
+  const burst = document.createElement('div');
+  burst.className = 'firework-burst';
+  burst.style.left = `${x}%`;
+  burst.style.top = `${y}%`;
+  const particleCount = 30 + Math.floor(Math.random() * 13);
+  for (let i = 0; i < particleCount; i++) {
+    const angle = (Math.PI * 2 * i / particleCount) + (Math.random() * .18);
+    const distance = 36 + Math.random() * 75;
+    const particle = document.createElement('i');
+    particle.className = 'firework-particle';
+    particle.style.setProperty('--spark-x', `${Math.cos(angle) * distance}px`);
+    particle.style.setProperty('--spark-y', `${Math.sin(angle) * distance}px`);
+    particle.style.setProperty('--spark-color', fireworkColors[Math.floor(Math.random() * fireworkColors.length)]);
+    particle.style.animationDelay = `${Math.random() * .13}s`;
+    burst.appendChild(particle);
+  }
+  festivalEffects.appendChild(burst);
+  window.setTimeout(() => burst.remove(), 1750);
+}
+function launchFirework() {
+  const x = 12 + Math.random() * 76;
+  const targetY = 13 + Math.random() * 35;
+  const rocket = document.createElement('i');
+  rocket.className = 'firework-rocket';
+  rocket.style.left = `${x}%`;
+  rocket.style.top = '91%';
+  rocket.style.setProperty('--rocket-dx', `${(Math.random() - .5) * 42}px`);
+  rocket.style.setProperty('--rocket-dy', `${targetY - 91}vh`);
+  festivalEffects.appendChild(rocket);
+  window.setTimeout(() => {
+    rocket.remove();
+    burstFirework(x, targetY);
+    if (Math.random() > .52) window.setTimeout(() => burstFirework(x + (Math.random() - .5) * 13, targetY + 8), 220);
+  }, 720);
+}
+window.setTimeout(launchFirework, 900);
+function scheduleNextFirework() {
+  window.setTimeout(() => {
+    launchFirework();
+    scheduleNextFirework();
+  }, 3400 + Math.random() * 2600);
+}
+scheduleNextFirework();
+
+const storySlides = Array.from(document.querySelectorAll('main > section.slide'));
+const slideDurations = [0, 34000, 27000, 18000, 0];
+const slideControls = document.getElementById('slideControls');
+const sceneCounter = document.getElementById('sceneCounter');
+const sceneCountdown = document.getElementById('sceneCountdown');
+const sceneProgress = document.getElementById('sceneProgress');
+const previousScene = document.getElementById('previousScene');
+const nextScene = document.getElementById('nextScene');
+let currentScene = 0;
+let journeyStarted = false;
+let sceneTimer = null;
+function startSceneTimer() {
+  window.clearInterval(sceneTimer);
+  const openedLetter = currentScene === 3 && letter.classList.contains('open');
+  const duration = currentScene === 3 && openedLetter ? 30000 : slideDurations[currentScene];
+  if (!duration) {
+    sceneCountdown.textContent = 'Take your time ♥';
+    sceneProgress.style.width = currentScene === storySlides.length - 1 ? '100%' : '0%';
+    return;
+  }
+  const startedAt = Date.now();
+  const update = () => {
+    const elapsed = Date.now() - startedAt;
+    const progress = Math.min(1, elapsed / duration);
+    sceneProgress.style.width = `${progress * 100}%`;
+    sceneCountdown.textContent = `Next moment in ${Math.ceil((duration - elapsed) / 1000)} seconds`;
+    if (progress >= 1) showScene(currentScene + 1);
+  };
+  update();
+  sceneTimer = window.setInterval(update, 180);
+}
+function showScene(index) {
+  currentScene = Math.max(0, Math.min(index, storySlides.length - 1));
+  journeyStarted = currentScene > 0;
+  storySlides.forEach((slide, slideIndex) => slide.classList.toggle('active', slideIndex === currentScene));
+  slideControls.hidden = !journeyStarted;
+  sceneCounter.textContent = `SCENE ${String(currentScene + 1).padStart(2, '0')} / ${String(storySlides.length).padStart(2, '0')}`;
+  previousScene.disabled = currentScene === 1;
+  nextScene.textContent = currentScene === storySlides.length - 1 ? 'Replay ↻' : 'Next →';
+  startSceneTimer();
+}
+function beginJourney() { showScene(1); }
+document.getElementById('openSurprise').addEventListener('click', beginJourney);
+previousScene.addEventListener('click', () => showScene(currentScene <= 1 ? 0 : currentScene - 1));
+nextScene.addEventListener('click', () => currentScene === storySlides.length - 1 ? showScene(0) : showScene(currentScene + 1));
+document.getElementById('replayJourney').addEventListener('click', () => showScene(0));
 const envelope = document.getElementById('envelope');
 const letter = document.getElementById('letter');
 envelope.addEventListener('click', () => {
   const opened = letter.classList.toggle('open');
+  document.querySelector('.note-section').classList.toggle('letter-revealed', opened);
   document.getElementById('envelopeHint').textContent = opened ? 'A NOTE FROM MY HEART ♥' : 'TAP TO OPEN YOUR LETTER';
-  if (opened) setTimeout(() => letter.scrollIntoView({ behavior: 'smooth', block: 'center' }), 150);
+  if (currentScene === 3) startSceneTimer();
 });
 
 // Original, locally synthesised romantic instrumental motif; no external audio or copyrighted recording.
