@@ -121,19 +121,6 @@
     ctx.clearRect(0,0,w,h);
     const sec=(now-started)/1000;
     ctx.globalAlpha=1;ctx.shadowBlur=0;ctx.lineCap="round";
-    trailDots.forEach((p,i)=>{
-      const t=((sec+p.offset)/p.dur)%1, pos=pointAt(trails[p.side],t);
-      ctx.globalAlpha=i%2===0?.25+.75*(.5+.5*Math.sin(sec*7.85+i)):.82;
-      ctx.fillStyle="#ffe5a1";ctx.shadowColor="#ffad4c";ctx.shadowBlur=7;
-      ctx.beginPath();ctx.arc(pos.x,pos.y,p.r,0,Math.PI*2);ctx.fill();
-    });
-    embers.forEach(p=>{
-      const t=((sec+p.phase)/p.dur)%1, rise=ease(t);
-      const alpha=t<.12?t/.12:t<.74?.9:.9*(1-(t-.74)/.26);
-      ctx.globalAlpha=Math.max(0,alpha);ctx.fillStyle=p.color;
-      ctx.shadowColor=p.color;ctx.shadowBlur=8;
-      ctx.beginPath();ctx.arc(p.x+p.dx*rise,p.y+p.dy*rise,1.6*(1-.55*t),0,Math.PI*2);ctx.fill();
-    });
     for(let i=rockets.length-1;i>=0;i--){
       const p=rockets[i],t=Math.min(1,(now-p.at)/720),f=ease(t),x=p.x+p.dx*f,y=p.y0+(p.y1-p.y0)*f;
       ctx.globalAlpha=1-.15*t;ctx.fillStyle="#fff3c7";ctx.shadowColor="#ffca70";ctx.shadowBlur=12;
