@@ -1,5 +1,6 @@
 (() => {
   "use strict";
+  window.__festivalCanvasActive = true;
   const host = document.getElementById("festivalEffects");
   if (!host || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
