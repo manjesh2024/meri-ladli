@@ -481,6 +481,7 @@ footer { text-align:center; padding:25px; color:#9c7c72; font-size:10px; letter-
   <div class="anar anar-right"><span class="anar-jet"></span><span id="anarRightSparks"></span><svg class="anar-pot" viewBox="0 0 100 108" xmlns="http://www.w3.org/2000/svg"><ellipse cx="50" cy="95" rx="39" ry="8" fill="#1c0b11" opacity=".5"/><path d="M24 43 Q50 35 76 43 L83 68 Q79 96 50 100 Q21 96 17 68Z" fill="#81382d" stroke="#d99b57" stroke-width="2"/><path d="M22 48 Q50 58 78 48 L83 68 Q50 88 17 68Z" fill="#b75f35" opacity=".9"/><path d="M26 50 Q50 59 74 50" fill="none" stroke="#ffe0a0" stroke-width="2"/><path d="M35 66 Q50 76 65 66" fill="none" stroke="#f7c879" stroke-width="2"/><ellipse cx="50" cy="43" rx="29" ry="8" fill="#e8b36b" stroke="#fff0b4" stroke-width="2"/><ellipse cx="50" cy="42" rx="19" ry="4" fill="#3a1720"/><path d="M27 78 Q50 93 73 78" fill="none" stroke="#f3c77d" stroke-width="2" opacity=".8"/><path class="pot-glow" d="M20 58 Q50 75 80 58" fill="none" stroke="#ffdc95" stroke-width="3" opacity=".7"/></svg></div>
 </div>
 <div id="toast" role="status">A little surprise is waiting below ♥</div>
+<script src="assets/festival-effects.js"></script>
 <script>
 const starField = document.getElementById('stars');
 for (let i = 0; i < 42; i++) {
@@ -578,7 +579,7 @@ festivalEffects.insertAdjacentHTML('beforeend', `
     <path class="golden-trail-line" d="M1472 10 C1402 35 1383 88 1308 119 C1243 146 1178 166 1104 151 C1035 137 975 139 880 169" style="stroke-width:1.55;opacity:.9;stroke-dasharray:21 7 3 9"/>
     <path class="golden-trail-core" d="M-25 43 C50 69 75 123 149 144 C222 165 274 187 346 173" style="stroke-width:.9;opacity:.8"/>
     <path class="golden-trail-core" d="M1465 43 C1390 69 1365 123 1291 144 C1218 165 1166 187 1094 173" style="stroke-width:.9;opacity:.8"/>
-    ${Array.from({length:92},(_,i)=>`<circle class="trail-spark" r="${i%9===0?3.4:i%3===0?2.2:1.35}"><animateMotion dur="${2.1+(i%13)*.34}s" begin="-${(i%19)*.43}s" repeatCount="indefinite"><mpath href="${i%2===0?'#trailLeft':'#trailRight'}"/></animateMotion></circle>`).join('')}
+    ${window.__festivalCanvasActive ? '' : Array.from({length:92},(_,i)=>`<circle class="trail-spark" r="${i%9===0?3.4:i%3===0?2.2:1.35}"><animateMotion dur="${2.1+(i%13)*.34}s" begin="-${(i%19)*.43}s" repeatCount="indefinite"><mpath href="${i%2===0?'#trailLeft':'#trailRight'}"/></animateMotion></circle>`).join('')}
   </svg>
   <svg class="rangoli-art" viewBox="0 0 320 320" aria-hidden="true">
     <defs><radialGradient id="rangoliGlow"><stop offset="0" stop-color="#fffbd0" stop-opacity="1"/><stop offset=".24" stop-color="#ffbf51" stop-opacity=".8"/><stop offset=".58" stop-color="#ff7e25" stop-opacity=".3"/><stop offset="1" stop-color="#ff7b24" stop-opacity="0"/></radialGradient><linearGradient id="rangoliGold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff7bf"/><stop offset=".42" stop-color="#ffad3c"/><stop offset=".76" stop-color="#f45a22"/><stop offset="1" stop-color="#ffdf88"/></linearGradient></defs>
@@ -592,6 +593,7 @@ festivalEffects.insertAdjacentHTML('beforeend', `
     <circle cx="160" cy="160" r="16" fill="url(#rangoliGlow)"/><circle cx="160" cy="160" r="4" fill="#fffde0"/>
   </svg>
 `);
+if (!window.__festivalCanvasActive) {
 // Sparkler-style gold embers travel inward from both lower corners; no stick or pot is shown.
 ['left','right'].forEach(side => {
   for (let i = 0; i < 48; i++) {
@@ -717,6 +719,8 @@ function scheduleNextFirework() {
   }, 3400 + Math.random() * 2600);
 }
 scheduleNextFirework();
+}
+
 
 const storySlides = Array.from(document.querySelectorAll('main > section.slide'));
 const slideControls = document.getElementById('slideControls');
