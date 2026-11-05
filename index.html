@@ -521,14 +521,14 @@ footer { text-align:center; padding:25px; color:#9c7c72; font-size:10px; letter-
           </button>
         </div>
         <div class="gift-gallery" id="giftGallery" hidden aria-live="polite">
-          <figure class="gift-item" style="--gift-delay:.05s;--gift-tilt:-2deg"><div class="gift-item-media"><span class="gift-fallback">🍫</span></div><figcaption>Galaxy Smooth Milk<small>A sweet little treat</small></figcaption></figure>
-          <figure class="gift-item" style="--gift-delay:.22s;--gift-tilt:1.5deg"><div class="gift-item-media"><span class="gift-fallback">🍫</span></div><figcaption>KitKat<small>Have a break, smile a little</small></figcaption></figure>
-          <figure class="gift-item" style="--gift-delay:.39s;--gift-tilt:-1deg"><div class="gift-item-media"><span class="gift-fallback">🍫</span></div><figcaption>Cadbury Crispello<small>A crispy chocolate surprise</small></figcaption></figure>
-          <figure class="gift-item" style="--gift-delay:.56s;--gift-tilt:2deg"><div class="gift-item-media"><span class="gift-fallback">🍫</span></div><figcaption>Bournville 50% Dark<small>A rich little indulgence</small></figcaption></figure>
-          <figure class="gift-item" style="--gift-delay:.73s;--gift-tilt:1deg"><div class="gift-item-media"><span class="gift-fallback">💝</span></div><figcaption>Pearl Wish Gift Set<small>A wish waiting to be opened</small></figcaption></figure>
-          <figure class="gift-item" style="--gift-delay:.90s;--gift-tilt:-1.5deg"><div class="gift-item-media"><span class="gift-fallback">💎</span></div><figcaption>Pearl Necklace<small>A little sparkle for you</small></figcaption></figure>
-          <figure class="gift-item" style="--gift-delay:1.07s;--gift-tilt:1.5deg"><div class="gift-item-media"><span class="gift-fallback">🌸</span></div><figcaption>Bracelet<small>A colourful keepsake</small></figure>
-          <figure class="gift-item" style="--gift-delay:1.24s;--gift-tilt:-2deg"><div class="gift-item-media"><span class="gift-fallback">🎀</span></div><figcaption>Wrapped with Love<small>Happy Diwali Ladli 😊</small></figure>
+          <figure class="gift-item" style="--gift-delay:.05s;--gift-tilt:-2deg"><div class="gift-item-media"><img src="assets/gifts/galaxy-smooth-milk.webp" alt="galaxy smooth milk" loading="lazy"><span class="gift-fallback">🍫</span></div><figcaption>Galaxy Smooth Milk<small>A sweet little treat</small></figcaption></figure>
+          <figure class="gift-item" style="--gift-delay:.22s;--gift-tilt:1.5deg"><div class="gift-item-media"><img src="assets/gifts/kitkat.webp" alt="kitkat" loading="lazy"><span class="gift-fallback">🍫</span></div><figcaption>KitKat<small>Have a break, smile a little</small></figcaption></figure>
+          <figure class="gift-item" style="--gift-delay:.39s;--gift-tilt:-1deg"><div class="gift-item-media"><img src="assets/gifts/cadbury-crispello.webp" alt="cadbury crispello" loading="lazy"><span class="gift-fallback">🍫</span></div><figcaption>Cadbury Crispello<small>A crispy chocolate surprise</small></figcaption></figure>
+          <figure class="gift-item" style="--gift-delay:.56s;--gift-tilt:2deg"><div class="gift-item-media"><img src="assets/gifts/bournville-50-dark.webp" alt="bournville 50 dark" loading="lazy"><span class="gift-fallback">🍫</span></div><figcaption>Bournville 50% Dark<small>A rich little indulgence</small></figcaption></figure>
+          <figure class="gift-item" style="--gift-delay:.73s;--gift-tilt:1deg"><div class="gift-item-media"><img src="assets/gifts/pearl-wish-gift-set.webp" alt="pearl wish gift set" loading="lazy"><span class="gift-fallback">💝</span></div><figcaption>Pearl Wish Gift Set<small>A wish waiting to be opened</small></figcaption></figure>
+          <figure class="gift-item" style="--gift-delay:.90s;--gift-tilt:-1.5deg"><div class="gift-item-media"><img src="assets/gifts/pearl-necklace.webp" alt="pearl necklace" loading="lazy"><span class="gift-fallback">💎</span></div><figcaption>Pearl Necklace<small>A little sparkle for you</small></figcaption></figure>
+          <figure class="gift-item" style="--gift-delay:1.07s;--gift-tilt:1.5deg"><div class="gift-item-media"><img src="assets/gifts/bracelet.webp" alt="bracelet" loading="lazy"><span class="gift-fallback">🌸</span></div><figcaption>Bracelet<small>A colourful keepsake</small></figcaption></figure>
+          <figure class="gift-item" style="--gift-delay:1.24s;--gift-tilt:-2deg"><div class="gift-item-media"><img src="assets/gifts/gift-wrapping.webp" alt="gift wrapping" loading="lazy"><span class="gift-fallback">🎀</span></div><figcaption>Wrapped with Love<small>Happy Diwali Ladli 😊</small></figure>
         </div>
         <p class="gift-gallery-note" id="giftGalleryNote" hidden>Every little gift carries a thought of you. ❤️</p>
         <div style="text-align:center"><button class="cta" id="finishSurprise">One last wish ♥</button></div>
@@ -935,6 +935,13 @@ const giftBoxButton = document.getElementById('giftBoxButton');
 const giftGallery = document.getElementById('giftGallery');
 const giftRevealHint = document.getElementById('giftRevealHint');
 const giftGalleryNote = document.getElementById('giftGalleryNote');
+giftGallery.querySelectorAll('.gift-item-media img').forEach(image => {
+  image.addEventListener('error', () => { image.hidden = true; }, { once: true });
+  image.addEventListener('load', () => {
+    const fallback = image.nextElementSibling;
+    if (fallback) fallback.hidden = true;
+  }, { once: true });
+});
 giftBoxButton.addEventListener('click', () => {
   if (giftBoxButton.classList.contains('opened')) return;
   giftBoxButton.classList.add('opened');
