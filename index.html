@@ -1959,8 +1959,11 @@ footer { text-align:center; padding:25px; color:#9c7c72; font-size:10px; letter-
 <div id="app">
   <div class="decor" aria-hidden="true" id="stars"></div>
   <div class="ambient-diyas" aria-hidden="true" id="ambientDiyas"></div>
-  <!-- Background Music Audio Element -->
-  <audio id="bgAudio" src="assets/diwali-soundtrack.mp3" loop preload="auto" autoplay></audio>
+  <!-- Background Music Audio Element (Mobile & Desktop Optimized) -->
+  <audio id="bgAudio" loop preload="auto" playsinline webkit-playsinline>
+    <source src="assets/diwali-soundtrack.mp3" type="audio/mpeg">
+    <source src="assets/diwali-soundtrack.mp3" type="audio/mp3">
+  </audio>
   <main>
     <section class="hero slide active" id="home">
       <div class="hero-inner">
@@ -2594,30 +2597,73 @@ if (finishSurprise) {
   finishSurprise.addEventListener('click', () => showScene(5));
 }
 
-// Festive Background Music Autoplay Controller
+// Festive Background Music Controller (Mobile & Desktop Autoplay)
 const bgAudio = document.getElementById('bgAudio');
 if (bgAudio) {
-  // Volume set to 50%
   bgAudio.volume = 0.5;
 
-  const startAutoplay = () => {
-    if (bgAudio.paused) {
-      bgAudio.play().catch(() => {});
+  let audioStarted = false;
+
+  const enableAudio = () => {
+    if (audioStarted && !bgAudio.paused && !bgAudio.muted) return;
+    
+    bgAudio.muted = false;
+    bgAudio.volume = 0.5;
+    
+    const promise = bgAudio.play();
+    if (promise !== undefined) {
+      promise.then(() => {
+        audioStarted = true;
+        removeInteractionListeners();
+      }).catch(() => {
+        // Still waiting for trusted user gesture
+      });
     }
   };
 
-  // Immediate attempt on script execution and load
-  startAutoplay();
-  window.addEventListener('load', startAutoplay, { once: true });
+  // 1. Immediate attempt on page load (desktop & permitted browsers)
+  enableAudio();
 
-  // On first user interaction anywhere (pointer, touch, key, click, scroll)
-  const interactionEvents = ['pointerdown', 'touchstart', 'click', 'keydown', 'scroll'];
-  const triggerAutoplayOnGesture = () => {
-    startAutoplay();
-    interactionEvents.forEach(evt => window.removeEventListener(evt, triggerAutoplayOnGesture));
-  };
-  interactionEvents.forEach(evt => {
-    window.addEventListener(evt, triggerAutoplayOnGesture, { once: true, passive: true });
+  // 2. Pre-warm: Start muted so iOS Safari/Android begins preloading and buffering
+  if (bgAudio.paused) {
+    bgAudio.muted = true;
+    bgAudio.play().catch(() => {});
+  }
+
+  // 3. User interaction triggers (Essential for iOS Safari & Android Chrome)
+  const userGestureEvents = ['touchstart', 'touchend', 'click', 'pointerdown'];
+  
+  function onUserGesture() {
+    enableAudio();
+  }
+
+  userGestureEvents.forEach(evt => {
+    document.addEventListener(evt, onUserGesture, { capture: true, passive: true });
+    window.addEventListener(evt, onUserGesture, { capture: true, passive: true });
+  });
+
+  function removeInteractionListeners() {
+    userGestureEvents.forEach(evt => {
+      document.removeEventListener(evt, onUserGesture, { capture: true, passive: true });
+      window.removeEventListener(evt, onUserGesture, { capture: true, passive: true });
+    });
+  }
+
+  // Directly bind to all primary journey buttons
+  const ctaButtons = ['openSurprise', 'nextScene', 'replayJourney', 'oneMoreSurprise', 'finishSurpriseFromDeck', 'envelope', 'diwaliGiftBox', 'hintBtn'];
+  ctaButtons.forEach(btnId => {
+    const el = document.getElementById(btnId);
+    if (el) {
+      el.addEventListener('click', enableAudio);
+      el.addEventListener('touchstart', enableAudio, { passive: true });
+    }
+  });
+
+  // Resume when returning to browser tab
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden && audioStarted && bgAudio.paused) {
+      bgAudio.play().catch(() => {});
+    }
   });
 }
 </script>
