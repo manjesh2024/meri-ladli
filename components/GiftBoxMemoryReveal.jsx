@@ -18,11 +18,11 @@ import { motion, AnimatePresence, useMotionValue, useTransform } from 'framer-mo
 export const DEFAULT_MEMORIES = [
   {
     id: 'm1',
-    src: 'assets/products/jewelry-wish-pearl-box.jpg',
-    category: 'Fine Keepsake',
-    title: 'Royal Wish Pearl Keepsake Set',
-    date: 'Diwali Special',
-    story: 'An authentic oyster with a genuine cultured pearl inside, waiting to be revealed and worn inside a delicate flower cage pendant.'
+    src: 'assets/products/gift-box-hamper.jpg',
+    category: 'Grand Hamper',
+    title: 'Hand-Wrapped Diwali Hamper',
+    date: 'Wrapped with Devotion',
+    story: 'Golden paisley wrapping, royal maroon velvet trims, and a satin rosette carrying all my blessings for my dearest Ladli.'
   },
   {
     id: 'm2',
@@ -74,11 +74,11 @@ export const DEFAULT_MEMORIES = [
   },
   {
     id: 'm8',
-    src: 'assets/products/gift-box-hamper.jpg',
-    category: 'Grand Hamper',
-    title: 'Hand-Wrapped Diwali Hamper',
-    date: 'Wrapped with Devotion',
-    story: 'Golden paisley wrapping, royal maroon velvet trims, and a satin rosette carrying all my blessings for my dearest Ladli.'
+    src: 'assets/products/jewelry-wish-pearl-box.jpg',
+    category: 'Fine Keepsake',
+    title: 'Royal Wish Pearl Keepsake Set',
+    date: 'Diwali Special',
+    story: 'An authentic oyster with a genuine cultured pearl inside, waiting to be revealed and worn inside a delicate flower cage pendant.'
   }
 ];
 
