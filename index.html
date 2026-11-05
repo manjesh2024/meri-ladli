@@ -830,22 +830,9 @@ footer { text-align:center; padding:25px; color:#9c7c72; font-size:10px; letter-
   display: none !important;
 }
 
-.surprise-slide #surpriseHeading {
-  font-family: 'Playfair Display', Georgia, serif !important;
-  font-size: clamp(26px, 4.4vw, 36px) !important;
-  font-weight: 700 !important;
-  color: #fff2db !important;
-  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.6) !important;
-  margin-bottom: 6px !important;
-  text-align: center !important;
-}
-
+.surprise-slide #surpriseHeading,
 .surprise-slide #surpriseIntro {
-  font-size: 13.5px !important;
-  color: #e2ba7c !important;
-  letter-spacing: 0.05em !important;
-  text-align: center !important;
-  margin: 0 auto 16px !important;
+  display: none !important;
 }
 
 /* ---------------- View Mode Switcher ---------------- */
@@ -2011,9 +1998,6 @@ footer { text-align:center; padding:25px; color:#9c7c72; font-size:10px; letter-
     </section>
         <section class="content slide surprise-slide" id="surpriseSlide">
       <div class="section-inner surprise-inner">
-        <h2 class="section-title" id="surpriseHeading">A Special Gift for You</h2>
-        <p class="section-intro" id="surpriseIntro">Tap the gift box to unwrap your memories</p>
-
         <!-- View Mode Switcher (visible once opened) -->
         <div class="surprise-view-switcher" id="surpriseViewSwitcher" hidden>
           <button class="view-switch-btn active" id="btnViewDeck" type="button">🃏 3D Memory Deck</button>
