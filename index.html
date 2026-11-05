@@ -1960,7 +1960,7 @@ footer { text-align:center; padding:25px; color:#9c7c72; font-size:10px; letter-
   <div class="decor" aria-hidden="true" id="stars"></div>
   <div class="ambient-diyas" aria-hidden="true" id="ambientDiyas"></div>
   <!-- Background Music Audio Element -->
-  <audio id="bgAudio" src="assets/diwali-soundtrack.mp3" loop preload="auto"></audio>
+  <audio id="bgAudio" src="assets/diwali-soundtrack.mp3" loop preload="auto" autoplay></audio>
   <button class="music music-floating" id="musicToggle" aria-label="Toggle festive background music">
     <span class="music-icon" id="musicIcon">♫</span><b id="musicLabel">Music</b>
   </button>
@@ -1968,7 +1968,7 @@ footer { text-align:center; padding:25px; color:#9c7c72; font-size:10px; letter-
     <div class="music-panel-heading"><span>✨ Festive Soundtrack ✨</span><button class="music-panel-close" id="closeMusicPanel" aria-label="Close music player">×</button></div>
     <div class="custom-audio-card">
       <div class="audio-disc-wrap">
-        <div class="audio-disc" id="audioDisc">
+        <div class="audio-disc is-spinning" id="audioDisc">
           <span class="disc-hole"></span>
         </div>
       </div>
@@ -1985,9 +1985,8 @@ footer { text-align:center; padding:25px; color:#9c7c72; font-size:10px; letter-
       </div>
       <div class="audio-controls">
         <button class="audio-ctrl-btn" id="audioMuteBtn" type="button" aria-label="Mute or unmute">🔊</button>
-        <button class="audio-play-toggle" id="audioPlayToggle" type="button" aria-label="Play or pause">▶</button>
         <div class="audio-vol-wrap">
-          <input type="range" class="audio-volume-slider" id="audioVolumeSlider" min="0" max="1" step="0.05" value="0.75" aria-label="Volume">
+          <input type="range" class="audio-volume-slider" id="audioVolumeSlider" min="0" max="1" step="0.05" value="0.5" aria-label="Volume">
         </div>
       </div>
     </div>
@@ -2785,7 +2784,6 @@ const musicLabel = document.getElementById('musicLabel');
 const musicIcon = document.getElementById('musicIcon');
 const musicPanel = document.getElementById('musicPlayerPanel');
 const closeMusicPanel = document.getElementById('closeMusicPanel');
-const audioPlayToggle = document.getElementById('audioPlayToggle');
 const audioDisc = document.getElementById('audioDisc');
 const audioProgressBar = document.getElementById('audioProgressBar');
 const audioCurrentTime = document.getElementById('audioCurrentTime');
@@ -2802,18 +2800,10 @@ function formatAudioTime(seconds) {
 
 function updatePlayStateUI(isPlaying) {
   if (isPlaying) {
-    if (audioPlayToggle) {
-      audioPlayToggle.textContent = '⏸';
-      audioPlayToggle.setAttribute('aria-label', 'Pause audio');
-    }
     if (audioDisc) audioDisc.classList.add('is-spinning');
     if (musicButton) musicButton.classList.add('is-playing');
     if (musicIcon) musicIcon.textContent = '♪';
   } else {
-    if (audioPlayToggle) {
-      audioPlayToggle.textContent = '▶';
-      audioPlayToggle.setAttribute('aria-label', 'Play audio');
-    }
     if (audioDisc) audioDisc.classList.remove('is-spinning');
     if (musicButton) musicButton.classList.remove('is-playing');
     if (musicIcon) musicIcon.textContent = '♫';
@@ -2821,7 +2811,9 @@ function updatePlayStateUI(isPlaying) {
 }
 
 if (bgAudio) {
-  bgAudio.volume = parseFloat(audioVolumeSlider ? audioVolumeSlider.value : 0.75);
+  // Volume set to 50%
+  bgAudio.volume = 0.5;
+  if (audioVolumeSlider) audioVolumeSlider.value = 0.5;
 
   bgAudio.addEventListener('play', () => updatePlayStateUI(true));
   bgAudio.addEventListener('pause', () => updatePlayStateUI(false));
@@ -2858,17 +2850,6 @@ if (bgAudio) {
     });
   }
 
-  if (audioPlayToggle) {
-    audioPlayToggle.addEventListener('click', () => {
-      if (bgAudio.paused) {
-        bgAudio.play().then(() => updatePlayStateUI(true)).catch(() => {});
-      } else {
-        bgAudio.pause();
-        updatePlayStateUI(false);
-      }
-    });
-  }
-
   if (audioVolumeSlider) {
     audioVolumeSlider.addEventListener('input', (e) => {
       const vol = parseFloat(e.target.value);
@@ -2891,14 +2872,26 @@ if (bgAudio) {
     });
   }
 
-  // Smooth cinematic autoplay on first user gesture anywhere on screen
-  const startAudioOnFirstInteraction = () => {
+  // Autoplay handler (immediate + interaction fallback for modern browser autoplay policies)
+  const startAutoplay = () => {
     if (bgAudio.paused) {
       bgAudio.play().then(() => updatePlayStateUI(true)).catch(() => {});
     }
   };
-  window.addEventListener('pointerdown', startAudioOnFirstInteraction, { once: true });
-  window.addEventListener('keydown', startAudioOnFirstInteraction, { once: true });
+
+  // Immediate attempt on script execution and load
+  startAutoplay();
+  window.addEventListener('load', startAutoplay, { once: true });
+
+  // On first interaction anywhere (pointer, touch, key, click, scroll)
+  const interactionEvents = ['pointerdown', 'touchstart', 'click', 'keydown', 'scroll'];
+  const triggerAutoplayOnGesture = () => {
+    startAutoplay();
+    interactionEvents.forEach(evt => window.removeEventListener(evt, triggerAutoplayOnGesture));
+  };
+  interactionEvents.forEach(evt => {
+    window.addEventListener(evt, triggerAutoplayOnGesture, { once: true, passive: true });
+  });
 }
 
 if (musicButton && musicPanel) {
