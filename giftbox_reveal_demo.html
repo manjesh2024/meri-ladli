@@ -1,0 +1,1147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interactive Gift Box Opening & Memory Reveal</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ==========================================================================
+   RESET & FOUNDATION STYLES
+   ========================================================================== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg-gradient: radial-gradient(circle at 50% 20%, #3e121e 0%, #200810 50%, #120308 100%);
+  --gold-primary: #f0c978;
+  --gold-glow: rgba(240, 201, 120, 0.45);
+  --ribbon-red: linear-gradient(135deg, #d90429, #ef233c);
+  --card-bg: rgba(255, 255, 255, 0.08);
+  --card-border: rgba(240, 201, 120, 0.35);
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+}
+
+body {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background: var(--bg-gradient);
+  font-family: var(--font-sans);
+  color: #fff4e6;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Background floating particles & ambiance */
+.ambient-canvas {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* App container */
+.stage-container {
+  position: relative;
+  width: 100%;
+  max-width: 580px;
+  height: 100%;
+  max-height: 820px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  perspective: 1200px;
+  z-index: 10;
+  padding: 20px;
+}
+
+/* Header status indicator */
+.flow-header {
+  position: absolute;
+  top: 36px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  transition: opacity 0.5s ease;
+  z-index: 20;
+}
+
+.flow-header h2 {
+  font-family: var(--font-serif);
+  font-size: clamp(22px, 4vw, 32px);
+  font-weight: 700;
+  color: #fff2db;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
+  margin-bottom: 6px;
+}
+
+.flow-header p {
+  font-size: 13px;
+  color: #e2ba7c;
+  letter-spacing: 0.05em;
+}
+
+/* ==========================================================================
+   PHASE 0: 3D GIFT BOX COMPONENT
+   ========================================================================== */
+.giftbox-wrapper {
+  position: relative;
+  width: min(300px, 85vw);
+  aspect-ratio: 4 / 3;
+  cursor: pointer;
+  transform-style: preserve-3d;
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.4s ease, opacity 0.6s ease;
+  z-index: 20;
+}
+
+.giftbox-wrapper.idle {
+  animation: giftboxFloat 3.8s ease-in-out infinite alternate;
+}
+
+.giftbox-wrapper:hover {
+  transform: translateY(-8px) scale(1.04);
+}
+
+@keyframes giftboxFloat {
+  0% { transform: translateY(0px) rotate(-0.5deg); }
+  50% { transform: translateY(-10px) rotate(0.5deg); }
+  100% { transform: translateY(-4px) rotate(-0.3deg); }
+}
+
+/* Pedestal shadow */
+.giftbox-pedestal {
+  position: absolute;
+  bottom: -25px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 280px;
+  height: 65px;
+  background: radial-gradient(ellipse at center, rgba(240, 201, 120, 0.45) 0%, rgba(217, 4, 41, 0.15) 45%, transparent 70%);
+  filter: blur(12px);
+  pointer-events: none;
+  animation: pedestalBreathe 3.8s ease-in-out infinite alternate;
+}
+
+@keyframes pedestalBreathe {
+  0% { transform: translateX(-50%) scale(0.9); opacity: 0.6; }
+  100% { transform: translateX(-50%) scale(1.1); opacity: 0.95; }
+}
+
+/* Real Hamper Card Frame */
+.real-giftbox-card {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 2px solid rgba(240, 201, 120, 0.85);
+  box-shadow: 
+    0 24px 55px rgba(0, 0, 0, 0.7),
+    0 0 35px var(--gold-glow),
+    inset 0 1px 3px rgba(255, 240, 200, 0.6);
+  background: #2b050f;
+}
+
+.real-box-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  pointer-events: none;
+  transition: transform 0.5s ease;
+}
+
+.giftbox-wrapper:hover .real-box-img {
+  transform: scale(1.05);
+}
+
+.real-box-shimmer {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 20%, rgba(255, 235, 180, 0.3) 45%, rgba(255, 255, 255, 0.5) 50%, rgba(255, 235, 180, 0.3) 55%, transparent 75%);
+  background-size: 250% 100%;
+  animation: shimmerSweep 4.5s infinite;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+}
+
+@keyframes shimmerSweep {
+  0% { background-position: 150% 0; }
+  100% { background-position: -150% 0; }
+}
+
+.real-box-sparkles .sparkle-star {
+  position: absolute;
+  color: #ffea9f;
+  text-shadow: 0 0 8px rgba(255, 225, 120, 0.9);
+  pointer-events: none;
+  font-size: 14px;
+  z-index: 4;
+}
+.sparkle-star.s1 { top: 10px; left: 14px; animation: sparkleBlink 2.2s infinite ease-in-out; }
+.sparkle-star.s2 { top: 12px; right: 14px; animation: sparkleBlink 2.8s 0.6s infinite ease-in-out; }
+.sparkle-star.s3 { bottom: 12px; right: 16px; animation: sparkleBlink 2.5s 1.2s infinite ease-in-out; }
+
+@keyframes sparkleBlink {
+  0%, 100% { opacity: 0.3; transform: scale(0.8) rotate(0deg); }
+  50% { opacity: 1; transform: scale(1.2) rotate(45deg); }
+}
+
+/* Callout Tap Pill */
+.tap-prompt {
+  position: absolute;
+  bottom: -48px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(135deg, #f7dfb0, #c99336);
+  color: #2e050f;
+  padding: 8px 20px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  box-shadow: 0 4px 20px var(--gold-glow);
+  white-space: nowrap;
+  cursor: pointer;
+  border: none;
+  animation: promptPulse 2s infinite ease-in-out;
+  z-index: 10;
+}
+
+@keyframes promptPulse {
+  0%, 100% { transform: translateX(-50%) scale(1); }
+  50% { transform: translateX(-50%) scale(1.06); }
+}
+
+/* Box Opening State Classes */
+.giftbox-wrapper.opening {
+  animation: boxBurstOpen 1.8s cubic-bezier(0.16, 0.9, 0.28, 1) forwards;
+}
+
+.giftbox-wrapper.opening .tap-prompt {
+  opacity: 0;
+  transform: translateX(-50%) scale(0.8);
+}
+
+@keyframes boxBurstOpen {
+  0% {
+    transform: scale(1) translateY(0);
+    filter: brightness(1) drop-shadow(0 0 0px #ffe07a);
+  }
+  30% {
+    transform: scale(1.08) translateY(-14px);
+    filter: brightness(1.35) drop-shadow(0 0 45px rgba(255, 220, 120, 0.95));
+  }
+  60% {
+    transform: scale(1.15) translateY(-25px);
+    opacity: 0.85;
+    filter: brightness(1.6) blur(2px) drop-shadow(0 0 65px rgba(255, 180, 50, 1));
+  }
+  100% {
+    transform: scale(0.5) translateY(-40px);
+    opacity: 0;
+    filter: blur(8px);
+    pointer-events: none;
+  }
+}
+
+.giftbox-wrapper.opened {
+  display: none !important;
+}
+
+/* ==========================================================================
+   PHASE 1 & 2: BURST PARTICLES & CONVERGENCE CARDS
+   ========================================================================== */
+.memory-card-layer {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 30;
+}
+
+.memory-card {
+  position: absolute;
+  width: 270px;
+  height: 380px;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1.5px solid var(--card-border);
+  border-radius: 18px;
+  padding: 14px 14px 18px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+  display: flex;
+  flex-direction: column;
+  cursor: grab;
+  touch-action: none;
+  will-change: transform, opacity;
+  opacity: 0;
+  transform-origin: center center;
+  pointer-events: auto;
+}
+
+.memory-card:active {
+  cursor: grabbing;
+}
+
+/* Polaroid Photo Frame inside Card */
+.card-media {
+  width: 100%;
+  height: 250px;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+  background: #140308;
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.4);
+}
+
+.card-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+.card-media .card-pill {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  padding: 4px 10px;
+  background: rgba(20, 4, 10, 0.75);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--gold-primary);
+  border-radius: 999px;
+  font-size: 9.5px;
+  font-weight: 700;
+  color: var(--gold-primary);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.card-meta {
+  padding-top: 12px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+}
+
+.card-meta .card-title {
+  font-family: var(--font-serif);
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff4e6;
+  margin-bottom: 4px;
+}
+
+.card-meta .card-subtitle {
+  font-size: 11px;
+  color: #e5ba7d;
+  font-style: italic;
+}
+
+.card-inspect-hint {
+  font-size: 9.5px;
+  color: rgba(255, 230, 200, 0.65);
+  margin-top: 4px;
+}
+
+/* ==========================================================================
+   PHASE 3: SWIPE CONTROLS & DECK NAVIGATION
+   ========================================================================== */
+.deck-controls {
+  position: absolute;
+  bottom: 28px;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  z-index: 40;
+}
+
+.deck-controls.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.deck-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 1.5px solid var(--gold-primary);
+  background: rgba(46, 12, 22, 0.75);
+  backdrop-filter: blur(10px);
+  color: var(--gold-primary);
+  font-size: 18px;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.deck-btn:hover {
+  transform: scale(1.1);
+  background: var(--gold-primary);
+  color: #2b0c13;
+  box-shadow: 0 0 16px var(--gold-glow);
+}
+
+.deck-btn.primary {
+  width: auto;
+  border-radius: 999px;
+  padding: 0 22px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+/* ==========================================================================
+   PHASE 4: FULL-SCREEN VIEWER (LIGHTBOX MODAL)
+   ========================================================================== */
+.lightbox-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s ease;
+}
+
+.lightbox-modal.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.lightbox-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(14, 3, 7, 0.88);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+}
+
+.lightbox-dialog {
+  position: relative;
+  z-index: 2;
+  max-width: 520px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  background: linear-gradient(145deg, #3d0d1b 0%, #1e050d 100%);
+  border: 2px solid var(--gold-primary);
+  border-radius: 24px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 35px var(--gold-glow);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  transform: scale(0.92) translateY(20px);
+  transition: transform 0.35s cubic-bezier(0.16, 0.9, 0.28, 1);
+}
+
+.lightbox-modal.active .lightbox-dialog {
+  transform: scale(1) translateY(0);
+}
+
+.lightbox-close-btn {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid rgba(240, 201, 120, 0.4);
+  background: rgba(0, 0, 0, 0.5);
+  color: var(--gold-primary);
+  font-size: 22px;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.2s ease;
+}
+
+.lightbox-close-btn:hover {
+  background: var(--gold-primary);
+  color: #24050d;
+}
+
+.lightbox-image-box {
+  width: 100%;
+  max-height: 380px;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #140308;
+  display: grid;
+  place-items: center;
+  margin-bottom: 16px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+}
+
+.lightbox-image-box img {
+  width: 100%;
+  max-height: 380px;
+  object-fit: contain;
+}
+
+.lightbox-info {
+  text-align: center;
+}
+
+.lightbox-pill {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: rgba(240, 201, 120, 0.15);
+  border: 1px solid var(--gold-primary);
+  color: var(--gold-primary);
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.lightbox-title {
+  font-family: var(--font-serif);
+  font-size: 24px;
+  color: #fff5e6;
+  margin-bottom: 4px;
+}
+
+.lightbox-date {
+  font-size: 12px;
+  color: #dfba7c;
+  font-style: italic;
+  margin-bottom: 12px;
+}
+
+.lightbox-story {
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: #f7ded3;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 12px;
+  border-left: 3px solid var(--gold-primary);
+  text-align: left;
+}
+
+/* ==========================================================================
+   CONFETTI CANVASES & BURST PARTICLES
+   ========================================================================== */
+.confetti-particle {
+  position: fixed;
+  pointer-events: none;
+  z-index: 50;
+  border-radius: 3px;
+  will-change: transform, opacity;
+}
+</style>
+</head>
+<body>
+
+<canvas class="ambient-canvas" id="ambientCanvas"></canvas>
+
+<div class="stage-container">
+  <!-- Header indicator -->
+  <header class="flow-header" id="flowHeader">
+    <h2 id="flowTitle">A Special Gift for You</h2>
+    <p id="flowSubtitle">Tap the gift box to unwrap your memories</p>
+  </header>
+
+  <!-- Phase 0: Real Diwali Gift Hamper Box Component -->
+  <div class="giftbox-wrapper idle" id="giftBox" role="button" tabindex="0" aria-label="Tap to open gift box">
+    <div class="giftbox-pedestal"></div>
+    <div class="real-giftbox-card">
+      <img src="assets/products/gift-box-hamper.jpg" alt="Diwali Gift Hamper" class="real-box-img">
+      <div class="real-box-shimmer"></div>
+      <div class="real-box-sparkles">
+        <span class="sparkle-star s1">✦</span>
+        <span class="sparkle-star s2">✦</span>
+        <span class="sparkle-star s3">✦</span>
+      </div>
+    </div>
+    <button class="tap-prompt" type="button" id="tapPrompt">Tap Box to Open ✨</button>
+  </div>
+
+  <!-- Phase 1, 2, 3: Memory Cards Layer -->
+  <div class="memory-card-layer" id="cardLayer"></div>
+
+  <!-- Phase 3: Bottom Swipe & Navigation Controls -->
+  <nav class="deck-controls" id="deckControls" aria-label="Memory card deck controls">
+    <button class="deck-btn" id="btnPrev" aria-label="Previous card">↺</button>
+    <button class="deck-btn primary" id="btnNext" aria-label="Next card">Next Memory →</button>
+    <button class="deck-btn" id="btnReset" aria-label="Repack gift box">🎁</button>
+  </nav>
+</div>
+
+<!-- Phase 4: Full-Screen Detail Viewer (Lightbox) -->
+<div class="lightbox-modal" id="lightboxModal" role="dialog" aria-modal="true" aria-label="Memory Detail Viewer">
+  <div class="lightbox-backdrop" id="lightboxBackdrop"></div>
+  <div class="lightbox-dialog">
+    <button class="lightbox-close-btn" id="lightboxClose" aria-label="Close viewer">×</button>
+    <div class="lightbox-image-box">
+      <img id="lightboxImg" src="" alt="Full view memory">
+    </div>
+    <div class="lightbox-info">
+      <span class="lightbox-pill" id="lightboxPill">Memories</span>
+      <h3 class="lightbox-title" id="lightboxTitle"></h3>
+      <p class="lightbox-date" id="lightboxDate"></p>
+      <p class="lightbox-story" id="lightboxStory"></p>
+    </div>
+  </div>
+</div>
+
+<script>
+/**
+ * ============================================================================
+ * INTERACTIVE GIFT BOX & MEMORY REVEAL CONTROLLER
+ * ============================================================================
+ */
+
+// Memory items dataset
+const MEMORIES = [
+  {
+    src: 'assets/products/jewelry-wish-pearl-box.jpg',
+    category: 'Fine Keepsake',
+    title: 'Royal Wish Pearl Keepsake Set',
+    date: 'Diwali Special',
+    story: 'An authentic oyster with a genuine cultured pearl inside, waiting to be revealed and worn inside a delicate flower cage pendant.'
+  },
+  {
+    src: 'assets/products/jewelry-wish-pearl-diy.jpg',
+    category: 'DIY Experience',
+    title: 'Wish Pearl DIY Keepsake',
+    date: 'A Heartfelt Ritual',
+    story: 'From oyster to elegant necklace in three simple steps. An intimate keepsake to celebrate every wish made from the heart.'
+  },
+  {
+    src: 'assets/products/jewelry-gemstone-bracelet.jpg',
+    category: 'Royal Jewelry',
+    title: 'Royal Gemstone Vine Bracelet',
+    date: 'Pure Sparkle',
+    story: 'Vibrant gemstone cabochons set on an 18K gold branch vine. Designed to sparkle beside your glowing smile.'
+  },
+  {
+    src: 'assets/products/chocolate-galaxy.jpg',
+    category: 'Silky Sweet',
+    title: 'Galaxy Smooth Milk Chocolate',
+    date: 'Sweet Moments',
+    story: 'Velvety smooth milk chocolate that melts gently on your tongue, bringing instant warmth and comfort.'
+  },
+  {
+    src: 'assets/products/chocolate-kitkat.jpg',
+    category: 'Crisp Joy',
+    title: 'Nestle KitKat Diwali Edition',
+    date: 'Shared Breaks',
+    story: 'Crispy wafer fingers layered with creamy chocolate for all the joyful, unscripted breaks we share together.'
+  },
+  {
+    src: 'assets/products/chocolate-crispello.jpg',
+    category: 'Crunchy Treat',
+    title: 'Cadbury Dairy Milk Crispello',
+    date: 'Little Surprises',
+    story: 'Crispy wheat balls bathed in melt-in-mouth Dairy Milk chocolate, crafted for shared laughter.'
+  },
+  {
+    src: 'assets/products/chocolate-bournville.jpg',
+    category: 'Gourmet Dark',
+    title: 'Cadbury Bournville 50% Dark',
+    date: 'Deep & Rich',
+    story: 'Rich Ghana cocoa offering a luxurious, intense flavor as deep and unforgettable as our fondest memories.'
+  },
+  {
+    src: 'assets/products/gift-box-hamper.jpg',
+    category: 'Grand Hamper',
+    title: 'Hand-Wrapped Diwali Hamper',
+    date: 'Wrapped with Devotion',
+    story: 'Golden paisley wrapping, royal maroon velvet trims, and a satin rosette carrying all my blessings for my dearest Ladli.'
+  }
+];
+
+class GiftBoxRevealController {
+  constructor(items) {
+    this.items = items;
+    this.activeIndex = 0;
+    this.state = 'idle'; // 'idle' | 'opening' | 'bursting' | 'gathering' | 'deck' | 'lightbox'
+    this.cards = [];
+
+    // DOM Elements
+    this.giftBox = document.getElementById('giftBox');
+    this.cardLayer = document.getElementById('cardLayer');
+    this.flowTitle = document.getElementById('flowTitle');
+    this.flowSubtitle = document.getElementById('flowSubtitle');
+    this.deckControls = document.getElementById('deckControls');
+    this.tapPrompt = document.getElementById('tapPrompt');
+
+    this.lightboxModal = document.getElementById('lightboxModal');
+    this.lightboxBackdrop = document.getElementById('lightboxBackdrop');
+    this.lightboxClose = document.getElementById('lightboxClose');
+    this.lightboxImg = document.getElementById('lightboxImg');
+    this.lightboxPill = document.getElementById('lightboxPill');
+    this.lightboxTitle = document.getElementById('lightboxTitle');
+    this.lightboxDate = document.getElementById('lightboxDate');
+    this.lightboxStory = document.getElementById('lightboxStory');
+
+    this.btnNext = document.getElementById('btnNext');
+    this.btnPrev = document.getElementById('btnPrev');
+    this.btnReset = document.getElementById('btnReset');
+
+    this.init();
+  }
+
+  init() {
+    this.giftBox.addEventListener('click', () => this.handleOpenBox());
+    this.giftBox.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        this.handleOpenBox();
+      }
+    });
+
+    this.btnNext.addEventListener('click', () => this.swipeTopCard('left'));
+    this.btnPrev.addEventListener('click', () => this.rewindCard());
+    this.btnReset.addEventListener('click', () => this.resetBox());
+
+    this.lightboxClose.addEventListener('click', () => this.closeLightbox());
+    this.lightboxBackdrop.addEventListener('click', () => this.closeLightbox());
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && this.state === 'lightbox') this.closeLightbox();
+      if (this.state === 'deck') {
+        if (e.key === 'ArrowRight') this.swipeTopCard('right');
+        if (e.key === 'ArrowLeft') this.swipeTopCard('left');
+        if (e.key === 'ArrowUp' || e.key === ' ') this.openLightbox(this.activeIndex);
+      }
+    });
+
+    this.createCards();
+    this.initAmbientParticles();
+
+    // Deep-linking / direct state inspection via URL parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('open') === '1' || urlParams.get('state') === 'deck') {
+      this.fastForwardToDeck();
+      if (urlParams.has('lightbox')) {
+        const lbIdx = parseInt(urlParams.get('lightbox'), 10) || 0;
+        this.openLightbox(lbIdx);
+      }
+    }
+  }
+
+  fastForwardToDeck() {
+    this.state = 'deck';
+    this.giftBox.classList.remove('idle');
+    this.giftBox.classList.add('opened');
+    this.flowTitle.textContent = `Memory ${this.activeIndex + 1} of ${this.items.length}`;
+    this.flowSubtitle.textContent = this.items[this.activeIndex].title;
+    this.deckControls.classList.add('visible');
+    this.cards.forEach((card, idx) => {
+      this.updateCardPositionInStack(card, idx);
+    });
+  }
+
+  createCards() {
+    this.cardLayer.innerHTML = '';
+    this.cards = this.items.map((item, index) => {
+      const card = document.createElement('div');
+      card.className = 'memory-card';
+      card.dataset.index = index;
+
+      card.innerHTML = `
+        <div class="card-media">
+          <span class="card-pill">${item.category}</span>
+          <img src="${item.src}" alt="${item.title}" loading="eager" draggable="false">
+        </div>
+        <div class="card-meta">
+          <h3 class="card-title">${item.title}</h3>
+          <p class="card-subtitle">${item.date}</p>
+          <span class="card-inspect-hint">Tap to view story 🔍</span>
+        </div>
+      `;
+
+      this.attachSwipeListeners(card, index);
+      this.cardLayer.appendChild(card);
+      return card;
+    });
+  }
+
+  /* -------------------------------------------------------------------------
+     PHASE 1: BOX OPENING & CONFETTI BURST
+     ------------------------------------------------------------------------- */
+  handleOpenBox() {
+    if (this.state !== 'idle') return;
+    this.state = 'opening';
+
+    this.giftBox.classList.remove('idle');
+    this.giftBox.classList.add('opening');
+    this.triggerConfetti();
+
+    this.flowTitle.textContent = "Unwrapping Treasures…";
+    this.flowSubtitle.textContent = "Your memories are emerging!";
+
+    // Phase 1: Burst Outward (after lid opens ~450ms)
+    setTimeout(() => {
+      this.state = 'bursting';
+      this.animateBurstOutward();
+    }, 450);
+
+    // Phase 2: Converge into Stack Deck (~1800ms)
+    setTimeout(() => {
+      this.giftBox.classList.add('opened');
+      this.state = 'gathering';
+      this.flowTitle.textContent = "Memories Gathered in Love";
+      this.flowSubtitle.textContent = "Swipe left/right or tap to explore each card";
+      this.animateGatherIntoDeck();
+    }, 1800);
+
+    // Phase 3: Activate Interactive Deck Mode (~2600ms)
+    setTimeout(() => {
+      this.state = 'deck';
+      this.deckControls.classList.add('visible');
+    }, 2600);
+  }
+
+  animateBurstOutward() {
+    const total = this.cards.length;
+    this.cards.forEach((card, idx) => {
+      const angle = (idx / total) * Math.PI * 2 - Math.PI / 2 + (Math.random() - 0.5) * 0.35;
+      const distance = 160 + (idx % 3) * 55 + Math.random() * 30;
+      const burstX = Math.cos(angle) * distance;
+      const burstY = Math.sin(angle) * (distance * 0.75) - 30;
+      const burstRot = (Math.random() - 0.5) * 45;
+
+      // Spring burst transition
+      card.style.transition = `
+        transform 0.95s cubic-bezier(0.18, 0.89, 0.32, 1.28),
+        opacity 0.4s ease
+      `;
+      card.style.opacity = '1';
+      card.style.transform = `
+        translate3d(${burstX}px, ${burstY}px, 0)
+        scale(0.85)
+        rotate(${burstRot}deg)
+      `;
+    });
+  }
+
+  /* -------------------------------------------------------------------------
+     PHASE 2: CONVERGENCE INTO CARD STACK
+     ------------------------------------------------------------------------- */
+  animateGatherIntoDeck() {
+    this.cards.forEach((card, idx) => {
+      // Delay stagger inward
+      const delay = idx * 60;
+      setTimeout(() => {
+        card.style.transition = `
+          transform 0.65s cubic-bezier(0.2, 0.8, 0.25, 1),
+          box-shadow 0.65s ease,
+          opacity 0.4s ease
+        `;
+        this.updateCardPositionInStack(card, idx);
+      }, delay);
+    });
+  }
+
+  /* Calculate 3D stacking depth & transform for card at visual position */
+  updateCardPositionInStack(card, absoluteIndex) {
+    const relativeIndex = absoluteIndex - this.activeIndex;
+
+    if (relativeIndex < 0) {
+      // Swiped away / discarded card
+      card.style.pointerEvents = 'none';
+      card.style.opacity = '0';
+      return;
+    }
+
+    if (relativeIndex > 3) {
+      // Hidden deep in the deck
+      card.style.pointerEvents = 'none';
+      card.style.opacity = '0';
+      card.style.transform = `translate3d(0, 36px, -120px) scale(0.82)`;
+      return;
+    }
+
+    // Visible stack layers (0 = top, 1 = mid, 2 = low, 3 = base)
+    const scale = 1 - relativeIndex * 0.05;
+    const translateY = relativeIndex * 13;
+    const translateZ = -relativeIndex * 35;
+    const rotate = (relativeIndex % 2 === 0 ? 1 : -1) * relativeIndex * 1.8;
+    const zIndex = 50 - relativeIndex;
+    const opacity = 1 - relativeIndex * 0.15;
+
+    card.style.zIndex = zIndex;
+    card.style.pointerEvents = relativeIndex === 0 ? 'auto' : 'none';
+    card.style.opacity = opacity;
+    card.style.transform = `
+      translate3d(0px, ${translateY}px, ${translateZ}px)
+      scale(${scale})
+      rotate(${rotate}deg)
+    `;
+    card.style.boxShadow = `
+      0 ${14 + relativeIndex * 4}px ${35 + relativeIndex * 8}px rgba(0, 0, 0, ${0.45 - relativeIndex * 0.08}),
+      0 0 ${12 - relativeIndex * 3}px var(--gold-glow)
+    `;
+  }
+
+  refreshDeck() {
+    this.cards.forEach((card, idx) => {
+      card.style.transition = 'transform 0.38s cubic-bezier(0.2, 0.8, 0.25, 1), opacity 0.38s ease';
+      this.updateCardPositionInStack(card, idx);
+    });
+
+    if (this.activeIndex >= this.items.length) {
+      this.flowTitle.textContent = "All Memories Unwrapped ✨";
+      this.flowSubtitle.textContent = "Tap replay ↺ to flip through again";
+      this.btnNext.textContent = "Replay All ↺";
+    } else {
+      this.flowTitle.textContent = `Memory ${this.activeIndex + 1} of ${this.items.length}`;
+      this.flowSubtitle.textContent = this.items[this.activeIndex].title;
+      this.btnNext.textContent = "Next Memory →";
+    }
+  }
+
+  /* -------------------------------------------------------------------------
+     PHASE 3: 3D SWIPE PHYSICS (POINTER EVENTS TOUCH + MOUSE)
+     ------------------------------------------------------------------------- */
+  attachSwipeListeners(card, index) {
+    let startX = 0, startY = 0;
+    let currentX = 0, currentY = 0;
+    let isDragging = false;
+    let startTime = 0;
+
+    const onPointerDown = (e) => {
+      if (this.state !== 'deck' || index !== this.activeIndex) return;
+      isDragging = true;
+      startX = e.clientX;
+      startY = e.clientY;
+      currentX = startX;
+      currentY = startY;
+      startTime = performance.now();
+
+      card.setPointerCapture(e.pointerId);
+      card.style.transition = 'none';
+    };
+
+    const onPointerMove = (e) => {
+      if (!isDragging) return;
+      currentX = e.clientX;
+      currentY = e.clientY;
+      const deltaX = currentX - startX;
+      const deltaY = currentY - startY;
+      const rotate = deltaX * 0.085;
+
+      card.style.transform = `
+        translate3d(${deltaX}px, ${deltaY}px, 0)
+        rotate(${rotate}deg)
+        scale(1.03)
+      `;
+    };
+
+    const onPointerUp = (e) => {
+      if (!isDragging) return;
+      isDragging = false;
+      card.releasePointerCapture(e.pointerId);
+
+      const deltaX = currentX - startX;
+      const deltaY = currentY - startY;
+      const duration = performance.now() - startTime;
+      const velocity = Math.abs(deltaX) / (duration || 1);
+
+      const distance = Math.hypot(deltaX, deltaY);
+
+      // Check for tap (click to view details)
+      if (distance < 7) {
+        this.openLightbox(this.activeIndex);
+        return;
+      }
+
+      // Check for swipe dismiss threshold (distance > 100px or quick flick)
+      const isSwipeOut = Math.abs(deltaX) > 100 || (velocity > 0.45 && Math.abs(deltaX) > 35);
+
+      if (isSwipeOut) {
+        const direction = deltaX > 0 ? 'right' : 'left';
+        this.animateCardExit(card, direction);
+      } else {
+        // Snap back to top of stack
+        card.style.transition = 'transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+        this.updateCardPositionInStack(card, index);
+      }
+    };
+
+    card.addEventListener('pointerdown', onPointerDown);
+    card.addEventListener('pointermove', onPointerMove);
+    card.addEventListener('pointerup', onPointerUp);
+    card.addEventListener('pointercancel', onPointerUp);
+  }
+
+  swipeTopCard(direction = 'left') {
+    if (this.activeIndex >= this.items.length) {
+      this.activeIndex = 0;
+      this.refreshDeck();
+      return;
+    }
+    const currentCard = this.cards[this.activeIndex];
+    if (currentCard) {
+      this.animateCardExit(currentCard, direction);
+    }
+  }
+
+  animateCardExit(card, direction) {
+    const exitX = direction === 'right' ? window.innerWidth * 0.85 : -window.innerWidth * 0.85;
+    const exitRot = direction === 'right' ? 35 : -35;
+
+    card.style.transition = 'transform 0.45s cubic-bezier(0.2, 0.8, 0.25, 1), opacity 0.35s ease';
+    card.style.transform = `translate3d(${exitX}px, 60px, 0) rotate(${exitRot}deg) scale(0.9)`;
+    card.style.opacity = '0';
+
+    this.activeIndex++;
+    this.refreshDeck();
+  }
+
+  rewindCard() {
+    if (this.activeIndex > 0) {
+      this.activeIndex--;
+      this.refreshDeck();
+    }
+  }
+
+  resetBox() {
+    this.state = 'idle';
+    this.activeIndex = 0;
+    this.deckControls.classList.remove('visible');
+
+    this.flowTitle.textContent = "A Special Gift for You";
+    this.flowSubtitle.textContent = "Tap the gift box to unwrap your memories";
+
+    this.giftBox.className = 'giftbox-wrapper idle';
+    this.cards.forEach(card => {
+      card.style.transition = 'transform 0.4s ease, opacity 0.4s ease';
+      card.style.opacity = '0';
+      card.style.transform = 'translate3d(0, 0, 0) scale(0.5)';
+      card.style.pointerEvents = 'none';
+    });
+  }
+
+  /* -------------------------------------------------------------------------
+     PHASE 4: FULL-SCREEN VIEWER MODAL
+     ------------------------------------------------------------------------- */
+  openLightbox(index) {
+    const item = this.items[index];
+    if (!item) return;
+
+    this.state = 'lightbox';
+    this.lightboxImg.src = item.src;
+    this.lightboxImg.alt = item.title;
+    this.lightboxPill.textContent = item.category;
+    this.lightboxTitle.textContent = item.title;
+    this.lightboxDate.textContent = item.date;
+    this.lightboxStory.textContent = `"${item.story}"`;
+
+    this.lightboxModal.classList.add('active');
+  }
+
+  closeLightbox() {
+    this.lightboxModal.classList.remove('active');
+    this.state = 'deck';
+  }
+
+  /* -------------------------------------------------------------------------
+     CONFETTI & PARTICLES SYSTEM
+     ------------------------------------------------------------------------- */
+  triggerConfetti() {
+    const colors = ['#f0c978', '#ff4d6d', '#fff0c7', '#ffd166', '#ef233c'];
+    for (let i = 0; i < 48; i++) {
+      const p = document.createElement('div');
+      p.className = 'confetti-particle';
+      const size = 6 + Math.random() * 8;
+      p.style.width = `${size}px`;
+      p.style.height = `${size * (Math.random() > 0.5 ? 1 : 1.6)}px`;
+      p.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+      p.style.top = '50%';
+      p.style.left = '50%';
+
+      const angle = Math.random() * Math.PI * 2;
+      const speed = 120 + Math.random() * 260;
+      const tx = Math.cos(angle) * speed;
+      const ty = Math.sin(angle) * speed - 60;
+      const rot = (Math.random() - 0.5) * 720;
+
+      document.body.appendChild(p);
+
+      p.animate([
+        { transform: 'translate3d(0,0,0) scale(0.2) rotate(0deg)', opacity: 1 },
+        { transform: `translate3d(${tx}px, ${ty}px, 0) scale(1) rotate(${rot}deg)`, opacity: 0.9, offset: 0.6 },
+        { transform: `translate3d(${tx * 1.2}px, ${ty + 140}px, 0) scale(0.8) rotate(${rot * 1.5}deg)`, opacity: 0 }
+      ], {
+        duration: 1200 + Math.random() * 600,
+        easing: 'cubic-bezier(0.18, 0.89, 0.32, 1.28)',
+        fill: 'forwards'
+      }).onfinish = () => p.remove();
+    }
+  }
+
+  initAmbientParticles() {
+    const canvas = document.getElementById('ambientCanvas');
+    const ctx = canvas.getContext('2d');
+    let w, h;
+    const resize = () => {
+      w = canvas.width = window.innerWidth;
+      h = canvas.height = window.innerHeight;
+    };
+    resize();
+    window.addEventListener('resize', resize);
+
+    const stars = Array.from({ length: 42 }, () => ({
+      x: Math.random() * w,
+      y: Math.random() * h,
+      r: 0.8 + Math.random() * 1.8,
+      speed: 0.2 + Math.random() * 0.4,
+      alpha: Math.random()
+    }));
+
+    function loop() {
+      ctx.clearRect(0, 0, w, h);
+      ctx.fillStyle = '#ffdf96';
+      stars.forEach(s => {
+        s.y -= s.speed;
+        if (s.y < 0) { s.y = h; s.x = Math.random() * w; }
+        s.alpha = 0.3 + Math.sin(Date.now() * 0.002 + s.x) * 0.3;
+        ctx.globalAlpha = s.alpha;
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fill();
+      });
+      requestAnimationFrame(loop);
+    }
+    loop();
+  }
+}
+
+// Instantiate controller when DOM is ready
+window.addEventListener('DOMContentLoaded', () => {
+  window.giftBoxController = new GiftBoxRevealController(MEMORIES);
+});
+</script>
+</body>
+</html>
