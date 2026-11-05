@@ -371,6 +371,43 @@ footer { text-align:center; padding:25px; color:#9c7c72; font-size:10px; letter-
 .slide-controls .scene-button { padding:12px 22px; font-size:12px; }
 @media(max-width:700px){ .slide-controls { margin-top:12px; } .slide-controls .scene-button { padding:10px 17px; font-size:11px; } }
 
+
+/* Interactive Ladli gift reveal */
+.gift-reveal { position:relative; max-width:760px; margin:30px auto 34px; padding:26px 16px 20px; text-align:center; border:1px solid rgba(233,197,141,.28); border-radius:26px; background:radial-gradient(ellipse at 50% 72%,rgba(244,181,100,.13),transparent 58%),linear-gradient(145deg,rgba(255,255,255,.075),rgba(255,255,255,.018)); overflow:hidden; }
+.gift-reveal::before { content:"✦  ✧  ·  ✧  ✦"; position:absolute; top:18px; left:0; right:0; color:rgba(239,202,139,.58); letter-spacing:1.2em; font-size:12px; pointer-events:none; }
+.gift-reveal-title { margin:10px 0 7px; color:var(--gold); font-family:var(--site-font-heading); font-size:clamp(23px,4vw,34px); }
+.gift-reveal-hint { margin:0 0 18px; color:var(--muted); font-size:12px; letter-spacing:.08em; }
+.gift-box-button { position:relative; display:block; width:min(280px,72vw); height:220px; margin:8px auto 0; border:0; background:transparent; cursor:pointer; perspective:900px; -webkit-tap-highlight-color:transparent; }
+.gift-box-button:focus-visible { outline:2px solid var(--gold); outline-offset:8px; border-radius:18px; }
+.gift-box-art { position:absolute; left:50%; bottom:14px; width:210px; height:140px; transform:translateX(-50%); }
+.gift-box-base { position:absolute; left:0; right:0; bottom:0; height:112px; border:1px solid #e9c58d; border-radius:5px 5px 13px 13px; background:linear-gradient(110deg,#6d1d35 0%,#a63c53 35%,#7e263e 68%,#4d1429 100%); box-shadow:0 22px 35px rgba(0,0,0,.4),inset 0 2px 7px rgba(255,255,255,.2); }
+.gift-box-base::before { content:""; position:absolute; left:50%; top:0; bottom:0; width:34px; transform:translateX(-50%); background:linear-gradient(90deg,#b77b45,#f5d69b 48%,#b77b45); box-shadow:0 0 16px rgba(255,213,143,.25); }
+.gift-box-lid { position:absolute; z-index:3; left:-8px; right:-8px; top:-15px; height:48px; border:1px solid #f3d9a9; border-radius:7px; transform-origin:12% 90%; background:linear-gradient(110deg,#8b2944,#c45a69 45%,#76203a); box-shadow:0 9px 16px rgba(0,0,0,.28),inset 0 2px 5px rgba(255,255,255,.25); transition:transform 1s cubic-bezier(.2,.8,.2,1),opacity .7s; }
+.gift-box-lid::before { content:""; position:absolute; left:50%; top:0; bottom:0; width:34px; transform:translateX(-50%); background:linear-gradient(90deg,#b77b45,#f5d69b 48%,#b77b45); }
+.gift-box-bow { position:absolute; z-index:4; left:50%; top:-48px; width:82px; height:48px; transform:translateX(-50%); transition:transform .6s ease,opacity .5s; }
+.gift-box-bow::before,.gift-box-bow::after { content:""; position:absolute; top:3px; width:37px; height:27px; border:7px solid #f2c77f; border-radius:70% 15% 70% 15%; filter:drop-shadow(0 2px 4px rgba(0,0,0,.25)); }
+.gift-box-bow::before { left:2px; transform:rotate(22deg); }
+.gift-box-bow::after { right:2px; transform:scaleX(-1) rotate(22deg); }
+.gift-box-bow span { position:absolute; left:34px; top:22px; width:16px; height:16px; border-radius:50%; background:radial-gradient(circle at 35% 30%,#fff0c6,#c78c4b 70%); }
+.gift-box-button.opened .gift-box-lid { transform:translate(-22px,-105px) rotate(-24deg); opacity:.96; }
+.gift-box-button.opened .gift-box-bow { transform:translate(-50%,-75px) rotate(-18deg) scale(.72); opacity:0; }
+.gift-box-button.opened .gift-box-base { animation:gift-box-glow 1.3s ease-in-out both; }
+@keyframes gift-box-glow { 0%{filter:brightness(1)} 45%{filter:brightness(1.8) drop-shadow(0 0 25px rgba(255,211,132,.9))} 100%{filter:brightness(1.1)} }
+.gift-box-button.opened { cursor:default; }
+.gift-gallery { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:14px; width:min(100%,850px); margin:8px auto 24px; perspective:1000px; }
+.gift-item { position:relative; min-width:0; margin:0; padding:8px 8px 12px; border:1px solid rgba(238,199,135,.55); border-radius:15px; background:linear-gradient(145deg,#fff4e7,#e8d2bd); color:#48212c; box-shadow:0 12px 30px rgba(0,0,0,.3); opacity:0; transform:translateY(90px) scale(.35) rotate(var(--gift-tilt,0deg)); transform-origin:50% 90%; }
+.gift-gallery.revealed .gift-item { animation:gift-fly-out .85s cubic-bezier(.16,.82,.25,1.15) var(--gift-delay,0s) both; }
+@keyframes gift-fly-out { 0%{opacity:0;transform:translateY(90px) scale(.35) rotate(var(--gift-tilt,0deg))} 58%{opacity:1;transform:translateY(-14px) scale(1.06) rotate(var(--gift-tilt,0deg))} 100%{opacity:1;transform:translateY(0) scale(1) rotate(var(--gift-tilt,0deg))} }
+.gift-item-media { display:grid; place-items:center; width:100%; aspect-ratio:4/5; overflow:hidden; border-radius:9px; background:radial-gradient(circle at 50% 35%,#fff5df,#d8b6a5 65%,#8d5963); color:#682b40; }
+.gift-item-media img { display:block; width:100%; height:100%; object-fit:contain; }
+.gift-item-media .gift-fallback { padding:12px; font-size:34px; text-align:center; }
+.gift-item figcaption { padding:9px 2px 0; font-family:var(--site-font-heading); font-size:13px; font-weight:600; }
+.gift-item small { display:block; margin-top:3px; color:#8b5b5b; font:9px var(--site-font-body); }
+.gift-gallery-note { color:var(--muted); font-size:11px; text-align:center; margin:0 auto 20px; }
+.gift-gallery[hidden] { display:none; }
+@media(max-width:680px){.gift-gallery{grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}.gift-reveal{padding:24px 12px 16px}.gift-box-button{height:205px}}
+@media(prefers-reduced-motion:reduce){.gift-gallery.revealed .gift-item{animation:none;opacity:1;transform:none}.gift-box-lid,.gift-box-bow{transition:none}}
+
 </style>
 <style id="latest-gallery-and-rangoli">
 :root { --memory-sprite:url('https://raw.githubusercontent.com/manjesh2024/meri-ladli/main/assets/memory-sprite-v3.webp?v=20261103-2310') !important; }
@@ -474,12 +511,26 @@ footer { text-align:center; padding:25px; color:#9c7c72; font-size:10px; letter-
         <div class="section-label">A little gift, made of memories</div>
         <h2 class="section-title">And here's one more surprise…</h2>
         <p class="section-intro">Some of my favourite moments with you, gathered in one little place.</p>
-        <div class="gift-collage">
-          <figure class="gift-photo"><div class="gift-placeholder-content"><span class="gift-placeholder-number">Gift 01</span><span class="gift-placeholder-icon">✧</span><span class="gift-placeholder-title">A little something</span><span class="gift-placeholder-caption">Your gift photo goes here</span></div></figure>
-          <figure class="gift-photo"><div class="gift-placeholder-content"><span class="gift-placeholder-number">Gift 02</span><span class="gift-placeholder-icon">♡</span><span class="gift-placeholder-title">Made just for you</span><span class="gift-placeholder-caption">Your gift photo goes here</span></div></figure>
-          <figure class="gift-photo"><div class="gift-placeholder-content"><span class="gift-placeholder-number">Gift 03</span><span class="gift-placeholder-icon">✦</span><span class="gift-placeholder-title">A tiny surprise</span><span class="gift-placeholder-caption">Your gift photo goes here</span></div></figure>
-          <figure class="gift-photo"><div class="gift-placeholder-content"><span class="gift-placeholder-number">Gift 04</span><span class="gift-placeholder-icon">❀</span><span class="gift-placeholder-title">One more smile</span><span class="gift-placeholder-caption">Your gift photo goes here</span></div></figure>
+        <div class="gift-reveal" id="giftReveal">
+          <h3 class="gift-reveal-title">A little surprise, just for you</h3>
+          <p class="gift-reveal-hint" id="giftRevealHint">Tap the ribbon to open your Diwali gift ✨</p>
+          <button class="gift-box-button" id="giftBoxButton" type="button" aria-label="Open the Diwali gift box">
+            <span class="gift-box-art" aria-hidden="true">
+              <span class="gift-box-base"></span><span class="gift-box-lid"></span><span class="gift-box-bow"><span></span></span>
+            </span>
+          </button>
         </div>
+        <div class="gift-gallery" id="giftGallery" hidden aria-live="polite">
+          <figure class="gift-item" style="--gift-delay:.05s;--gift-tilt:-2deg"><div class="gift-item-media"><span class="gift-fallback">🍫</span></div><figcaption>Galaxy Smooth Milk<small>A sweet little treat</small></figcaption></figure>
+          <figure class="gift-item" style="--gift-delay:.22s;--gift-tilt:1.5deg"><div class="gift-item-media"><span class="gift-fallback">🍫</span></div><figcaption>KitKat<small>Have a break, smile a little</small></figcaption></figure>
+          <figure class="gift-item" style="--gift-delay:.39s;--gift-tilt:-1deg"><div class="gift-item-media"><span class="gift-fallback">🍫</span></div><figcaption>Cadbury Crispello<small>A crispy chocolate surprise</small></figcaption></figure>
+          <figure class="gift-item" style="--gift-delay:.56s;--gift-tilt:2deg"><div class="gift-item-media"><span class="gift-fallback">🍫</span></div><figcaption>Bournville 50% Dark<small>A rich little indulgence</small></figcaption></figure>
+          <figure class="gift-item" style="--gift-delay:.73s;--gift-tilt:1deg"><div class="gift-item-media"><span class="gift-fallback">💝</span></div><figcaption>Pearl Wish Gift Set<small>A wish waiting to be opened</small></figcaption></figure>
+          <figure class="gift-item" style="--gift-delay:.90s;--gift-tilt:-1.5deg"><div class="gift-item-media"><span class="gift-fallback">💎</span></div><figcaption>Pearl Necklace<small>A little sparkle for you</small></figcaption></figure>
+          <figure class="gift-item" style="--gift-delay:1.07s;--gift-tilt:1.5deg"><div class="gift-item-media"><span class="gift-fallback">🌸</span></div><figcaption>Bracelet<small>A colourful keepsake</small></figure>
+          <figure class="gift-item" style="--gift-delay:1.24s;--gift-tilt:-2deg"><div class="gift-item-media"><span class="gift-fallback">🎀</span></div><figcaption>Wrapped with Love<small>Happy Diwali Ladli 😊</small></figure>
+        </div>
+        <p class="gift-gallery-note" id="giftGalleryNote" hidden>Every little gift carries a thought of you. ❤️</p>
         <div style="text-align:center"><button class="cta" id="finishSurprise">One last wish ♥</button></div>
       </div>
     </section>
@@ -879,6 +930,23 @@ function launchConfetti() {
 document.getElementById('oneMoreSurprise').addEventListener('click', () => {
   showScene(4);
   launchConfetti();
+});
+const giftBoxButton = document.getElementById('giftBoxButton');
+const giftGallery = document.getElementById('giftGallery');
+const giftRevealHint = document.getElementById('giftRevealHint');
+const giftGalleryNote = document.getElementById('giftGalleryNote');
+giftBoxButton.addEventListener('click', () => {
+  if (giftBoxButton.classList.contains('opened')) return;
+  giftBoxButton.classList.add('opened');
+  giftBoxButton.setAttribute('aria-label','Your Diwali gifts are open');
+  giftRevealHint.textContent = 'A little love is coming your way… ❤️';
+  launchConfetti();
+  window.setTimeout(() => {
+    giftGallery.hidden = false;
+    giftGallery.classList.add('revealed');
+    giftGalleryNote.hidden = false;
+    giftRevealHint.textContent = 'A little something for every smile, Ladli ❤️';
+  }, 520);
 });
 document.getElementById('finishSurprise').addEventListener('click', () => showScene(5));
 
