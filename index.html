@@ -1961,36 +1961,6 @@ footer { text-align:center; padding:25px; color:#9c7c72; font-size:10px; letter-
   <div class="ambient-diyas" aria-hidden="true" id="ambientDiyas"></div>
   <!-- Background Music Audio Element -->
   <audio id="bgAudio" src="assets/diwali-soundtrack.mp3" loop preload="auto" autoplay></audio>
-  <button class="music music-floating" id="musicToggle" aria-label="Toggle festive background music">
-    <span class="music-icon" id="musicIcon">♫</span><b id="musicLabel">Music</b>
-  </button>
-  <aside class="music-player-panel" id="musicPlayerPanel" aria-label="Festive music player" hidden>
-    <div class="music-panel-heading"><span>✨ Festive Soundtrack ✨</span><button class="music-panel-close" id="closeMusicPanel" aria-label="Close music player">×</button></div>
-    <div class="custom-audio-card">
-      <div class="audio-disc-wrap">
-        <div class="audio-disc is-spinning" id="audioDisc">
-          <span class="disc-hole"></span>
-        </div>
-      </div>
-      <div class="audio-info">
-        <h4 class="audio-title">Our Diwali Soundtrack</h4>
-        <p class="audio-artist">Playing with love for Ladli ♥</p>
-      </div>
-      <div class="audio-progress-wrap">
-        <input type="range" class="audio-progress-bar" id="audioProgressBar" min="0" max="100" value="0" step="0.1" aria-label="Track progress">
-        <div class="audio-time-display">
-          <span id="audioCurrentTime">0:00</span>
-          <span id="audioDuration">1:52</span>
-        </div>
-      </div>
-      <div class="audio-controls">
-        <button class="audio-ctrl-btn" id="audioMuteBtn" type="button" aria-label="Mute or unmute">🔊</button>
-        <div class="audio-vol-wrap">
-          <input type="range" class="audio-volume-slider" id="audioVolumeSlider" min="0" max="1" step="0.05" value="0.5" aria-label="Volume">
-        </div>
-      </div>
-    </div>
-  </aside>
   <main>
     <section class="hero slide active" id="home">
       <div class="hero-inner">
@@ -2160,11 +2130,6 @@ footer { text-align:center; padding:25px; color:#9c7c72; font-size:10px; letter-
     </section>
         <section class="content slide surprise-slide" id="surpriseSlide">
       <div class="section-inner surprise-inner">
-        <!-- View Mode Switcher (visible once opened) -->
-        <div class="surprise-view-switcher" id="surpriseViewSwitcher" hidden>
-          <button class="view-switch-btn active" id="btnViewDeck" type="button">🃏 3D Memory Deck</button>
-          <button class="view-switch-btn" id="btnViewGrid" type="button">▦ View All Gifts (8)</button>
-        </div>
 
         <!-- Interactive 3D Gift Box Stage -->
         <div class="gift-box-stage" id="giftBoxStage">
@@ -2210,157 +2175,6 @@ footer { text-align:center; padding:25px; color:#9c7c72; font-size:10px; letter-
           <button class="cta" id="finishSurpriseFromDeck" type="button">One last wish ♥</button>
         </div>
 
-        <!-- The Emerging & Arranging Gifts Showcase -->
-        <div class="gifts-showcase" id="giftsShowcase" hidden>
-          <!-- Showcase Header & Filter Tabs -->
-          <div class="showcase-header">
-            <div class="showcase-badge">✨ 8 Gifts Handpicked with Love ✨</div>
-            <h3 class="showcase-heading">Treasures for My Dearest Ladli</h3>
-            <div class="showcase-filter-tabs" id="showcaseFilterTabs">
-              <button class="filter-tab active" data-filter="all" type="button">All Surprises (8)</button>
-              <button class="filter-tab" data-filter="jewelry" type="button">💎 Jewelry & Keepsakes (3)</button>
-              <button class="filter-tab" data-filter="chocolate" type="button">🍫 Sweet Chocolates (4)</button>
-              <button class="filter-tab" data-filter="hamper" type="button">🎁 Grand Hamper (1)</button>
-            </div>
-          </div>
-
-          <!-- Cards Grid with 8 Items -->
-          <div class="gifts-grid" id="giftsGrid">
-            <!-- 1. Royal Diwali Hamper Box -->
-            <article class="gift-card" data-category="hamper" data-index="0">
-              <div class="card-inner">
-                <div class="card-image-wrap">
-                  <img src="assets/products/gift-box-hamper.jpg" alt="Luxury Diwali Gift Hamper with Red Ribbon" loading="lazy" class="gift-img">
-                  <span class="card-badge">🎁 Festive Hamper</span>
-                  <div class="card-zoom-hint"><span>🔍 Tap to view closer</span></div>
-                </div>
-                <div class="card-info">
-                  <h4 class="card-title">Hand-Wrapped Diwali Hamper</h4>
-                  <p class="card-subtitle">Wrapped in Love, Paisleys & Silk 🎀</p>
-                  <p class="card-desc">Traditional golden paisley wrapping, royal maroon velvet accents, and a custom Diwali wish tag.</p>
-                </div>
-              </div>
-            </article>
-
-            <!-- 2. Royal Wish Pearl Keepsake Gift Set -->
-            <article class="gift-card" data-category="jewelry" data-index="1">
-              <div class="card-inner">
-                <div class="card-image-wrap">
-                  <img src="assets/products/jewelry-wish-pearl-box.jpg" alt="Royal Wish Pearl Necklace Gift Set" loading="lazy" class="gift-img">
-                  <span class="card-badge">💎 Fine Keepsake</span>
-                  <div class="card-zoom-hint"><span>🔍 Tap to view closer</span></div>
-                </div>
-                <div class="card-info">
-                  <h4 class="card-title">Royal Wish Pearl Kit</h4>
-                  <p class="card-subtitle">A Wish Waiting in Every Pearl ✨</p>
-                  <p class="card-desc">Open the oyster to discover your genuine pearl and place it in the glowing cage pendant.</p>
-                </div>
-              </div>
-            </article>
-
-            <!-- 3. Wish Pearl DIY Experience -->
-            <article class="gift-card" data-category="jewelry" data-index="2">
-              <div class="card-inner">
-                <div class="card-image-wrap">
-                  <img src="assets/products/jewelry-wish-pearl-diy.jpg" alt="Wish Pearl DIY Experience and Necklace" loading="lazy" class="gift-img">
-                  <span class="card-badge">🦪 DIY Keepsake</span>
-                  <div class="card-zoom-hint"><span>🔍 Tap to view closer</span></div>
-                </div>
-                <div class="card-info">
-                  <h4 class="card-title">Wish Pearl DIY Experience & Necklace</h4>
-                  <p class="card-subtitle">From Oyster to Elegant Keepsake 🌸</p>
-                  <p class="card-desc">A 3-step heartfelt experience to create a pendant you can wear close to your heart forever.</p>
-                </div>
-              </div>
-            </article>
-
-            <!-- 4. Royal Gemstone Gold Bracelet -->
-            <article class="gift-card" data-category="jewelry" data-index="3">
-              <div class="card-inner">
-                <div class="card-image-wrap">
-                  <img src="assets/products/jewelry-gemstone-bracelet.jpg" alt="Royal Multi-Gemstone Gold Bracelet" loading="lazy" class="gift-img">
-                  <span class="card-badge">👑 Royal Jewelry</span>
-                  <div class="card-zoom-hint"><span>🔍 Tap to view closer</span></div>
-                </div>
-                <div class="card-info">
-                  <h4 class="card-title">Royal Gemstone Vine Bracelet</h4>
-                  <p class="card-subtitle">Delicate Floral Craft in Pure Gold 🌺</p>
-                  <p class="card-desc">Vibrant multi-colored gemstones woven into an ornate gold vine to sparkle on your wrist.</p>
-                </div>
-              </div>
-            </article>
-
-            <!-- 5. Cadbury Dairy Milk Crispello -->
-            <article class="gift-card" data-category="chocolate" data-index="4">
-              <div class="card-inner">
-                <div class="card-image-wrap">
-                  <img src="assets/products/chocolate-crispello.jpg" alt="Cadbury Dairy Milk Crispello Diwali Edition" loading="lazy" class="gift-img">
-                  <span class="card-badge">💜 Crunchy Sweet</span>
-                  <div class="card-zoom-hint"><span>🔍 Tap to view closer</span></div>
-                </div>
-                <div class="card-info">
-                  <h4 class="card-title">Cadbury Dairy Milk Crispello</h4>
-                  <p class="card-subtitle">Crunchy Puffs & Silky Cadbury ✨</p>
-                  <p class="card-desc">Light crispy wafer balls coated in signature rich Cadbury chocolate.</p>
-                </div>
-              </div>
-            </article>
-
-            <!-- 6. Galaxy Smooth Milk Chocolate -->
-            <article class="gift-card" data-category="chocolate" data-index="5">
-              <div class="card-inner">
-                <div class="card-image-wrap">
-                  <img src="assets/products/chocolate-galaxy.jpg" alt="Galaxy Smooth Milk Chocolate Diwali" loading="lazy" class="gift-img">
-                  <span class="card-badge">🍫 Velvety Milk</span>
-                  <div class="card-zoom-hint"><span>🔍 Tap to view closer</span></div>
-                </div>
-                <div class="card-info">
-                  <h4 class="card-title">Galaxy Smooth Milk</h4>
-                  <p class="card-subtitle">Melty Outside, Intense Inside 🌟</p>
-                  <p class="card-desc">Silky smooth chocolate that melts instantly with pure indulgence and warmth.</p>
-                </div>
-              </div>
-            </article>
-
-            <!-- 7. Nestle KitKat Diwali Edition -->
-            <article class="gift-card" data-category="chocolate" data-index="6">
-              <div class="card-inner">
-                <div class="card-image-wrap">
-                  <img src="assets/products/chocolate-kitkat.jpg" alt="Nestle KitKat Diwali Edition" loading="lazy" class="gift-img">
-                  <span class="card-badge">❤️ Crisp & Joy</span>
-                  <div class="card-zoom-hint"><span>🔍 Tap to view closer</span></div>
-                </div>
-                <div class="card-info">
-                  <h4 class="card-title">Nestle KitKat Diwali Special</h4>
-                  <p class="card-subtitle">Have a Break, Celebrate with Joy 🎆</p>
-                  <p class="card-desc">Iconic crunchy wafer bars paired with delicious milk chocolate for joyful celebrations.</p>
-                </div>
-              </div>
-            </article>
-
-            <!-- 8. Cadbury Bournville 50% Dark -->
-            <article class="gift-card" data-category="chocolate" data-index="7">
-              <div class="card-inner">
-                <div class="card-image-wrap">
-                  <img src="assets/products/chocolate-bournville.jpg" alt="Cadbury Bournville 50% Dark Chocolate" loading="lazy" class="gift-img">
-                  <span class="card-badge">🌙 Gourmet Dark</span>
-                  <div class="card-zoom-hint"><span>🔍 Tap to view closer</span></div>
-                </div>
-                <div class="card-info">
-                  <h4 class="card-title">Cadbury Bournville 50% Dark</h4>
-                  <p class="card-subtitle">Rich Cocoa & Intense Flavor ☕</p>
-                  <p class="card-desc">Crafted with 50% premium Ghana cocoa for a rich, sophisticated dark chocolate experience.</p>
-                </div>
-              </div>
-            </article>
-          </div>
-
-          <!-- Controls at bottom of showcase -->
-          <div class="showcase-bottom-actions">
-            <button class="repack-btn" id="repackGiftBox" type="button">↻ Pack Box Again</button>
-            <button class="cta" id="finishSurprise">One last wish ♥</button>
-          </div>
-        </div>
 
         
 
@@ -2775,107 +2589,20 @@ document.getElementById('oneMoreSurprise').addEventListener('click', () => {
   showScene(4);
   launchConfetti();
 });
-document.getElementById('finishSurprise').addEventListener('click', () => showScene(5));
+const finishSurprise = document.getElementById('finishSurprise');
+if (finishSurprise) {
+  finishSurprise.addEventListener('click', () => showScene(5));
+}
 
-// Festive Background Music Controller (Native HTML5 Audio)
+// Festive Background Music Autoplay Controller
 const bgAudio = document.getElementById('bgAudio');
-const musicButton = document.getElementById('musicToggle');
-const musicLabel = document.getElementById('musicLabel');
-const musicIcon = document.getElementById('musicIcon');
-const musicPanel = document.getElementById('musicPlayerPanel');
-const closeMusicPanel = document.getElementById('closeMusicPanel');
-const audioDisc = document.getElementById('audioDisc');
-const audioProgressBar = document.getElementById('audioProgressBar');
-const audioCurrentTime = document.getElementById('audioCurrentTime');
-const audioDuration = document.getElementById('audioDuration');
-const audioMuteBtn = document.getElementById('audioMuteBtn');
-const audioVolumeSlider = document.getElementById('audioVolumeSlider');
-
-function formatAudioTime(seconds) {
-  if (isNaN(seconds) || seconds < 0) return '0:00';
-  const m = Math.floor(seconds / 60);
-  const s = Math.floor(seconds % 60);
-  return `${m}:${s < 10 ? '0' : ''}${s}`;
-}
-
-function updatePlayStateUI(isPlaying) {
-  if (isPlaying) {
-    if (audioDisc) audioDisc.classList.add('is-spinning');
-    if (musicButton) musicButton.classList.add('is-playing');
-    if (musicIcon) musicIcon.textContent = '♪';
-  } else {
-    if (audioDisc) audioDisc.classList.remove('is-spinning');
-    if (musicButton) musicButton.classList.remove('is-playing');
-    if (musicIcon) musicIcon.textContent = '♫';
-  }
-}
-
 if (bgAudio) {
   // Volume set to 50%
   bgAudio.volume = 0.5;
-  if (audioVolumeSlider) audioVolumeSlider.value = 0.5;
 
-  bgAudio.addEventListener('play', () => updatePlayStateUI(true));
-  bgAudio.addEventListener('pause', () => updatePlayStateUI(false));
-
-  let isScrubbing = false;
-  bgAudio.addEventListener('timeupdate', () => {
-    if (!isScrubbing && bgAudio.duration) {
-      const pct = (bgAudio.currentTime / bgAudio.duration) * 100;
-      if (audioProgressBar) audioProgressBar.value = pct;
-      if (audioCurrentTime) audioCurrentTime.textContent = formatAudioTime(bgAudio.currentTime);
-    }
-  });
-
-  bgAudio.addEventListener('loadedmetadata', () => {
-    if (bgAudio.duration && audioDuration) {
-      audioDuration.textContent = formatAudioTime(bgAudio.duration);
-    }
-  });
-
-  if (audioProgressBar) {
-    audioProgressBar.addEventListener('input', () => {
-      isScrubbing = true;
-      if (bgAudio.duration && audioCurrentTime) {
-        const targetTime = (audioProgressBar.value / 100) * bgAudio.duration;
-        audioCurrentTime.textContent = formatAudioTime(targetTime);
-      }
-    });
-
-    audioProgressBar.addEventListener('change', () => {
-      if (bgAudio.duration) {
-        bgAudio.currentTime = (audioProgressBar.value / 100) * bgAudio.duration;
-      }
-      isScrubbing = false;
-    });
-  }
-
-  if (audioVolumeSlider) {
-    audioVolumeSlider.addEventListener('input', (e) => {
-      const vol = parseFloat(e.target.value);
-      bgAudio.volume = vol;
-      bgAudio.muted = (vol === 0);
-      if (audioMuteBtn) {
-        audioMuteBtn.textContent = vol === 0 ? '🔇' : (vol < 0.5 ? '🔉' : '🔊');
-      }
-    });
-  }
-
-  if (audioMuteBtn) {
-    audioMuteBtn.addEventListener('click', () => {
-      bgAudio.muted = !bgAudio.muted;
-      if (bgAudio.muted) {
-        audioMuteBtn.textContent = '🔇';
-      } else {
-        audioMuteBtn.textContent = bgAudio.volume < 0.5 ? '🔉' : '🔊';
-      }
-    });
-  }
-
-  // Autoplay handler (immediate + interaction fallback for modern browser autoplay policies)
   const startAutoplay = () => {
     if (bgAudio.paused) {
-      bgAudio.play().then(() => updatePlayStateUI(true)).catch(() => {});
+      bgAudio.play().catch(() => {});
     }
   };
 
@@ -2883,7 +2610,7 @@ if (bgAudio) {
   startAutoplay();
   window.addEventListener('load', startAutoplay, { once: true });
 
-  // On first interaction anywhere (pointer, touch, key, click, scroll)
+  // On first user interaction anywhere (pointer, touch, key, click, scroll)
   const interactionEvents = ['pointerdown', 'touchstart', 'click', 'keydown', 'scroll'];
   const triggerAutoplayOnGesture = () => {
     startAutoplay();
@@ -2891,20 +2618,6 @@ if (bgAudio) {
   };
   interactionEvents.forEach(evt => {
     window.addEventListener(evt, triggerAutoplayOnGesture, { once: true, passive: true });
-  });
-}
-
-if (musicButton && musicPanel) {
-  musicButton.addEventListener('click', () => {
-    musicPanel.hidden = !musicPanel.hidden;
-    musicLabel.textContent = musicPanel.hidden ? 'Music' : 'Close music';
-  });
-}
-
-if (closeMusicPanel && musicPanel) {
-  closeMusicPanel.addEventListener('click', () => {
-    musicPanel.hidden = true;
-    if (musicLabel) musicLabel.textContent = 'Music';
   });
 }
 </script>
@@ -3065,7 +2778,6 @@ class SurpriseDeckController {
     this.items = items;
     this.activeIndex = 0;
     this.state = 'idle'; // 'idle' | 'opening' | 'bursting' | 'gathering' | 'deck'
-    this.viewMode = 'deck'; // 'deck' | 'grid'
     this.cards = [];
 
     // DOM Elements
@@ -3075,15 +2787,10 @@ class SurpriseDeckController {
     this.deckControls = document.getElementById('deckControls');
     this.surpriseHeading = document.getElementById('surpriseHeading');
     this.surpriseIntro = document.getElementById('surpriseIntro');
-    this.viewSwitcher = document.getElementById('surpriseViewSwitcher');
-    this.btnViewDeck = document.getElementById('btnViewDeck');
-    this.btnViewGrid = document.getElementById('btnViewGrid');
     this.btnNext = document.getElementById('btnNext');
     this.btnPrev = document.getElementById('btnPrev');
     this.btnReset = document.getElementById('btnReset');
     this.deckProceedWrap = document.getElementById('deckProceedWrap');
-    this.giftsShowcase = document.getElementById('giftsShowcase');
-    this.repackGiftBox = document.getElementById('repackGiftBox');
 
     this.init();
   }
@@ -3114,56 +2821,15 @@ class SurpriseDeckController {
     if (this.btnNext) this.btnNext.addEventListener('click', () => this.swipeTopCard('left'));
     if (this.btnPrev) this.btnPrev.addEventListener('click', () => this.rewindCard());
     if (this.btnReset) this.btnReset.addEventListener('click', () => this.resetBox());
-    if (this.repackGiftBox) this.repackGiftBox.addEventListener('click', () => this.resetBox());
 
     const finishBtnDeck = document.getElementById('finishSurpriseFromDeck');
     if (finishBtnDeck) {
       finishBtnDeck.addEventListener('click', () => showScene(5));
     }
 
-    // View Switcher
-    if (this.btnViewDeck) {
-      this.btnViewDeck.addEventListener('click', () => this.switchView('deck'));
-    }
-    if (this.btnViewGrid) {
-      this.btnViewGrid.addEventListener('click', () => this.switchView('grid'));
-    }
-
-    // Grid card click to open lightbox
-    const giftsGrid = document.getElementById('giftsGrid');
-    if (giftsGrid) {
-      giftsGrid.querySelectorAll('.gift-card').forEach(card => {
-        card.addEventListener('click', () => {
-          const idx = parseInt(card.dataset.index, 10);
-          openLightbox(idx);
-        });
-      });
-    }
-
-    // Category filter tabs in grid view
-    const filterTabs = document.querySelectorAll('.filter-tab');
-    if (filterTabs.length) {
-      filterTabs.forEach(tab => {
-        tab.addEventListener('click', () => {
-          filterTabs.forEach(t => t.classList.remove('active'));
-          tab.classList.add('active');
-          const category = tab.dataset.filter;
-          if (giftsGrid) {
-            giftsGrid.querySelectorAll('.gift-card').forEach(card => {
-              if (category === 'all' || card.dataset.category === category) {
-                card.classList.remove('is-hidden');
-              } else {
-                card.classList.add('is-hidden');
-              }
-            });
-          }
-        });
-      });
-    }
-
     // Keyboard support for 3D deck
     document.addEventListener('keydown', (e) => {
-      if (typeof currentScene !== 'undefined' && currentScene === 4 && this.state === 'deck' && this.viewMode === 'deck') {
+      if (typeof currentScene !== 'undefined' && currentScene === 4 && this.state === 'deck') {
         if (e.key === 'ArrowRight') this.swipeTopCard('right');
         if (e.key === 'ArrowLeft') this.swipeTopCard('left');
         if (e.key === 'ArrowUp') openLightbox(this.activeIndex);
@@ -3174,9 +2840,6 @@ class SurpriseDeckController {
     const params = new URLSearchParams(window.location.search);
     if ((params.get('open') === '1' && (params.get('scene') === '4' || window.location.hash === '#surprise')) || params.get('state') === 'deck') {
       this.fastForwardToDeck();
-      if (params.get('view') === 'grid') {
-        this.switchView('grid');
-      }
     }
     if (params.get('click') === '1') {
       setTimeout(() => this.handleOpenBox(), 400);
@@ -3248,7 +2911,6 @@ class SurpriseDeckController {
         this.deckControls.hidden = false;
         this.deckControls.classList.add('visible');
       }
-      if (this.viewSwitcher) this.viewSwitcher.hidden = false;
       if (this.deckProceedWrap) this.deckProceedWrap.hidden = false;
       this.refreshDeck();
     }, 2600);
@@ -3317,7 +2979,7 @@ class SurpriseDeckController {
 
     if (this.activeIndex >= this.items.length) {
       if (this.surpriseHeading) this.surpriseHeading.textContent = "All Memories Unwrapped ✨";
-      if (this.surpriseIntro) this.surpriseIntro.textContent = "You can replay ↺, explore the grid view ▦, or make one last wish ♥";
+      if (this.surpriseIntro) this.surpriseIntro.textContent = "You can replay ↺ or make one last wish ♥";
       if (this.btnNext) this.btnNext.textContent = "Replay All ↺";
     } else {
       if (this.surpriseHeading) this.surpriseHeading.textContent = `Memory ${this.activeIndex + 1} of ${this.items.length}`;
@@ -3333,7 +2995,7 @@ class SurpriseDeckController {
     let startTime = 0;
 
     const onPointerDown = (e) => {
-      if (this.state !== 'deck' || index !== this.activeIndex || this.viewMode !== 'deck') return;
+      if (this.state !== 'deck' || index !== this.activeIndex) return;
       isDragging = true;
       startX = e.clientX;
       startY = e.clientY;
@@ -3422,51 +3084,15 @@ class SurpriseDeckController {
     }
   }
 
-  switchView(mode) {
-    this.viewMode = mode;
-    if (mode === 'deck') {
-      if (this.btnViewDeck) this.btnViewDeck.classList.add('active');
-      if (this.btnViewGrid) this.btnViewGrid.classList.remove('active');
-      if (this.boxStage) this.boxStage.style.display = 'flex';
-      if (this.deckProceedWrap) this.deckProceedWrap.hidden = false;
-      if (this.giftsShowcase) {
-        this.giftsShowcase.hidden = true;
-        this.giftsShowcase.classList.remove('showcase-enter');
-      }
-      this.refreshDeck();
-    } else {
-      if (this.btnViewDeck) this.btnViewDeck.classList.remove('active');
-      if (this.btnViewGrid) this.btnViewGrid.classList.add('active');
-      if (this.boxStage) this.boxStage.style.display = 'none';
-      if (this.deckProceedWrap) this.deckProceedWrap.hidden = true;
-      if (this.giftsShowcase) {
-        this.giftsShowcase.hidden = false;
-        this.giftsShowcase.classList.add('showcase-enter');
-        const gridCards = this.giftsShowcase.querySelectorAll('.gift-card');
-        gridCards.forEach((c, i) => {
-          c.style.animation = `cardPopIn 0.4s ${i * 0.05}s cubic-bezier(0.16, 0.9, 0.28, 1) both`;
-        });
-      }
-    }
-  }
-
   resetBox() {
     this.state = 'idle';
     this.activeIndex = 0;
-    this.viewMode = 'deck';
 
-    if (this.btnViewDeck) this.btnViewDeck.classList.add('active');
-    if (this.btnViewGrid) this.btnViewGrid.classList.remove('active');
-    if (this.viewSwitcher) this.viewSwitcher.hidden = true;
     if (this.deckControls) {
       this.deckControls.classList.remove('visible');
       this.deckControls.hidden = true;
     }
     if (this.deckProceedWrap) this.deckProceedWrap.hidden = true;
-    if (this.giftsShowcase) {
-      this.giftsShowcase.hidden = true;
-      this.giftsShowcase.classList.remove('showcase-enter');
-    }
 
     if (this.boxStage) this.boxStage.style.display = 'flex';
     if (this.surpriseHeading) this.surpriseHeading.textContent = "A Special Gift for You";
@@ -3497,7 +3123,6 @@ class SurpriseDeckController {
       this.deckControls.hidden = false;
       this.deckControls.classList.add('visible');
     }
-    if (this.viewSwitcher) this.viewSwitcher.hidden = false;
     if (this.deckProceedWrap) this.deckProceedWrap.hidden = false;
     this.cards.forEach((card, idx) => {
       this.updateCardPositionInStack(card, idx);
