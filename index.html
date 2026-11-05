@@ -75,11 +75,150 @@ button { font: inherit; }
 .music-player-panel[hidden] { display:none; }
 .music-panel-heading { display:flex; justify-content:space-between; align-items:center; margin:0 0 9px; color:var(--gold); font-size:10px; letter-spacing:.12em; text-transform:uppercase; }
 .music-panel-close { border:0; background:transparent; color:var(--cream); font-size:19px; cursor:pointer; padding:0 4px; }
-#spotifyPlayerHost { width:100%; height:352px; margin:auto; overflow:hidden; border-radius:12px; background:#14070d; }
-#spotifyPlayerHost iframe { display:block; width:100%; height:352px; border:0; border-radius:12px; }
-.music-panel-track { margin:9px 1px 2px; color:var(--cream); font-size:10px; line-height:1.45; }
-.music-panel-volume { margin:6px 1px 0; color:var(--muted); font-size:9px; letter-spacing:.03em; }
-.music-panel-open { display:inline-flex; margin:8px 0 0; color:var(--gold); font-size:10px; text-decoration:underline; text-underline-offset:3px; }
+.music-floating.is-playing {
+  border-color: rgba(245, 203, 134, 0.85);
+  box-shadow: 0 0 18px rgba(233, 197, 141, 0.45), 0 4px 15px rgba(0, 0, 0, 0.4);
+  background: linear-gradient(135deg, rgba(84, 25, 42, 0.9), rgba(43, 12, 21, 0.95));
+}
+.music-floating.is-playing .music-icon {
+  display: inline-block;
+  animation: musicIconPulse 1.2s ease-in-out infinite alternate;
+}
+@keyframes musicIconPulse {
+  0% { transform: scale(1) rotate(-5deg); color: #ffd782; }
+  100% { transform: scale(1.25) rotate(5deg); color: #fff3db; }
+}
+.custom-audio-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 8px 6px 6px;
+  gap: 10px;
+}
+.audio-disc-wrap {
+  position: relative;
+  width: 66px;
+  height: 66px;
+  margin: 0 auto;
+}
+.audio-disc {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: radial-gradient(circle, #2d101a 18%, #14050d 19%, #14050d 38%, #5a1d2d 40%, #1a0610 65%, #ffd477 98%, #e8b36b 100%);
+  border: 2px solid rgba(240, 201, 120, 0.7);
+  box-shadow: 0 0 16px rgba(240, 201, 120, 0.35), inset 0 0 8px rgba(0, 0, 0, 0.7);
+  display: grid;
+  place-items: center;
+  position: relative;
+  animation: discSpin 10s linear infinite;
+  animation-play-state: paused;
+}
+.audio-disc.is-spinning {
+  animation-play-state: running;
+}
+@keyframes discSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.disc-hole {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #1b090f;
+  border: 2px solid #ffd477;
+  box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.8);
+}
+.audio-info {
+  text-align: center;
+  width: 100%;
+}
+.audio-title {
+  margin: 0 0 2px;
+  font-family: var(--site-font-heading);
+  font-size: 13.5px;
+  color: var(--cream);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+.audio-artist {
+  margin: 0;
+  font-size: 10.5px;
+  color: var(--gold);
+  opacity: 0.88;
+}
+.audio-progress-wrap {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.audio-progress-bar {
+  width: 100%;
+  height: 4px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.15);
+  accent-color: #ffd477;
+  cursor: pointer;
+  outline: none;
+}
+.audio-time-display {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+  color: var(--muted);
+  font-family: monospace;
+}
+.audio-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  width: 100%;
+  margin-top: 2px;
+}
+.audio-play-toggle {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid rgba(240, 201, 120, 0.8);
+  background: linear-gradient(135deg, #e8c48e, #b67b4d);
+  color: #24130e;
+  font-size: 15px;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(205, 143, 79, 0.35);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.audio-play-toggle:hover {
+  transform: scale(1.08);
+  box-shadow: 0 6px 18px rgba(205, 143, 79, 0.5);
+}
+.audio-ctrl-btn {
+  background: transparent;
+  border: 0;
+  font-size: 15px;
+  cursor: pointer;
+  color: var(--gold);
+  padding: 4px;
+  opacity: 0.85;
+  transition: opacity 0.2s;
+}
+.audio-ctrl-btn:hover {
+  opacity: 1;
+}
+.audio-vol-wrap {
+  display: flex;
+  align-items: center;
+}
+.audio-volume-slider {
+  width: 60px;
+  height: 3px;
+  border-radius: 999px;
+  accent-color: #ffd477;
+  cursor: pointer;
+}
 .hero { min-height: 83vh; position: relative; z-index: 1; display: grid; place-items: center; text-align: center; padding: 50px 20px 110px; }
 .hero-inner { max-width: 760px; padding:clamp(30px,5vw,58px); border:1px solid rgba(255,239,220,.16); border-radius:30px; background:linear-gradient(145deg,rgba(255,255,255,.105),rgba(255,255,255,.025)); box-shadow:0 24px 80px rgba(0,0,0,.2),inset 0 1px 0 rgba(255,255,255,.12); backdrop-filter:blur(22px) saturate(135%); -webkit-backdrop-filter:blur(22px) saturate(135%); }
 .eyebrow { color: var(--gold); letter-spacing: .35em; text-transform: uppercase; font-size: 10px; margin-bottom: 24px; }
@@ -311,7 +450,6 @@ footer { display:none; }
 @media(max-width:700px){
   .music-floating { top:10px; right:10px; padding:8px 12px; font-size:10px; }
   .music-player-panel { top:54px; right:8px; width:calc(100vw - 16px); }
-  #spotifyPlayerHost, #spotifyPlayerHost iframe { height:352px; }
   .diya-row { gap:14px; margin-bottom:22px; align-items:center; }
   .diya-row .diya { flex-basis:62px; width:62px; height:48px; }
   main > section.content.slide { padding:68px 12px 82px; }
@@ -1821,13 +1959,38 @@ footer { text-align:center; padding:25px; color:#9c7c72; font-size:10px; letter-
 <div id="app">
   <div class="decor" aria-hidden="true" id="stars"></div>
   <div class="ambient-diyas" aria-hidden="true" id="ambientDiyas"></div>
-  <button class="music music-floating" id="musicToggle" aria-label="Open music player"><span>♫</span><b id="musicLabel">Music</b></button>
-  <aside class="music-player-panel" id="musicPlayerPanel" aria-label="Spotify music player" hidden>
-    <div class="music-panel-heading"><span>Our Diwali soundtrack</span><button class="music-panel-close" id="closeMusicPanel" aria-label="Close music player">×</button></div>
-    <div id="spotifyPlayerHost"></div>
-    <p class="music-panel-track">Tap the Spotify Play button. Sign in to Spotify for the full track.</p>
-    <p class="music-panel-volume">Preferred volume · 65% (adjust in Spotify or on your device)</p>
-    <a class="music-panel-open" href="https://open.spotify.com/track/5PEA63vLNp32cLnTi39E9V" target="_blank" rel="noopener noreferrer">Open track directly in Spotify ↗</a>
+  <!-- Background Music Audio Element -->
+  <audio id="bgAudio" src="assets/diwali-soundtrack.mp3" loop preload="auto"></audio>
+  <button class="music music-floating" id="musicToggle" aria-label="Toggle festive background music">
+    <span class="music-icon" id="musicIcon">♫</span><b id="musicLabel">Music</b>
+  </button>
+  <aside class="music-player-panel" id="musicPlayerPanel" aria-label="Festive music player" hidden>
+    <div class="music-panel-heading"><span>✨ Festive Soundtrack ✨</span><button class="music-panel-close" id="closeMusicPanel" aria-label="Close music player">×</button></div>
+    <div class="custom-audio-card">
+      <div class="audio-disc-wrap">
+        <div class="audio-disc" id="audioDisc">
+          <span class="disc-hole"></span>
+        </div>
+      </div>
+      <div class="audio-info">
+        <h4 class="audio-title">Our Diwali Soundtrack</h4>
+        <p class="audio-artist">Playing with love for Ladli ♥</p>
+      </div>
+      <div class="audio-progress-wrap">
+        <input type="range" class="audio-progress-bar" id="audioProgressBar" min="0" max="100" value="0" step="0.1" aria-label="Track progress">
+        <div class="audio-time-display">
+          <span id="audioCurrentTime">0:00</span>
+          <span id="audioDuration">1:52</span>
+        </div>
+      </div>
+      <div class="audio-controls">
+        <button class="audio-ctrl-btn" id="audioMuteBtn" type="button" aria-label="Mute or unmute">🔊</button>
+        <button class="audio-play-toggle" id="audioPlayToggle" type="button" aria-label="Play or pause">▶</button>
+        <div class="audio-vol-wrap">
+          <input type="range" class="audio-volume-slider" id="audioVolumeSlider" min="0" max="1" step="0.05" value="0.75" aria-label="Volume">
+        </div>
+      </div>
+    </div>
   </aside>
   <main>
     <section class="hero slide active" id="home">
@@ -2615,31 +2778,142 @@ document.getElementById('oneMoreSurprise').addEventListener('click', () => {
 });
 document.getElementById('finishSurprise').addEventListener('click', () => showScene(5));
 
-// Spotify controls playback inside its own embed; the page opens and closes the player panel.
+// Festive Background Music Controller (Native HTML5 Audio)
+const bgAudio = document.getElementById('bgAudio');
 const musicButton = document.getElementById('musicToggle');
 const musicLabel = document.getElementById('musicLabel');
+const musicIcon = document.getElementById('musicIcon');
 const musicPanel = document.getElementById('musicPlayerPanel');
-musicButton.addEventListener('click', () => {
-  musicPanel.hidden = !musicPanel.hidden;
-  musicLabel.textContent = musicPanel.hidden ? 'Music' : 'Close music';
-  if (!musicPanel.hidden && !document.querySelector('#spotifyPlayerHost iframe')) {
-    const player = document.createElement('iframe');
-    player.dataset.testid = 'embed-iframe';
-    player.style.borderRadius = '12px';
-    player.src = 'https://open.spotify.com/embed/track/5PEA63vLNp32cLnTi39E9V?utm_source=generator';
-    player.width = '100%';
-    player.height = '352';
-    player.frameBorder = '0';
-    player.allowFullscreen = true;
-    player.allow = 'autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture';
-    player.title = 'Kehdoon Tumhen — Instrumental Music Hits on Spotify';
-    document.getElementById('spotifyPlayerHost').appendChild(player);
+const closeMusicPanel = document.getElementById('closeMusicPanel');
+const audioPlayToggle = document.getElementById('audioPlayToggle');
+const audioDisc = document.getElementById('audioDisc');
+const audioProgressBar = document.getElementById('audioProgressBar');
+const audioCurrentTime = document.getElementById('audioCurrentTime');
+const audioDuration = document.getElementById('audioDuration');
+const audioMuteBtn = document.getElementById('audioMuteBtn');
+const audioVolumeSlider = document.getElementById('audioVolumeSlider');
+
+function formatAudioTime(seconds) {
+  if (isNaN(seconds) || seconds < 0) return '0:00';
+  const m = Math.floor(seconds / 60);
+  const s = Math.floor(seconds % 60);
+  return `${m}:${s < 10 ? '0' : ''}${s}`;
+}
+
+function updatePlayStateUI(isPlaying) {
+  if (isPlaying) {
+    if (audioPlayToggle) {
+      audioPlayToggle.textContent = '⏸';
+      audioPlayToggle.setAttribute('aria-label', 'Pause audio');
+    }
+    if (audioDisc) audioDisc.classList.add('is-spinning');
+    if (musicButton) musicButton.classList.add('is-playing');
+    if (musicIcon) musicIcon.textContent = '♪';
+  } else {
+    if (audioPlayToggle) {
+      audioPlayToggle.textContent = '▶';
+      audioPlayToggle.setAttribute('aria-label', 'Play audio');
+    }
+    if (audioDisc) audioDisc.classList.remove('is-spinning');
+    if (musicButton) musicButton.classList.remove('is-playing');
+    if (musicIcon) musicIcon.textContent = '♫';
   }
-});
-document.getElementById('closeMusicPanel').addEventListener('click', () => {
-  musicPanel.hidden = true;
-  musicLabel.textContent = 'Music';
-});
+}
+
+if (bgAudio) {
+  bgAudio.volume = parseFloat(audioVolumeSlider ? audioVolumeSlider.value : 0.75);
+
+  bgAudio.addEventListener('play', () => updatePlayStateUI(true));
+  bgAudio.addEventListener('pause', () => updatePlayStateUI(false));
+
+  let isScrubbing = false;
+  bgAudio.addEventListener('timeupdate', () => {
+    if (!isScrubbing && bgAudio.duration) {
+      const pct = (bgAudio.currentTime / bgAudio.duration) * 100;
+      if (audioProgressBar) audioProgressBar.value = pct;
+      if (audioCurrentTime) audioCurrentTime.textContent = formatAudioTime(bgAudio.currentTime);
+    }
+  });
+
+  bgAudio.addEventListener('loadedmetadata', () => {
+    if (bgAudio.duration && audioDuration) {
+      audioDuration.textContent = formatAudioTime(bgAudio.duration);
+    }
+  });
+
+  if (audioProgressBar) {
+    audioProgressBar.addEventListener('input', () => {
+      isScrubbing = true;
+      if (bgAudio.duration && audioCurrentTime) {
+        const targetTime = (audioProgressBar.value / 100) * bgAudio.duration;
+        audioCurrentTime.textContent = formatAudioTime(targetTime);
+      }
+    });
+
+    audioProgressBar.addEventListener('change', () => {
+      if (bgAudio.duration) {
+        bgAudio.currentTime = (audioProgressBar.value / 100) * bgAudio.duration;
+      }
+      isScrubbing = false;
+    });
+  }
+
+  if (audioPlayToggle) {
+    audioPlayToggle.addEventListener('click', () => {
+      if (bgAudio.paused) {
+        bgAudio.play().then(() => updatePlayStateUI(true)).catch(() => {});
+      } else {
+        bgAudio.pause();
+        updatePlayStateUI(false);
+      }
+    });
+  }
+
+  if (audioVolumeSlider) {
+    audioVolumeSlider.addEventListener('input', (e) => {
+      const vol = parseFloat(e.target.value);
+      bgAudio.volume = vol;
+      bgAudio.muted = (vol === 0);
+      if (audioMuteBtn) {
+        audioMuteBtn.textContent = vol === 0 ? '🔇' : (vol < 0.5 ? '🔉' : '🔊');
+      }
+    });
+  }
+
+  if (audioMuteBtn) {
+    audioMuteBtn.addEventListener('click', () => {
+      bgAudio.muted = !bgAudio.muted;
+      if (bgAudio.muted) {
+        audioMuteBtn.textContent = '🔇';
+      } else {
+        audioMuteBtn.textContent = bgAudio.volume < 0.5 ? '🔉' : '🔊';
+      }
+    });
+  }
+
+  // Smooth cinematic autoplay on first user gesture anywhere on screen
+  const startAudioOnFirstInteraction = () => {
+    if (bgAudio.paused) {
+      bgAudio.play().then(() => updatePlayStateUI(true)).catch(() => {});
+    }
+  };
+  window.addEventListener('pointerdown', startAudioOnFirstInteraction, { once: true });
+  window.addEventListener('keydown', startAudioOnFirstInteraction, { once: true });
+}
+
+if (musicButton && musicPanel) {
+  musicButton.addEventListener('click', () => {
+    musicPanel.hidden = !musicPanel.hidden;
+    musicLabel.textContent = musicPanel.hidden ? 'Music' : 'Close music';
+  });
+}
+
+if (closeMusicPanel && musicPanel) {
+  closeMusicPanel.addEventListener('click', () => {
+    musicPanel.hidden = true;
+    if (musicLabel) musicLabel.textContent = 'Music';
+  });
+}
 </script>
 
 <!--sites-preview-theme:start-->
