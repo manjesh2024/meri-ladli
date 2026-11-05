@@ -26,11 +26,11 @@ export const DEFAULT_MEMORIES = [
   },
   {
     id: 'm2',
-    src: 'assets/products/jewelry-wish-pearl-diy.jpg',
-    category: 'DIY Experience',
-    title: 'Wish Pearl DIY Keepsake',
-    date: 'A Heartfelt Ritual',
-    story: 'From oyster to elegant necklace in three simple steps. An intimate keepsake to celebrate every wish made from the heart.'
+    src: 'assets/products/jewelry-wish-pearl-box.jpg',
+    category: 'Fine Keepsake',
+    title: 'Royal Wish Pearl Keepsake Set',
+    date: 'Diwali Special',
+    story: 'An authentic oyster with a genuine cultured pearl inside, waiting to be revealed and worn inside a delicate flower cage pendant.'
   },
   {
     id: 'm3',
@@ -74,11 +74,11 @@ export const DEFAULT_MEMORIES = [
   },
   {
     id: 'm8',
-    src: 'assets/products/jewelry-wish-pearl-box.jpg',
-    category: 'Fine Keepsake',
-    title: 'Royal Wish Pearl Keepsake Set',
-    date: 'Diwali Special',
-    story: 'An authentic oyster with a genuine cultured pearl inside, waiting to be revealed and worn inside a delicate flower cage pendant.'
+    src: 'assets/products/jewelry-wish-pearl-diy.jpg',
+    category: 'DIY Experience',
+    title: 'Wish Pearl DIY Keepsake',
+    date: 'A Heartfelt Ritual',
+    story: 'From oyster to elegant necklace in three simple steps. An intimate keepsake to celebrate every wish made from the heart.'
   }
 ];
 
