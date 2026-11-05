@@ -34,6 +34,14 @@ export const DEFAULT_MEMORIES = [
   },
   {
     id: 'm3',
+    src: 'assets/products/jewelry-wish-pearl-diy.jpg',
+    category: 'DIY Experience',
+    title: 'Wish Pearl DIY Keepsake',
+    date: 'A Heartfelt Ritual',
+    story: 'From oyster to elegant necklace in three simple steps. An intimate keepsake to celebrate every wish made from the heart.'
+  },
+  {
+    id: 'm4',
     src: 'assets/products/jewelry-gemstone-bracelet.jpg',
     category: 'Royal Jewelry',
     title: 'Royal Gemstone Vine Bracelet',
@@ -41,23 +49,7 @@ export const DEFAULT_MEMORIES = [
     story: 'Vibrant gemstone cabochons set on an 18K gold branch vine. Designed to sparkle beside your glowing smile.'
   },
   {
-    id: 'm4',
-    src: 'assets/products/chocolate-galaxy.jpg',
-    category: 'Silky Sweet',
-    title: 'Galaxy Smooth Milk Chocolate',
-    date: 'Sweet Moments',
-    story: 'Velvety smooth milk chocolate that melts gently on your tongue, bringing instant warmth and comfort.'
-  },
-  {
     id: 'm5',
-    src: 'assets/products/chocolate-kitkat.jpg',
-    category: 'Crisp Joy',
-    title: 'Nestle KitKat Diwali Edition',
-    date: 'Shared Breaks',
-    story: 'Crispy wafer fingers layered with creamy chocolate for all the joyful, unscripted breaks we share together.'
-  },
-  {
-    id: 'm6',
     src: 'assets/products/chocolate-crispello.jpg',
     category: 'Crunchy Treat',
     title: 'Cadbury Dairy Milk Crispello',
@@ -65,20 +57,28 @@ export const DEFAULT_MEMORIES = [
     story: 'Crispy wheat balls bathed in melt-in-mouth Dairy Milk chocolate, crafted for shared laughter.'
   },
   {
+    id: 'm6',
+    src: 'assets/products/chocolate-galaxy.jpg',
+    category: 'Silky Sweet',
+    title: 'Galaxy Smooth Milk Chocolate',
+    date: 'Sweet Moments',
+    story: 'Velvety smooth milk chocolate that melts gently on your tongue, bringing instant warmth and comfort.'
+  },
+  {
     id: 'm7',
+    src: 'assets/products/chocolate-kitkat.jpg',
+    category: 'Crisp Joy',
+    title: 'Nestle KitKat Diwali Edition',
+    date: 'Shared Breaks',
+    story: 'Crispy wafer fingers layered with creamy chocolate for all the joyful, unscripted breaks we share together.'
+  },
+  {
+    id: 'm8',
     src: 'assets/products/chocolate-bournville.jpg',
     category: 'Gourmet Dark',
     title: 'Cadbury Bournville 50% Dark',
     date: 'Deep & Rich',
     story: 'Rich Ghana cocoa offering a luxurious, intense flavor as deep and unforgettable as our fondest memories.'
-  },
-  {
-    id: 'm8',
-    src: 'assets/products/jewelry-wish-pearl-diy.jpg',
-    category: 'DIY Experience',
-    title: 'Wish Pearl DIY Keepsake',
-    date: 'A Heartfelt Ritual',
-    story: 'From oyster to elegant necklace in three simple steps. An intimate keepsake to celebrate every wish made from the heart.'
   }
 ];
 
