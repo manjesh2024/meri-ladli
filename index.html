@@ -193,7 +193,7 @@ section.content { position: relative; z-index: 1; padding: 92px 20px; }
 .trail-spark { fill:#ffe5a1; filter:drop-shadow(0 0 4px #ffad4c) drop-shadow(0 0 9px #ffad4c); }
 .trail-spark:nth-child(2n) { animation:trail-twinkle .8s ease-in-out infinite alternate; }
 @keyframes trail-twinkle { from { opacity:.24; r:1.1; } to { opacity:1; r:3.2; } }
-.rangoli-art { position:absolute; left:50%; bottom:calc(env(safe-area-inset-bottom,0px) + 2px); width:clamp(172px,20vw,250px); height:auto; aspect-ratio:1; transform:translateX(-50%); transform-origin:center; overflow:visible; filter:drop-shadow(0 0 21px rgba(255,143,42,.84)) drop-shadow(0 0 46px rgba(255,112,30,.4)); }
+.rangoli-art { position:absolute; left:50%; top:50%; bottom:auto; width:clamp(172px,20vw,250px); height:auto; aspect-ratio:1; transform:translate(-50%, -50%); transform-origin:center; overflow:visible; filter:drop-shadow(0 0 21px rgba(255,143,42,.84)) drop-shadow(0 0 46px rgba(255,112,30,.4)); }
 .rangoli-spin { transform-box:view-box; transform-origin:160px 160px; animation:rangoli-turn 28s linear infinite; will-change:transform; }
 .rangoli-pulse { transform-box:fill-box; transform-origin:center; animation:rangoli-breathe 2.8s ease-in-out infinite alternate; }
 @keyframes rangoli-turn { from { transform:rotate(0deg); } to { transform:rotate(360deg); } }
@@ -345,7 +345,7 @@ footer { display:none; }
   .scene-countdown { font-size:8px; }
   .scene-actions { gap:5px; }
   .scene-button { padding:8px 11px; font-size:10px; }
-  .rangoli-art { width:clamp(132px,38vw,174px); height:auto; bottom:calc(env(safe-area-inset-bottom,0px) + 2px); }
+  .rangoli-art { width:clamp(132px,38vw,174px); height:auto; top:50%; bottom:auto; transform:translate(-50%, -50%); }
   .golden-trails { height:clamp(78px,14vh,118px); }
   .trail-ember { --ember-bottom:0px; }
 }
@@ -374,7 +374,7 @@ footer { text-align:center; padding:25px; color:#9c7c72; font-size:10px; letter-
 </style>
 <style id="latest-gallery-and-rangoli">
 :root { --memory-sprite:url('https://raw.githubusercontent.com/manjesh2024/meri-ladli/main/assets/memory-sprite-v3.webp?v=20261103-2310') !important; }
-#app .festival-effects .rangoli-art, .festival-effects .rangoli-art { position:fixed !important; bottom:calc(env(safe-area-inset-bottom,0px) + 8px) !important; top:auto !important; left:50% !important; right:auto !important; margin:0 !important; width:clamp(180px,24vw,300px) !important; height:auto !important; aspect-ratio:1; transform:translateX(-50%) !important; transform-origin:center !important; opacity:0.5 !important; pointer-events:none !important; z-index:1 !important; }
+#app .festival-effects .rangoli-art, .festival-effects .rangoli-art { position:fixed !important; top:50% !important; bottom:auto !important; left:50% !important; right:auto !important; margin:0 !important; width:clamp(180px,24vw,300px) !important; height:auto !important; aspect-ratio:1; transform:translate(-50%, -50%) !important; transform-origin:center !important; opacity:0.5 !important; pointer-events:none !important; z-index:1 !important; }
 @media(max-width:700px) { #app .festival-effects .rangoli-art, .festival-effects .rangoli-art { width:clamp(160px,44vw,220px) !important; } }
 @media(max-height:720px) and (min-width:701px) { #app .festival-effects .rangoli-art, .festival-effects .rangoli-art { width:clamp(150px,20vw,240px) !important; } }
 .festival-effects { z-index:1 !important; pointer-events:none !important; }
@@ -2575,11 +2575,6 @@ function showScene(index) {
   nextScene.textContent = currentScene === 1 ? 'Our little story →' : 'A little note for you →';
   const activeCard = storySlides[currentScene].querySelector('.hero-inner, .section-inner') || storySlides[currentScene];
   activeCard.appendChild(slideControls);
-
-  const rangoliEl = document.querySelector('.rangoli-art');
-  if (rangoliEl) {
-    rangoliEl.style.display = currentScene === 4 ? 'none' : '';
-  }
 }
 document.getElementById('openSurprise').addEventListener('click', () => showScene(1));
 nextScene.addEventListener('click', () => showScene(currentScene + 1));
